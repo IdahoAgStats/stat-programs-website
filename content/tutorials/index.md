@@ -10,6 +10,7 @@ type: page
 
 * [What They Forgot to Teach You](https://imci-idaho.github.io/2022-03-01-WhatTheyForgot/) (about using R)
 * [Rstats4Ag](https://rstats4ag.org/) (weed-science oriented)
+* <a href="/post/getting-r-setup">Getting R Set Up</a>
 
 ### SAS
 
