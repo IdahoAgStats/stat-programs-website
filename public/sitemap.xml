@@ -104,6 +104,9 @@
     <loc>/category/troubleshooting/</loc>
     <lastmod>2022-05-05T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>/post/ordinal/</loc>
+    <lastmod>2022-06-23T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>/post/r-gui/</loc>
     <lastmod>2022-06-23T00:00:00+00:00</lastmod>
   </url><url>
@@ -186,6 +189,8 @@
     <lastmod>2021-04-09T15:30:00+00:00</lastmod>
   </url><url>
     <loc>/admin/</loc>
+  </url><url>
+    <loc>/authors/hkaur/</loc>
   </url><url>
     <loc>/tutorials/</loc>
   </url><url>
