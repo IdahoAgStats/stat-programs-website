@@ -1,23 +1,26 @@
 ---
-bio: My research interests include plant genetics, spatial statistics and how to implement open science and reproducible research practices routinely. 
+bio: My research interests include soil fertility, agronomy, and statistics and how to implement different statistical approaches to improve the reproducability of the research. 
 education:
   courses:
   - course: PhD in Crop science
-    institution: Washington State University
-    year: 2012
-  - course: MS in Crop Science
-    institution: Washington State University
-    year: 2008
-  - course: BS in Molecular Biology, Biochemistry and Microbiology
-    institution: University of Idaho
-    year: 2001
+    institution: University of Missouri
+    year: 2023
+  - course: MA in Statistics
+    institution: University of Missouri
+    year: 2023
+  - course: MS in Watershed Management
+    institution: Southern Illinois University
+    year: 2020
+  - course: BS in Agriculture
+    institution: Punjab Agriculture University
+    year: 2018
 email: ""
 highlight_name: false
 interests:
-- Agricultural statistics
+- Applied statistics
 - open data & reproducible research
-- plant and animal genetics
-- spatial statistics
+- Agronomy and Soil Science
+- R and SAS software
 organizations:
 - name: University of Idaho
   url: https://www.uidaho.edu/
@@ -31,16 +34,16 @@ social:
   icon: twitter
   icon_pack: fab
   label: Follow me on Twitter
-  link: https://twitter.com/SeedsandBreeds
+  link: https://twitter.com/harpreet_kaur_9
 - icon: graduation-cap
   icon_pack: fas
-  link: https://scholar.google.com/citations?user=PMN2WZEAAAAJ
+  link: https://scholar.google.com/citations?user=OEz1hwQAAAAJ&hl=en
 - icon: github
   icon_pack: fab
-  link: https://github.com/jpiaskowski
+  link: https://github.com/Sidhuharp97
 - icon: linkedin
   icon_pack: fab
-  link: https://www.linkedin.com/in/julia-piaskowski-4623145a
+  link: https://www.linkedin.com/in/harpreet-kaur-6b9888148/
 superuser: false
 title: Harpreet Kaur
 ---
