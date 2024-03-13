@@ -7,6 +7,7 @@ rmarkdown::render_site()
 
 rmarkdown::render_site()
 
+##to open website
 blogdown::serve_site()
 
 update.packages(ask = FALSE, checkBuilt = TRUE)
