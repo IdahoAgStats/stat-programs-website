@@ -11,6 +11,9 @@ type: page
 * [What They Forgot to Teach You](https://imci-idaho.github.io/2022-03-01-WhatTheyForgot/) (about using R)
 * [Rstats4Ag](https://rstats4ag.org/) (weed-science oriented)
 * <a href="/post/getting-r-setup">Getting R Set Up</a>
+* [Mixed models in R](https://m-clark.github.io/mixed-models-with-R/)
+* [Data Science for Agriculture in R](https://schmidtpaul.github.io/DSFAIR/)
+* [Mixed Models for Agriculture in R](https://schmidtpaul.github.io/MMFAIR/)
 
 ### SAS
 
@@ -33,9 +36,5 @@ type: page
 * [Basic Introduction to Linear models](https://lindeloev.github.io/tests-as-linear/#1_the_simplicity_underlying_common_tests)
 * [USDA SCINet Learning Pathway](https://scinet.usda.gov/training/learningpath) 
 
-#### Mixed Models in R
-* [Mixed models in R](https://m-clark.github.io/mixed-models-with-R/)
-* [Data Science for Agriculture in R](https://schmidtpaul.github.io/DSFAIR/)
-* [Mixed Models for Agriculture in R](https://schmidtpaul.github.io/MMFAIR/)
 
 
