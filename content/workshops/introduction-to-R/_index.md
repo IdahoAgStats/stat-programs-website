@@ -36,7 +36,7 @@ This workshop is intended for beginner R users. No previous experience in R or a
 
 ### Requirements
 
--   A laptop. You can opt to install R and RStudio on it (recommended if you plan to continue using R beyond the workshop), or you can use the online R programming environment provided by [Posit Cloud]()
+-   A laptop. You can opt to install R and RStudio on it (recommended if you plan to continue using R beyond the workshop), or you can use the online R programming environment provided by [Posit Cloud](https://posit.cloud/).
 
 ### When
 
