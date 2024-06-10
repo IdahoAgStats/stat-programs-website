@@ -8,8 +8,8 @@ type: page
 
 ### R
 
--   <a href="../r-for-ag-scientists/lessons/data-import.qmd" target="_blank">Data Import and manipulation</a>
--   [Data Import and Manipulation](https://github.com/IdahoAgStats/r-for-ag-scientists/blob/main/lessons/data-import.qmd)
+-   [Data Import and Manipulation](https://idahoagstats.github.io/r-for-ag-scientists/lessons/data-import.html)
+-   [Creating Plots in R](https://idahoagstats.github.io/r-for-ag-scientists/lessons/ggplotting.html)
 -   [What They Forgot to Teach You](https://imci-idaho.github.io/2022-03-01-WhatTheyForgot/) (about using R)
 -   [Rstats4Ag](https://rstats4ag.org/) (weed-science oriented)
 -   [Mixed models in R](https://m-clark.github.io/mixed-models-with-R/)
