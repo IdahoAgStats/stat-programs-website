@@ -8,6 +8,7 @@ type: page
 
 ### R
 
+-   [Data Import and Manipulation](https://idahoagstats.github.io/r-for-ag-scientists/lessons/data-import.html)
 -   [What They Forgot to Teach You](https://imci-idaho.github.io/2022-03-01-WhatTheyForgot/) (about using R)
 -   [Rstats4Ag](https://rstats4ag.org/) (weed-science oriented)
 -   [Mixed models in R](https://m-clark.github.io/mixed-models-with-R/)
