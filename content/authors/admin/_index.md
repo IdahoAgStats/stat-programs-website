@@ -1,7 +1,9 @@
 ---
-bio: Focused on Supporting Agricultural Research in and around Idaho. 
+title: Statistical Programs
+bio: Supporting Agricultural Research for Idaho
 education:
-email: 
+email:
+
 highlight_name: false
 interests:
 - agricultural statistics
@@ -11,23 +13,20 @@ interests:
 - experimental design
 - machine learning
 organizations:
-- name: University of Idaho
-  url: https://www.uidaho.edu/
+- name: UIdaho CALS
+  url: https://www.uidaho.edu/cals/idaho-agricultural-experiment-station/statistical-programs
 role: Statistical Consultation
 social:
-- icon: paper-plane
-  icon_pack: fas
-  link: /#contact
 - display:
     header: true
 - icon: info
   icon_pack: fas
-  link: https://www.uidaho.edu/cals/statistical-programs
+  link: https://www.uidaho.edu/cals/idaho-agricultural-experiment-station/statistical-programs
 - icon: github
   icon_pack: fab
   link: https://github.com/IdahoAgStats
 superuser: true
-title: Statistical Programs
+
 ---
 
 Statistical Programs is a unit located within the Idaho Agricultural Experimental Station serving the College of Agriculture and Life Sciences at the University of Idaho. 
