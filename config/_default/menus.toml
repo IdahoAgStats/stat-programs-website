@@ -35,10 +35,6 @@
   url = "talks"
   weight = 50
   
-[[main]]
-  name = "contact"
-  url = "#contact"
-  weight = 60
   
 [[main]]
   pre = "<i class='fa fa-rss'></i>"
