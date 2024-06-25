@@ -38,38 +38,20 @@
     <loc>/workshops/</loc>
     <lastmod>2024-04-09T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/categories/</loc>
-    <lastmod>2022-10-26T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/category/data-cleaning/</loc>
-    <lastmod>2022-10-26T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/post/data-cleaning-r/</loc>
-    <lastmod>2022-10-26T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/post/</loc>
-    <lastmod>2022-10-26T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/category/r/</loc>
-    <lastmod>2022-10-26T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/category/tidyverse/</loc>
-    <lastmod>2022-10-26T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/category/data-visualization/</loc>
-    <lastmod>2022-10-21T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/post/intro-to-ggplot/</loc>
-    <lastmod>2022-10-21T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>/authors/</loc>
     <lastmod>2022-06-23T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/post/p-values/</loc>
+    <loc>/categories/</loc>
+    <lastmod>2022-06-23T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/blog/p-values/</loc>
     <lastmod>2021-04-15T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/category/p-values/</loc>
     <lastmod>2021-04-15T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/blog/</loc>
+    <lastmod>2022-06-23T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/category/reproducible-research/</loc>
     <lastmod>2021-04-15T00:00:00+00:00</lastmod>
@@ -83,7 +65,7 @@
     <loc>/category/design/</loc>
     <lastmod>2021-04-15T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/post/experimental-design/</loc>
+    <loc>/blog/experimental-design/</loc>
     <lastmod>2021-04-15T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/category/experiment/</loc>
@@ -92,7 +74,7 @@
     <loc>/category/treatment/</loc>
     <lastmod>2021-04-15T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/post/sas-troubleshooting/</loc>
+    <loc>/blog/sas-troubleshooting/</loc>
     <lastmod>2021-04-15T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/category/documentation/</loc>
@@ -104,7 +86,7 @@
     <loc>/category/troubleshooting/</loc>
     <lastmod>2022-05-05T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/post/r-gui/</loc>
+    <loc>/blog/r-gui/</loc>
     <lastmod>2022-06-23T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/authors/jpiaskowski/</loc>
@@ -113,23 +95,11 @@
     <loc>/category/learning-r/</loc>
     <lastmod>2022-06-23T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/post/learning-r/</loc>
+    <loc>/category/r/</loc>
+    <lastmod>2022-06-23T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/blog/learning-r/</loc>
     <lastmod>2022-06-01T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/tag/cran/</loc>
-    <lastmod>2022-05-16T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/talks/</loc>
-    <lastmod>2022-05-16T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/tag/r/</loc>
-    <lastmod>2022-05-16T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/tags/</loc>
-    <lastmod>2022-05-16T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/talks/agstats-conference-2022/</loc>
-    <lastmod>2022-05-16T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/category/agriculture/</loc>
     <lastmod>2022-05-13T00:00:00+00:00</lastmod>
@@ -137,10 +107,10 @@
     <loc>/category/cran/</loc>
     <lastmod>2022-05-13T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/post/keeping-up-with-r/</loc>
+    <loc>/blog/keeping-up-with-r/</loc>
     <lastmod>2022-05-13T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/post/help-in-r/</loc>
+    <loc>/blog/help-in-r/</loc>
     <lastmod>2022-05-05T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/workshops/what-they-forgot/</loc>
@@ -149,49 +119,38 @@
     <loc>/category/functions/</loc>
     <lastmod>2021-11-17T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/post/writing-r-functions/</loc>
-    <lastmod>2021-11-17T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/category/anova/</loc>
-    <lastmod>2021-11-17T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/post/anova-in-r/</loc>
-    <lastmod>2021-11-17T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/category/linear-models/</loc>
+    <loc>/blog/writing-r-functions/</loc>
     <lastmod>2021-11-17T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/workshops/spatial-workshop/</loc>
     <lastmod>2021-11-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/post/getting-r-setup/</loc>
+    <loc>/blog/getting-r-setup/</loc>
     <lastmod>2021-04-15T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/post/reproducible-r/</loc>
+    <loc>/blog/reproducible-r/</loc>
+    <lastmod>2021-04-15T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/tag/r/</loc>
     <lastmod>2021-04-15T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/tag/reproducible-research/</loc>
     <lastmod>2021-04-15T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/tag/field-experiments/</loc>
-    <lastmod>2021-04-09T15:30:00+00:00</lastmod>
-  </url><url>
-    <loc>/talks/spatial-seminar-2021-04-09/</loc>
-    <lastmod>2021-04-09T15:30:00+00:00</lastmod>
-  </url><url>
-    <loc>/tag/spatial-statistics/</loc>
-    <lastmod>2021-04-09T15:30:00+00:00</lastmod>
-  </url><url>
-    <loc>/authors/admin/</loc>
-    <lastmod>2021-04-09T15:30:00+00:00</lastmod>
+    <loc>/tags/</loc>
+    <lastmod>2021-04-15T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/admin/</loc>
+  </url><url>
+    <loc>/stats/</loc>
   </url><url>
     <loc>/authors/hkaur/</loc>
   </url><url>
     <loc>/r/</loc>
   </url><url>
-    <loc>/tutorials/</loc>
+    <loc>/sas/</loc>
+  </url><url>
+    <loc>/authors/admin/</loc>
   </url><url>
     <loc>/authors/xdai/</loc>
   </url>
