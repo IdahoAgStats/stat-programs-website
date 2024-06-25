@@ -5,7 +5,7 @@ categories:
 - R
 - ANOVA
 - linear models
-draft: false
+draft: true
 date: "2021-11-17T00:00:00Z"
 image:
   caption: ""

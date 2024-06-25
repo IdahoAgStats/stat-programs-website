@@ -26,28 +26,28 @@ In time, you may find you truly love solving the various logic puzzles R puts be
 ## Resources for the Beginner R User 
 
 
-* [RStudio Primers](https://rstudio.cloud/learn/primers)   
-* [R for Excel Users](https://rstudio-conf-2020.github.io/r-for-excel/])    
-* [R for Reproducible Research](https://swcarpentry.github.io/r-novice-gapminder/)   
-* [Short Introduction to R](https://datacarpentry.org/R-ecology-lesson/01-intro-to-r.html)   
-* [YaRrr! The Pirate’s Guide to R](https://bookdown.org/ndphillips/YaRrr/)
-* [EdX short courses](https://www.edx.org/learn/r-programming)   
+- [RStudio Primers](https://rstudio.cloud/learn/primers)   
+- [R for Excel Users](https://rstudio-conf-2020.github.io/r-for-excel/])    
+- [R for Reproducible Research](https://swcarpentry.github.io/r-novice-gapminder/)   
+- [Short Introduction to R](https://datacarpentry.org/R-ecology-lesson/01-intro-to-r.html)   
+- [YaRrr! The Pirate’s Guide to R](https://bookdown.org/ndphillips/YaRrr/)
+- [EdX short courses](https://www.edx.org/learn/r-programming)   
 
 
 ## Resources for the Intermediate R User
 
-* [R 4 Data Science](https://r4ds.had.co.nz/)   
-* [What They Forgot to Teach You (about R)](https://rstats.wtf/)   
+- [R 4 Data Science](https://r4ds.had.co.nz/)   
+- [What They Forgot to Teach You (about R)](https://rstats.wtf/)   
 
 
 ## Miscellaneous very useful resources
 
-* [RStudio cheatsheets](https://www.rstudio.com/resources/cheatsheets/)   
-* [R Graphics Cookbook](https://r-graphics.org/) (a ggplot resource)   
-* [Rmarkdown: the Definitive Guide](https://bookdown.org/yihui/rmarkdown/)   
-* [Rweekly Blog](https://rweekly.org/) (great place to learn about updates to the R ecosystem)   
-* [R Studio Resources](https://education.rstudio.com/learn/beginner/) (there's so much here!)    
-* [RStudio YouTube Channel](https://www.youtube.com/c/RStudioPBC)   
-* [Happy Git with R](https://happygitwithr.com/)   
-* [Advanced R](https://adv-r.hadley.nz/) (book, it is rather advanced)   
+- [RStudio cheatsheets](https://www.rstudio.com/resources/cheatsheets/)   
+- [R Graphics Cookbook](https://r-graphics.org/) (a ggplot resource)   
+- [Rmarkdown: the Definitive Guide](https://bookdown.org/yihui/rmarkdown/)   
+- [Rweekly Blog](https://rweekly.org/) (great place to learn about updates to the R ecosystem)   
+- [R Studio Resources](https://education.rstudio.com/learn/beginner/) (there's so much here!)    
+- [RStudio YouTube Channel](https://www.youtube.com/c/RStudioPBC)   
+- [Happy Git with R](https://happygitwithr.com/)   
+- [Advanced R](https://adv-r.hadley.nz/) (book, it is rather advanced)   
 

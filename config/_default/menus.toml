@@ -3,48 +3,45 @@
 #     desired widget in your `content/home/` folder.
 #   The weight parameter defines the order that the links will appear in.
 
-#[[main]]
-#  name = "about"
-#  url = "#about"
-#  weight = 10
 
-[[main]]
-  name = "Posts"
-  url = "post"
-  weight = 20
-
-#[[main]]
-#  name = "Events"
-#  url = "events"
-#  weight = 30
 
 [[main]]
   name = "Tutorials"
+  parent = "Tutorials"
   url = "tutorials"
+  weight = 10
+  
+[[main]]
+  name = "R"
+  parent = "Tutorials"
+  url = "tutorials/r"
+  weight = 11
+  
+[[main]]
+  name = "SAS"
+  parent = "Tutorials"
+  url = "tutorials/sas"
+  weight = 12
+  
+[[main]]
+  name = "General Ag Stats"
+  parent = "Tutorials"
+  url = "tutorials/stats"
+  weight = 12
+
+[[main]]
+  name = "Blog"
+  url = "blog"
   weight = 30
   
 [[main]]
   name = "Workshops"
-  #parent = "Events"
   url = "workshops"
   weight = 40
-  
-[[main]]
-  name = "Talks"
-  #parent = "Events"
-  url = "talks"
-  weight = 50
-  
-  
+
 [[main]]
   pre = "<i class='fa fa-rss'></i>"
   url =  "index.xml"
   target="_blank"
   weight = 80
 
-# Link to a PDF of your resume/CV from the menu.
-# To enable, copy your resume/CV to `static/media/resume.pdf` and uncomment the lines below.
-# [[main]]
-#    name = "CV"
-#    url = "media/resume.pdf"
-#    weight = 70
