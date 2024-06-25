@@ -7,7 +7,6 @@
 
 [[main]]
   name = "Tutorials"
-  parent = "Tutorials"
   url = "tutorials"
   weight = 10
   
@@ -27,7 +26,7 @@
   name = "General Ag Stats"
   parent = "Tutorials"
   url = "tutorials/stats"
-  weight = 12
+  weight = 13
 
 [[main]]
   name = "Blog"

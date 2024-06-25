@@ -4,7 +4,7 @@ title: Workshops
 #   1 = List
 #   2 = Compact
 #   3 = Card
-view: 2
+view: 3
 # Optional header image (relative to `static/media/` folder).
 header:
   caption: ""
@@ -12,7 +12,11 @@ header:
 outputs: html
 ---
 
-There are no upcoming workshops at this time
+<br>
+
+*There are no upcoming workshops at this time.*
+
+<br>
 
 ### Previous Workshops
 

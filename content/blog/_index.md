@@ -2,7 +2,7 @@
 header:
   caption: ""
   image: ""
-title: Posts
+title: Blog Posts
 type: page
 ---
 

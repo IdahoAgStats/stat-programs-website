@@ -6,7 +6,7 @@ summary: "Carpentries-style introductory workshop to R for scientists"
 type: page
 ---
 
-#### *Registration Closed*
+#### *Registration has closed.*
  
 <br>
 

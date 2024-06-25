@@ -6,17 +6,15 @@ header:
 type: page
 ---
 
-### Tutorials
-
-#### Basics
+### Basics Tutorials
 
 -   [Data Import and Manipulation](https://idahoagstats.github.io/r-for-ag-scientists/lessons/data-import.html)
 -   [Creating Publication-Quality Plots in R](https://idahoagstats.github.io/r-for-ag-scientists/lessons/ggplotting.html)
 -   [How to Write an R Function](blog/writing-R-functions)
 
-#### Meta Issues
+### Meta Tutorials
 
--   [R installation and set-up](blog/getting-r-setup)
+-   [R installation and set-up](../../blog/getting-r-setup)
 -   [reproducible Research in R](blog/reproducible-R)
 -   [Finding Help When You're Stuck in R](blog/help-in-R)
 -   [Keeping up With Changes in R](blog/keeping-up-with-R)
