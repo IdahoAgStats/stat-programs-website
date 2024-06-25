@@ -6,7 +6,7 @@ summary: "Carpentries-style introductory workshop to R for scientists"
 type: page
 ---
 
-## *[Registration Open](https://urldefense.com/v3/__https:/forms.office.com/Pages/ResponsePage.aspx?id=Y2u8fpJXGUqyCwS4JgSIU8llQCXr4PVDl9MlRvtGgnZUNU1LWDFNRk1FMUxYOTdRNUhWSlRLOVQ4VS4u__;!!JYXjzlvb!mTlzpsdUE4njw8kE6SP1tyGVJKx6Oc269H7GgAdiJk2zbsAsRZIUJ98b-x0PPxCNLgzerUY-YG6Gx6D53o409hLDno4$)*
+#### *Registration Closed*
  
 <br>
 

@@ -12,7 +12,8 @@ type: book
 
 Sunday, November 7  
 9:00am - 4:00pm  
-Salt Palace Convention Center, 250D 
+Salt Palace Convention Center, 250D
+Salt Lake City, Utah
 
 ## What you will learn
 
