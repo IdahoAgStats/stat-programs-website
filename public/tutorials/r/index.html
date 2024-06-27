@@ -33,11 +33,10 @@
   
     
   
-  <meta name="description" content="Here are instructions for how check your R installation and install packages needed for the workshop.
-Check software versions Open R and run this code to check what version of R your system is running:" />
+  <meta name="description" content="Basics Tutorials  Data Import and Manipulation Creating Publication-Quality Plots in R How to Write an R Function  Meta Tutorials  R installation and set-up reproducible Research in R Finding Help When You&rsquo;re Stuck in R Keeping up With Changes in R  Additional Resources Agricultural Statistics  Rstats4Ag (weed-science oriented) Mixed models in R Data Science for Agriculture in R Mixed Models for Agriculture in R  General R  Tips for Learning R R GUIs RStudio cheatsheets R Graphics Cookbook (a ggplot resource) Rmarkdown: the Definitive Guide Rweekly Blog (great place to learn about updates to the R ecosystem) R Studio Resources (there&rsquo;s so much here!" />
 
   
-  <link rel="alternate" hreflang="en-us" href="/workshops/spatial-workshop/prep-work/" />
+  <link rel="alternate" hreflang="en-us" href="/tutorials/r/" />
 
   
 
@@ -274,7 +273,7 @@ Check software versions Open R and run this code to check what version of R your
   
 
   
-    <link rel="alternate" href="/workshops/spatial-workshop/prep-work/index.xml" type="application/rss+xml" title="Idaho Ag Stats" />
+    <link rel="alternate" href="/tutorials/r/index.xml" type="application/rss+xml" title="Idaho Ag Stats" />
   
 
   
@@ -284,7 +283,7 @@ Check software versions Open R and run this code to check what version of R your
   <link rel="icon" type="image/png" href="/media/icon_hu7ba84dbfc1f77034a85f055c8517ec9c_4951_32x32_fill_lanczos_center_2.png" />
   <link rel="apple-touch-icon" type="image/png" href="/media/icon_hu7ba84dbfc1f77034a85f055c8517ec9c_4951_180x180_fill_lanczos_center_2.png" />
 
-  <link rel="canonical" href="/workshops/spatial-workshop/prep-work/" />
+  <link rel="canonical" href="/tutorials/r/" />
 
   
   
@@ -301,19 +300,13 @@ Check software versions Open R and run this code to check what version of R your
   <meta property="twitter:card" content="summary" />
   
   <meta property="og:site_name" content="Idaho Ag Stats" />
-  <meta property="og:url" content="/workshops/spatial-workshop/prep-work/" />
-  <meta property="og:title" content="Computational Set-up | Idaho Ag Stats" />
-  <meta property="og:description" content="Here are instructions for how check your R installation and install packages needed for the workshop.
-Check software versions Open R and run this code to check what version of R your system is running:" /><meta property="og:image" content="/media/icon_hu7ba84dbfc1f77034a85f055c8517ec9c_4951_512x512_fill_lanczos_center_2.png" />
+  <meta property="og:url" content="/tutorials/r/" />
+  <meta property="og:title" content="R Tutorials &amp; Resources | Idaho Ag Stats" />
+  <meta property="og:description" content="Basics Tutorials  Data Import and Manipulation Creating Publication-Quality Plots in R How to Write an R Function  Meta Tutorials  R installation and set-up reproducible Research in R Finding Help When You&rsquo;re Stuck in R Keeping up With Changes in R  Additional Resources Agricultural Statistics  Rstats4Ag (weed-science oriented) Mixed models in R Data Science for Agriculture in R Mixed Models for Agriculture in R  General R  Tips for Learning R R GUIs RStudio cheatsheets R Graphics Cookbook (a ggplot resource) Rmarkdown: the Definitive Guide Rweekly Blog (great place to learn about updates to the R ecosystem) R Studio Resources (there&rsquo;s so much here!" /><meta property="og:image" content="/media/icon_hu7ba84dbfc1f77034a85f055c8517ec9c_4951_512x512_fill_lanczos_center_2.png" />
     <meta property="twitter:image" content="/media/icon_hu7ba84dbfc1f77034a85f055c8517ec9c_4951_512x512_fill_lanczos_center_2.png" /><meta property="og:locale" content="en-us" />
   
     
-      <meta
-        property="article:published_time"
-        content="2021-11-07T00:00:00&#43;00:00"
-      />
     
-    <meta property="article:modified_time" content="2021-11-07T00:00:00&#43;00:00">
   
 
   
@@ -326,15 +319,15 @@ Check software versions Open R and run this code to check what version of R your
 
   
 
-<link rel="alternate" type="application/rss+xml" href="/workshops/spatial-workshop/prep-work/index.xml" title="Idaho Ag Stats" />
+<link rel="alternate" type="application/rss+xml" href="/tutorials/r/index.xml" title="Idaho Ag Stats" />
 
 
 
-  <title>Computational Set-up | Idaho Ag Stats</title>
+  <title>R Tutorials &amp; Resources | Idaho Ag Stats</title>
 </head>
 
 
-<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   " data-wc-page-id="15841bfb95305ff58eb70b526b39d8a2" >
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   " data-wc-page-id="79f9b87c6510b8be881a90f2f0ab8d47" >
 
   
   
@@ -502,7 +495,7 @@ Check software versions Open R and run this code to check what version of R your
         
 
         <li class="nav-item">
-          <a class="nav-link  active" href="/workshops"><span>Workshops</span></a>
+          <a class="nav-link " href="/workshops"><span>Workshops</span></a>
         </li>
 
         
@@ -596,340 +589,260 @@ Check software versions Open R and run this code to check what version of R your
   </div>
 
   <div class="page-body">
-    
+    <article class="article">
+
+  
 
 
 
 
 
-<div class="container-fluid docs">
-  <div class="row flex-xl-nowrap">
-    <div class="col-12 col-md-3 col-xl-2 docs-sidebar">
-      <form class="docs-search d-flex align-items-center">
-  <button class="btn docs-toggle d-md-none p-0 mr-md-3 w-100" type="button" data-toggle="collapse" data-target="#docs-nav" aria-controls="docs-nav" aria-expanded="false" aria-label="Toggle section navigation">
-    <div class="d-flex">
-      <span class="d-md-none pl-1 flex-grow-1 text-left overflow-hidden">
-        
-          Spatial Statistics in Field Trials
-        
-      </span>
-      <span><i class="fas fa-chevron-down"></i></span>
-    </div>
-  </button>
 
-  
-  <button class="form-control sidebar-search js-search d-none d-md-flex">
-    <i class="fas fa-search pr-2"></i>
-    <span class="sidebar-search-text">Search...</span>
-    <span class="sidebar-search-shortcut">/</span>
-  </button>
-  
-</form>
 
-<nav class="collapse docs-links" id="docs-nav">
-  
-  
-  
-  
-  
+
+
+
+
+
   
 
   
   
-    
+  
+<div class="article-container pt-3">
+  <h1>R Tutorials &amp; Resources</h1>
 
-    
-      
-
-      <ul class="nav docs-sidenav">
-        <li><a href="/workshops/"><i class="fas fa-arrow-left pr-1"></i>Workshops</a></li>
-      </ul>
-
-      
-      
-        
-          
-        
-      
-
+  
 
   
     
-    
-    
-    
-      
-    
-    
-
-    
-      <div class="docs-toc-item">
-        <a class="docs-toc-link " href="/workshops/spatial-workshop/">Spatial Statistics in Field Trials</a>
-    
-      
-        <ul class="nav docs-sidenav">
-      
 
 
-  <li class="active"><a href="/workshops/spatial-workshop/prep-work/">Computational Set-up</a></li>
+<div class="article-metadata">
 
-
-
-  <li class=""><a href="/workshops/spatial-workshop/why-spatial/">Why Care about Spatial Variation?</a></li>
-
-
-
-  <li class=""><a href="/workshops/spatial-workshop/diagnosis/">Diagnosing Spatial Autocorrelation</a></li>
-
-
-
-  <li class=""><a href="/workshops/spatial-workshop/variograms/">Empirical Variograms</a></li>
-
-
-
-  <li class=""><a href="/workshops/spatial-workshop/correlated-error-models/">Linear Models with Correlated Errors</a></li>
-
-
-
-  <li class=""><a href="/workshops/spatial-workshop/trend-modelling/">Modelling Spatial Trends</a></li>
-
-
-
-  <li class=""><a href="/workshops/spatial-workshop/model-comparison/">Comparing Models</a></li>
-
-
-
-  <li class=""><a href="/workshops/spatial-workshop/augmented/">Augmented Designs</a></li>
-
-
-
-  <li class=""><a href="/workshops/spatial-workshop/conclusion/">Final thoughts</a></li>
-
-      
-        </ul>
-      
-    
-
-    
-      </div>
-    
-
-    
   
-</nav>
+  
 
-    </div>
+  
 
-    
-    
-    <div class="d-none d-xl-block col-xl-2 docs-toc">
-      <ul class="nav toc-top">
-        <li><a href="#" id="back_to_top" class="docs-toc-title">Contents</a></li>
-      </ul>
+  
 
-      <nav id="TableOfContents">
-  <ul>
-    <li>
-      <ul>
-        <li><a href="#check-software-versions">Check software versions</a></li>
-        <li><a href="#install-workshop-packages">Install workshop packages</a></li>
-        <li><a href="#library-information">Library Information</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav>
+  
 
-      
-    </div>
-    
-
-    <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 docs-content" role="main">
-
-      <article class="article">
-
-        <div class="docs-article-container">
-          
-            
-  <nav class="d-none d-md-flex" aria-label="breadcrumb">
-    <ol class="breadcrumb">
-      
+  
+  
+  
   
   
   
 
-  <li class="breadcrumb-item">
-    <a href="/">
-      
-        Home
-      
-    </a>
-  </li>
+  
+  
 
-
-  <li class="breadcrumb-item">
-    <a href="/workshops/">
-      
-        Workshops
-      
-    </a>
-  </li>
-
-
-  <li class="breadcrumb-item">
-    <a href="/workshops/spatial-workshop/">
-      
-        Spatial Statistics in Field Trials
-      
-    </a>
-  </li>
-
-
-      <li class="breadcrumb-item active" aria-current="page">
-        Computational Set-up
-      </li>
-    </ol>
-  </nav>
-
-
-          
-
-          <h1>Computational Set-up</h1>
-
-          <div class="article-style">
-            <p>
-  <i class="fab fa-r-project  pr-1 fa-fw"></i> Here are instructions for how check your R installation and install packages needed for the workshop.</p>
-<h3 id="check-software-versions">Check software versions</h3>
-<p>Open R and run this code to check what version of R your system is running:</p>
-<pre><code>R.Version()
-</code></pre>
-<p>If the version printed is not 4.0 or newer, please <a href="https://cran.r-project.org/" target="_blank" rel="noopener">upgrade R</a>.</p>
-<p><em>This step is not required if you do not use RStudio.</em> Open RStudio and run this code to check what version of RStudio is installed on your system:</p>
-<pre><code>rstudioapi::versionInfo()
-</code></pre>
-<p>If the version printed is not 1.4 or newer, please <a href="https://www.rstudio.com/products/rstudio/download/" target="_blank" rel="noopener">upgrade Rstudio</a>.</p>
-<h3 id="install-workshop-packages">Install workshop packages</h3>
-<p>Open R and run this script:</p>
-<pre><code>package_list &lt;- c(&quot;dplyr&quot;, &quot;tidyr&quot;, &quot;purrr&quot;,       # for standard data manipulation
-                  &quot;ggplot2&quot;, &quot;desplot&quot;,            # for plotting
-                  &quot;nlme&quot;, &quot;lme4&quot;, &quot;emmeans&quot;,       # for linear modelling
-                  &quot;SpATS&quot;,                         # for fitting splines
-                  &quot;sp&quot;, &quot;spdep&quot;, &quot;gstat&quot;, &quot;spaMM&quot;, &quot;sf&quot;)    # for spatial modelling
-
-install.packages(package_list)
-sapply(package_list, require, character.only = TRUE)
-</code></pre>
-<div class="alert alert-warning">
-  <div>
-    Please note that the spatial packages may take awhile to install, and you may run into problems with the installation. Please attempt installation <em>in advance</em> of the workshop. The packages have all been successfully installed if after the <code>sapply(package_list, require, character.only = TRUE)</code> is run, the R output is &ldquo;TRUE&rdquo; for each package. If you have problems installing and/or loading any of these packages that you are not able to resolve, contact us so we can help you, preferably <em>before</em> the workshop.
-  </div>
 </div>
-<h3 id="library-information">Library Information</h3>
-<table>
-<thead>
-<tr>
-<th>package</th>
-<th>usage</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="https://dplyr.tidyverse.org/" target="_blank" rel="noopener">dplyr</a>, <a href="https://tidyr.tidyverse.org/" target="_blank" rel="noopener">tidyr</a>,</td>
-<td>standard data manipulation</td>
-</tr>
-<tr>
-<td><a href="https://purrr.tidyverse.org/" target="_blank" rel="noopener">purrr</a></td>
-<td>for repeat functions</td>
-</tr>
-<tr>
-<td><a href="https://CRAN.R-project.org/package=nlme" target="_blank" rel="noopener">nlme</a></td>
-<td>mixed linear models with options for spatial covariates</td>
-</tr>
-<tr>
-<td><a href="https://CRAN.R-project.org/package=lme4" target="_blank" rel="noopener">lme4</a></td>
-<td>mixed linear models with crossed random effects</td>
-</tr>
-<tr>
-<td><a href="https://ggplot2-book.org/" target="_blank" rel="noopener">ggplot</a>, <a href="http://kwstat.github.io/desplot/index.html" target="_blank" rel="noopener">desplot</a></td>
-<td>standard plotting packge and extension for plotting block outlines</td>
-</tr>
-<tr>
-<td><a href="https://CRAN.R-project.org/package=SpATS" target="_blank" rel="noopener">SpATS</a></td>
-<td>spline-fitting</td>
-</tr>
-<tr>
-<td><a href="https://CRAN.R-project.org/package=sp" target="_blank" rel="noopener">sp</a></td>
-<td>preparation of spatial objects</td>
-</tr>
-<tr>
-<td><a href="https://r-spatial.github.io/spdep/" target="_blank" rel="noopener">spdep</a></td>
-<td>Moran&rsquo;s I test</td>
-</tr>
-<tr>
-<td><a href="https://CRAN.R-project.org/package=gstat" target="_blank" rel="noopener">gstat</a></td>
-<td>for fitting empirical variogram</td>
-</tr>
-<tr>
-<td><a href="https://gitlab.mbb.univ-montp2.fr/francois/spamm-ref" target="_blank" rel="noopener">spaMM</a></td>
-<td>fits Matern covariances structure for mixed linear models</td>
-</tr>
-<tr>
-<td><a href="https://github.com/rvlenth/emmeans" target="_blank" rel="noopener">emmeans</a></td>
-<td>extracts marginal means from linear model objects</td>
-</tr>
-</tbody>
-</table>
 
-          </div>
-
-          
+    
 
 
 
-          
-          
-          <div class="article-widget">
-            
-<div class="post-nav">
-  
-  
-  
-  <div class="post-nav-item">
-    <div class="meta-nav">Next</div>
-    <a href="/workshops/spatial-workshop/why-spatial/" rel="prev">Why Care about Spatial Variation?</a>
-  </div>
+
+
   
 </div>
 
-          </div>
-          
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      <h3 id="basics-tutorials">Basics Tutorials</h3>
+<ul>
+<li><a href="https://idahoagstats.github.io/r-for-ag-scientists/lessons/data-import.html" target="_blank" rel="noopener">Data Import and Manipulation</a></li>
+<li><a href="https://idahoagstats.github.io/r-for-ag-scientists/lessons/ggplotting.html" target="_blank" rel="noopener">Creating Publication-Quality Plots in R</a></li>
+<li><a href="blog/writing-R-functions">How to Write an R Function</a></li>
+</ul>
+<h3 id="meta-tutorials">Meta Tutorials</h3>
+<ul>
+<li><a href="../../blog/getting-r-setup">R installation and set-up</a></li>
+<li><a href="blog/reproducible-R">reproducible Research in R</a></li>
+<li><a href="blog/help-in-R">Finding Help When You&rsquo;re Stuck in R</a></li>
+<li><a href="blog/keeping-up-with-R">Keeping up With Changes in R</a></li>
+</ul>
+<h3 id="additional-resources">Additional Resources</h3>
+<h4 id="agricultural-statistics">Agricultural Statistics</h4>
+<ul>
+<li><a href="https://rstats4ag.org/" target="_blank" rel="noopener">Rstats4Ag</a> (weed-science oriented)</li>
+<li><a href="https://m-clark.github.io/mixed-models-with-R/" target="_blank" rel="noopener">Mixed models in R</a></li>
+<li><a href="https://schmidtpaul.github.io/DSFAIR/" target="_blank" rel="noopener">Data Science for Agriculture in R</a></li>
+<li><a href="https://schmidtpaul.github.io/MMFAIR/" target="_blank" rel="noopener">Mixed Models for Agriculture in R</a></li>
+</ul>
+<h4 id="general-r">General R</h4>
+<ul>
+<li><a href="blog/learning-R">Tips for Learning R</a></li>
+<li><a href="blog/r-gui">R GUIs</a></li>
+<li><a href="https://www.rstudio.com/resources/cheatsheets/" target="_blank" rel="noopener">RStudio cheatsheets</a></li>
+<li><a href="https://r-graphics.org/" target="_blank" rel="noopener">R Graphics Cookbook</a> (a ggplot resource)</li>
+<li><a href="https://bookdown.org/yihui/rmarkdown/" target="_blank" rel="noopener">Rmarkdown: the Definitive Guide</a></li>
+<li><a href="https://rweekly.org/" target="_blank" rel="noopener">Rweekly Blog</a> (great place to learn about updates to the R ecosystem)</li>
+<li><a href="https://education.rstudio.com/learn/beginner/" target="_blank" rel="noopener">R Studio Resources</a> (there&rsquo;s so much here!)</li>
+<li><a href="https://www.youtube.com/c/RStudioPBC" target="_blank" rel="noopener">RStudio YouTube Channel</a></li>
+<li><a href="https://happygitwithr.com/" target="_blank" rel="noopener">Happy Git with R</a></li>
+<li><a href="https://adv-r.hadley.nz/" target="_blank" rel="noopener">Advanced R</a> (book, it is rather advanced)</li>
+</ul>
+
+    </div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+
+
+
+
+
+
+<style type="text/css" media="screen">
+    .revue-embed {
+    background: #FEF7DF;
+    /*font-family: 'Lato', sans-serif;
+    color: #FDFCFB;*/
+    text-align: center;
+    border-radius: 5px;
+}
+
+form {
+    width: 80%;
+    margin: 0.5em auto;
+}
+
+.revue-header {
+    font-size: 26px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding-top: 0.5em;
+    padding-bottom: 1em;
+}
+
+.revue-description {
+    font-size: 15px;
+    letter-spacing: 1px;
+    line-height: 1.3em;
+    margin: -2px 0 45px;
+}
+
+.revue-input {
+    display: flex;
+    align-items: center;
+    padding-bottom: 2em;
+}
+
+.button {
+    height: 44px;
+    border: none;
+}
+
+#member_email {
+    width: 65%;
+    font-size: 14px;
+    background: #FDFCFB;
+    font-family: inherit;
+    color: #737373; 
+    letter-spacing: 1px;
+    text-indent: 5%;
+    border-radius: 5px 0 0 5px;
+}
+
+#member_submit {
+    width: 35%;
+    height: 46px;
+    font-size: 14px;
+    background: #FB4646;
+    font-family: inherit;
+    font-weight: bold;
+    color: inherit;
+    letter-spacing: 1px;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    transition: background .3s ease-in-out;
+}
+
+#member_submit:hover {
+    background: #3AEBDA;
+}
+
+input:focus {
+    outline: none;
+    outline: 2px solid #3AEBDA;
+    box-shadow: 0 0 2px #3AEBDA;
+}
+
+</style>
+<link href='https://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+
+<div id="revue-embed" class="revue-embed">
+    <form action="https://buttondown.email/api/emails/embed-subscribe/Uidaho-stat-programs" 
+          method="post" 
+          id="revue-form" 
+          name="revue-form"
+          target="popupwindow" 
+          onsubmit="window.open('https://buttondown.email/Uidaho-stat-programs', 'popupwindow', 'scrollbars=yes,width=800,height=600');return true">
+      
+      
+      
+        <div class="revue-header">
+            <p>Sign up for our newsletter</p>
         </div>
-
-        <div class="body-footer">
-          <p>Last updated on Nov 7, 2021</p>
-
-          
-
-
-
-
-
-          
-
-
-
-
-          
-
-
-  
-  
-
-
-
+        <div class="revue-description">
+            <p>Agricultural statistical content focused on R and SAS, along with info about upcoming workshops, lectures, and trainings relevant to these topics</p>
+            <p>Sent quarterly (thereabouts)</p>
         </div>
+        <div class="revue-input">
+            <input type="email" class="button" name="email" id="member_email" placeholder="Your email address">
+            <input type="hidden" name="embed" value="1">
+            <input type="submit" class="button" id="member_submit" value="Subscribe"/>
+        </div>
+    
+</div>
 
-      </article>
 
+        
+
+
+  </div>
+</article>
+  </div>
+
+  <div class="page-footer">
+    
+    
+    <div class="container">
       <footer class="site-footer">
   
 
@@ -948,15 +861,7 @@ sapply(package_list, require, character.only = TRUE)
 
 </footer>
 
-
-    </main>
-  </div>
-</div>
-
-  </div>
-
-  <div class="page-footer">
-    
+    </div>
     
   </div>
 
@@ -1028,11 +933,6 @@ sapply(package_list, require, character.only = TRUE)
     
 
     
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.2.2/anchor.min.js" integrity="sha512-I7w3ZdSFzw5j3jU3ZkNikBNeIrl3i+hEuEdwNmqUJvwNcaBUNcijnP2gd9DtGlgVYDplfjGoD8vTNsID+lCjqg==" crossorigin="anonymous"></script>
-    <script>
-      anchors.add();
-    </script>
     
 
     

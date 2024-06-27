@@ -41,6 +41,9 @@
     <loc>/authors/</loc>
     <lastmod>2022-06-23T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>/blog/</loc>
+    <lastmod>2022-06-23T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>/categories/</loc>
     <lastmod>2022-06-23T00:00:00+00:00</lastmod>
   </url><url>
@@ -49,9 +52,6 @@
   </url><url>
     <loc>/category/p-values/</loc>
     <lastmod>2021-04-15T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/blog/</loc>
-    <lastmod>2022-06-23T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/category/reproducible-research/</loc>
     <lastmod>2021-04-15T00:00:00+00:00</lastmod>
@@ -142,15 +142,17 @@
   </url><url>
     <loc>/admin/</loc>
   </url><url>
-    <loc>/stats/</loc>
+    <loc>/tutorials/stats/</loc>
   </url><url>
     <loc>/authors/hkaur/</loc>
   </url><url>
-    <loc>/r/</loc>
+    <loc>/tutorials/r/</loc>
   </url><url>
-    <loc>/sas/</loc>
+    <loc>/tutorials/sas/</loc>
   </url><url>
     <loc>/authors/admin/</loc>
+  </url><url>
+    <loc>/tutorials/</loc>
   </url><url>
     <loc>/authors/xdai/</loc>
   </url>
