@@ -1,0 +1,8 @@
+
+assets/
+config/
+ignored_content/
+layouts/
+public/
+resources/
+themes/
