@@ -8,14 +8,19 @@ type: page
 
 ### Basics Tutorials
 
--   [Data Import and Manipulation](https://idahoagstats.github.io/r-for-ag-scientists/lessons/data-import.html)
+-   [Data Import](https://idahoagstats.github.io/r-for-ag-scientists/lessons/data-import.html)
+-   [Data Transformation & Wrangling](https://idahoagstats.github.io/r-for-ag-scientists/lessons/data-wrangling.html)
+-   [Exporting Data & Results](https://idahoagstats.github.io/r-for-ag-scientists/lessons/data-export.html)
+-   [Reshaping Data](https://idahoagstats.github.io/r-for-ag-scientists/lessons/reshaping.html) and [Merging Data](https://idahoagstats.github.io/r-for-ag-scientists/lessons/data-merging.html)
+-   [Data Aggregation and Summary](https://idahoagstats.github.io/r-for-ag-scientists/lessons/data-aggregation.html)
 -   [Creating Publication-Quality Plots in R](https://idahoagstats.github.io/r-for-ag-scientists/lessons/ggplotting.html)
 -   [How to Write an R Function](blog/writing-R-functions)
+-   [How to Repeat Operation in R](https://idahoagstats.github.io/r-for-ag-scientists/lessons/repeating-actions.html)
 
 ### Meta Tutorials
 
 -   [R installation and set-up](../../posts/getting-r-setup)
--   [reproducible Research in R](../../posts/reproducible-r)
+-   [Intro to Reproducible Research in R](../../posts/reproducible-r) and [More Resources](https://idahoagstats.github.io/r-for-ag-scientists/lessons/reproducible-research.html)
 -   [Finding Help When You're Stuck in R](../../posts/help-in-r)
 -   [Keeping up With Changes in R](../../posts/keeping-up-with-r)
 
