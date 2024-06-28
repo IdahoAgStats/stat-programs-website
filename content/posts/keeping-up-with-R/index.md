@@ -6,7 +6,7 @@ categories:
 - R
 - CRAN
 - agriculture
-draft: false
+draft: true
 date: "2022-05-13T00:00:00Z"
 image:
   caption: "Map of Australia as R package hex stickers; image credit: [Mitchell O'Hara-Wild](https://www.mitchelloharawild.com/blog/user-2018-feature-wall/)"

@@ -41,13 +41,13 @@
     <loc>/authors/</loc>
     <lastmod>2022-06-23T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/blog/</loc>
+    <loc>/posts/</loc>
     <lastmod>2022-06-23T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/categories/</loc>
     <lastmod>2022-06-23T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/blog/p-values/</loc>
+    <loc>/posts/p-values/</loc>
     <lastmod>2021-04-15T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/category/p-values/</loc>
@@ -65,7 +65,7 @@
     <loc>/category/design/</loc>
     <lastmod>2021-04-15T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/blog/experimental-design/</loc>
+    <loc>/posts/experimental-design/</loc>
     <lastmod>2021-04-15T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/category/experiment/</loc>
@@ -74,7 +74,7 @@
     <loc>/category/treatment/</loc>
     <lastmod>2021-04-15T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/blog/sas-troubleshooting/</loc>
+    <loc>/posts/sas-troubleshooting/</loc>
     <lastmod>2021-04-15T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/category/documentation/</loc>
@@ -86,7 +86,7 @@
     <loc>/category/troubleshooting/</loc>
     <lastmod>2022-05-05T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/blog/r-gui/</loc>
+    <loc>/posts/r-gui/</loc>
     <lastmod>2022-06-23T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/authors/jpiaskowski/</loc>
@@ -98,19 +98,10 @@
     <loc>/category/r/</loc>
     <lastmod>2022-06-23T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/blog/learning-r/</loc>
+    <loc>/posts/learning-r/</loc>
     <lastmod>2022-06-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/category/agriculture/</loc>
-    <lastmod>2022-05-13T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/category/cran/</loc>
-    <lastmod>2022-05-13T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/blog/keeping-up-with-r/</loc>
-    <lastmod>2022-05-13T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/blog/help-in-r/</loc>
+    <loc>/posts/help-in-r/</loc>
     <lastmod>2022-05-05T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/workshops/what-they-forgot/</loc>
@@ -119,16 +110,16 @@
     <loc>/category/functions/</loc>
     <lastmod>2021-11-17T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/blog/writing-r-functions/</loc>
+    <loc>/posts/writing-r-functions/</loc>
     <lastmod>2021-11-17T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/workshops/spatial-workshop/</loc>
     <lastmod>2021-11-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/blog/getting-r-setup/</loc>
+    <loc>/posts/getting-r-setup/</loc>
     <lastmod>2021-04-15T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/blog/reproducible-r/</loc>
+    <loc>/posts/reproducible-r/</loc>
     <lastmod>2021-04-15T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/tag/r/</loc>

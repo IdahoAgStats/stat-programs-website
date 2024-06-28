@@ -5,7 +5,7 @@ education:
 email:
 
 highlight_name: false
-interests:
+Consulting In:
 - agricultural statistics
 - open data & reproducible research
 - R programming
@@ -29,4 +29,14 @@ superuser: true
 
 ---
 
-Statistical Programs is a unit located within the Idaho Agricultural Experimental Station serving the College of Agriculture and Life Sciences at the University of Idaho. 
+Statistical Programs is a unit located within the Idaho Agricultural Experimental Station serving the College of Agriculture and Life Sciences at the University of Idaho.
+
+This resource is provided to address common problems we see in analysis of agricultural studies.
+
+**[Tutorials](../../tutorials)** is organized into three sections: R-focused, SAS-focused and general tutorials covering statistical topics. 
+
+**[Blog posts](../../posts)** are short essays on topical issues in agricultural and adjacent statistics. 
+
+**[Workshops](../../workshops)** includes course materials from previous workshops.  
+
+
