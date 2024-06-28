@@ -8,8 +8,8 @@ type: page
 
 ## Short Posts
 
-- [Notes on Experimental Design](blog/experimental-design)
-- [Some Comments on P-values](blog/p-values)
+- [Notes on Experimental Design](../../posts/experimental-design)
+- [Some Comments on P-values](../../posts/p-values)
 
 
 ## Comprehensive Tutorials

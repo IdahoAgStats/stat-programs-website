@@ -14,10 +14,10 @@ type: page
 
 ### Meta Tutorials
 
--   [R installation and set-up](../../blog/getting-r-setup)
--   [reproducible Research in R](blog/reproducible-R)
--   [Finding Help When You're Stuck in R](blog/help-in-R)
--   [Keeping up With Changes in R](blog/keeping-up-with-R)
+-   [R installation and set-up](../../posts/getting-r-setup)
+-   [reproducible Research in R](../../posts/reproducible-r)
+-   [Finding Help When You're Stuck in R](../../posts/help-in-r)
+-   [Keeping up With Changes in R](../../posts/keeping-up-with-r)
 
 ### Additional Resources 
 
@@ -30,8 +30,8 @@ type: page
 
 #### General R 
 
--  [Tips for Learning R](blog/learning-R)
--  [R GUIs](blog/r-gui)
+-  [Tips for Learning R](../../posts/learning-r)
+-  [R GUIs](../../posts/r-gui)
 -  [RStudio cheatsheets](https://www.rstudio.com/resources/cheatsheets/)   
 -  [R Graphics Cookbook](https://r-graphics.org/) (a ggplot resource)   
 -  [Rmarkdown: the Definitive Guide](https://bookdown.org/yihui/rmarkdown/)   

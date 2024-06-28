@@ -21,7 +21,7 @@ type: page
 -   <a href="../tutorials/sas-graphics.html" target="_blank">Graphics and Plotting</a>
 
 ### Meta
--   [Troubleshooting SAS Errors](blog/SAS-troubleshooting)
+-   [Troubleshooting SAS Errors](../../posts/sas-troubleshooting)
 
 ## Additional Resources
 
