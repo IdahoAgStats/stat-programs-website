@@ -21,7 +21,7 @@ type: page
 
 -   [R installation and set-up](../../posts/getting-r-setup)
 -   [Intro to Reproducible Research in R](../../posts/reproducible-r) and [More Resources](https://idahoagstats.github.io/r-for-ag-scientists/lessons/reproducible-research.html)
--   [Finding Help When You're Stuck in R](../../posts/help-in-r)
+-   [Finding Help When You're Stuck in R](../../posts/getting-help-in-r)
 -   [Keeping up With Changes in R](../../posts/keeping-up-with-r)
 
 ### Additional Resources 

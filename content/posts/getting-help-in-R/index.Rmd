@@ -1,5 +1,5 @@
 ---
-title: 'Finding Help in R'
+title: 'Finding Help for R Programmingh'
 authors:
 - jpiaskowski
 categories:
@@ -28,7 +28,9 @@ For most everyone, goggling an error message is the first step. This is not a ba
 
 ### Check the documentation!
 
-There's an ancient proverb about the importance of reading documentation: "you can spend 2 hours searching the web in order to save 15 minutes of reading the documentation." 
+> You can spend 2 hours searching the web in order to save 15 minutes of reading the documentation.
+> -- ancient data science proverb
+
 
 Package and function documentation can be very helpful. There are two main aspects of documentation:   
 
@@ -85,7 +87,7 @@ Over time, these messages will become comprehensible. It's still the same messag
 
 ### Specific places to ask for help
 
-Eventually, you may need to search forums or ask for help from kind strangers. If Google fails you, here are some other useful resources: 
+Eventually, you may need to search forums or ask for help from kind strangers. If Google or ChatGPT fails you, here are some other useful resources: 
 
 * [RStudio Community](https://community.rstudio.com/), a helpful forum that is only for R questions. It is run by RStudio and moderated (to an extent). This is one of the more useful sites to search or post on. 
 <br>  
