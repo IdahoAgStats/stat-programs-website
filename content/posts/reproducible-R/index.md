@@ -33,11 +33,13 @@ Step 1 is to disable automatic saving of your objects to a *.RData* file. This f
 usethis::use_blank_slate()
 ```
 
-You can read more about this function in its [documentation](https://usethis`.R`-lib.org/reference/use_blank_slate.html). 
+You can read more about this function in its [documentation](https://usethis.R-lib.org/reference/use_blank_slate.html). 
 
 You can disable this across all projects in R with the drop-down menu **Tools** --> *Global Options...* --> unclick '*Restore .RData into workspace at startup*' and set '*Save workspace to .rRData on exit*' to '*Never*'. 
 
-### Save all code you run in an *.R* or *.Rmd* file
+### Save all code you run in an *.R/.Rmd/.qmd* file
+
+*(Or another file type)*
 
 This is your source code. It's as real and as important as your input data. This file should capture a set of actions that can be repeated by another person (e.g. your PI, other colleagues yourself in the future) including packages loaded, files imported, all data manipulations and the outputs from these actions (e.g. visualisations, analytical outcomes). The idea is to capture your thought process and specific actions so this can be repeated in full. In most analyses, it is extremely likely* you will revisit a project and need to repeat what has already been done! Keeping a record of actions will save you considerable time because you will not have to attempt to recall and/or reconstruct exactly what you did in previous sessions.   
 
@@ -126,4 +128,4 @@ If you're familiar with **Packrat**, this is a replacement for that. This is par
 
 ### Final Comments
 
-There are many more resources and recommendations for conducting reproducible research in R. There an entire [CRAN task view](https://cran`.R`-project.org/web/views/ReproducibleResearch.html) devoted to this!
+There are many more resources and recommendations for conducting reproducible research in R. There an entire [CRAN task view](https://cran.R-project.org/web/views/ReproducibleResearch.html) devoted to this!

@@ -21,5 +21,3 @@ type: page
 -   [Basic Introduction to Linear models](https://lindeloev.github.io/tests-as-linear/#1_the_simplicity_underlying_common_tests)
 -   [USDA SCINet Learning Pathway](https://scinet.usda.gov/training/learningpath)
 
-
-

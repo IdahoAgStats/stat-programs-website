@@ -44,4 +44,5 @@ type: page
 -  [R Studio Resources](https://education.rstudio.com/learn/beginner/) (there's so much here!)    
 -  [RStudio YouTube Channel](https://www.youtube.com/c/RStudioPBC)   
 -  [Happy Git with R](https://happygitwithr.com/)   
--  [Advanced R](https://adv-r.hadley.nz/) (book, it is rather advanced)   
+-  [Advanced R](https://adv-r.hadley.nz/) (book, it is rather advanced)  
+- [Reproducible Research](https://ecorepsci.github.io/reproducible-science/): git, GitHub, SQL, dependency management in R, general R usage
