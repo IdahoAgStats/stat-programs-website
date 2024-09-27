@@ -8,6 +8,8 @@
     <loc>/workshops/spatial-workshop/why-spatial/</loc>
     <lastmod>2021-11-07T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>/authors/admin/</loc>
+  </url><url>
     <loc>/workshops/spatial-workshop/diagnosis/</loc>
     <lastmod>2021-11-01T00:00:00+00:00</lastmod>
   </url><url>
@@ -28,6 +30,8 @@
   </url><url>
     <loc>/workshops/spatial-workshop/conclusion/</loc>
     <lastmod>2021-11-07T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/authors/xdai/</loc>
   </url><url>
     <loc>/</loc>
     <lastmod>2024-04-09T00:00:00+00:00</lastmod>
@@ -141,10 +145,6 @@
   </url><url>
     <loc>/tutorials/sas/</loc>
   </url><url>
-    <loc>/authors/admin/</loc>
-  </url><url>
     <loc>/tutorials/</loc>
-  </url><url>
-    <loc>/authors/xdai/</loc>
   </url>
 </urlset>

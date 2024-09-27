@@ -26,7 +26,7 @@ social:
   icon_pack: fab
   link: https://github.com/IdahoAgStats
 superuser: true
-
+weight: 10
 ---
 
 Statistical Programs is a unit located within the Idaho Agricultural Experimental Station serving the College of Agriculture and Life Sciences at the University of Idaho.
