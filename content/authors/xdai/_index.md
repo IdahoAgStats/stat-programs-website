@@ -1,4 +1,5 @@
 ---
+Order: 5
 bio: I provide support in design, analysis and interpretation of research for faculty and students in agricultural sciences.My favorite work is to collaborate with researchers at the planning stage to design a study for specific research questions and outline corresponding statistical analysis steps.  
 education:
   courses:

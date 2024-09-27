@@ -1,4 +1,5 @@
 ---
+Order: 2
 bio: My research interests include plant genetics, spatial statistics and how to implement open science and reproducible research practices routinely. 
 education:
   courses:

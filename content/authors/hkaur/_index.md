@@ -1,4 +1,5 @@
 ---
+Order: 3
 bio: My research interests include agronomy, soil fertility, and applied statistics. 
 education:
   courses:

@@ -1,4 +1,5 @@
 ---
+Order: 4
 bio: My research interests include linear models, Bayesian Statistics, and nonlinear models.
 education:
   courses:

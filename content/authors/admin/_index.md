@@ -3,7 +3,7 @@ title: Statistical Programs
 bio: Supporting Agricultural Research for Idaho
 education:
 email:
-
+Order: 1
 highlight_name: false
 Consulting In:
 - agricultural statistics
