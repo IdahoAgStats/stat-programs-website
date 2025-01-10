@@ -135,13 +135,19 @@
   </url><url>
     <loc>/admin/</loc>
   </url><url>
+    <loc>/category/big-data/</loc>
+  </url><url>
     <loc>/tutorials/stats/</loc>
   </url><url>
     <loc>/authors/hkaur/</loc>
   </url><url>
+    <loc>/category/parallel-computing/</loc>
+  </url><url>
     <loc>/tutorials/r/</loc>
   </url><url>
     <loc>/tutorials/sas/</loc>
+  </url><url>
+    <loc>/posts/big-data/</loc>
   </url><url>
     <loc>/tutorials/</loc>
   </url><url>

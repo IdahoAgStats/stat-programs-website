@@ -1,0 +1,15 @@
+
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>So, you think you have big data on Idaho Ag Stats</title>
+    <link>/posts/big-data/</link>
+    <description>Recent content in So, you think you have big data on Idaho Ag Stats</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>Copyright @ {year} by the [University of Idaho Statistical Programs](https://www.uidaho.edu/cals/statistical-programs). &lt;br&gt; Built with [Wowchemy](https://wowchemy.com/), a free open-source web builder.</copyright>
+    
+	    <atom:link href="/posts/big-data/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+  </channel>
+</rss>

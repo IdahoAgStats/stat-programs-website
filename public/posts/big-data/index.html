@@ -1,0 +1,1163 @@
+<!DOCTYPE html><html lang="en-us" >
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  
+  
+    <meta name="generator" content="Wowchemy 5.0.0-beta.3 for Hugo" />
+  
+
+  
+
+  
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Statistical Programs" />
+
+  
+  
+  
+    
+  
+  <meta name="description" content="Tips and Tricks for Handling Large Data Sets on a Home Computer" />
+
+  
+  <link rel="alternate" hreflang="en-us" href="/posts/big-data/" />
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+
+  
+  
+  
+    <meta name="theme-color" content="#1565c0" />
+  
+
+  
+  
+    
+    <script src="/js/mathjax-config.js"></script>
+  
+
+  
+  
+  
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.1/css/academicons.min.css" integrity="sha512-W0xM4mr6dEP9nREo7Z9z+9X70wytKvMGeDsj7ps2+xg5QPrEBXC8tAW1IFnzjR6eoJ90JmCnFzerQJTLzIEHjA==" crossorigin="anonymous">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha256-FMvZuGapsJLjouA6k7Eo2lusoAX9i0ShlWFG6qt7SLc=" crossorigin="anonymous">
+
+    
+    
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/github.min.css" crossorigin="anonymous" title="hl-light" media="print" onload="this.media='all'">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" media="print" onload="this.media='all'" disabled>
+        
+      
+    
+
+    
+    
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.css" integrity="sha512-1xoFisiGdy9nvho8EgXuXvnpR5GAMSjFwp40gSRE3NwdUdIMIKuPa7bqoUhLD0O/5tPNhteAsE5XyyMi5reQVA==" crossorigin="anonymous" media="print" onload="this.media='all'">
+    
+
+    
+
+    
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+  
+
+  
+  
+  
+    
+      
+      <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap" media="print" onload="this.media='all'">
+    
+  
+
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/wowchemy.003d2be57501b5669ca58ef75468ece2.css" />
+
+  
+
+
+
+  
+
+  
+
+  
+
+
+
+
+  
+  
+  
+
+  
+    <link rel="alternate" href="/posts/big-data/index.xml" type="application/rss+xml" title="Idaho Ag Stats" />
+  
+
+  
+    <link rel="manifest" href="/index.webmanifest" />
+  
+
+  <link rel="icon" type="image/png" href="/media/icon_hu7ba84dbfc1f77034a85f055c8517ec9c_4951_32x32_fill_lanczos_center_2.png" />
+  <link rel="apple-touch-icon" type="image/png" href="/media/icon_hu7ba84dbfc1f77034a85f055c8517ec9c_4951_180x180_fill_lanczos_center_2.png" />
+
+  <link rel="canonical" href="/posts/big-data/" />
+
+  
+  
+  
+  
+  
+  
+  
+  
+    
+  
+  
+  <meta property="twitter:card" content="summary_large_image" />
+  
+  <meta property="og:site_name" content="Idaho Ag Stats" />
+  <meta property="og:url" content="/posts/big-data/" />
+  <meta property="og:title" content="So, you think you have big data | Idaho Ag Stats" />
+  <meta property="og:description" content="Tips and Tricks for Handling Large Data Sets on a Home Computer" /><meta property="og:image" content="/posts/big-data/featured.jpg" />
+    <meta property="twitter:image" content="/posts/big-data/featured.jpg" /><meta property="og:locale" content="en-us" />
+  
+    
+    
+  
+
+  
+
+
+
+  
+
+  
+
+  
+
+<link rel="alternate" type="application/rss+xml" href="/posts/big-data/index.xml" title="Idaho Ag Stats" />
+
+
+
+  <title>So, you think you have big data | Idaho Ag Stats</title>
+</head>
+
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   " data-wc-page-id="0cddd76857a6b943d51db27d60d07326" >
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <script src="/js/wowchemy-init.min.eca9bbc7a71accd5ebd9eee0ff004132.js"></script>
+
+  
+
+
+<aside class="search-modal" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#" aria-label="Close"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search" class="form-control"
+        aria-label="Search...">
+        
+      </div>
+
+      
+      
+
+      
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+
+  <div class="page-header">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container-xl">
+
+    
+    <div class="d-none d-lg-inline-flex">
+      <a class="navbar-brand" href="/">Idaho Ag Stats</a>
+    </div>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+      <a class="navbar-brand" href="/">Idaho Ag Stats</a>
+    </div>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+        <li class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"><span>Tutorials</span><span class="caret"></span>
+          </a>
+          <div class="dropdown-menu">
+            
+              <a class="dropdown-item" href="/tutorials/r"><span>R</span></a>
+            
+              <a class="dropdown-item" href="/tutorials/sas"><span>SAS</span></a>
+            
+              <a class="dropdown-item" href="/tutorials/stats"><span>General Ag Stats</span></a>
+            
+          </div>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link  active" href="/posts"><span>Blog</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/workshops"><span>Workshops</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/index.xml"><i class='fa fa-rss'></i><span></span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+
+      
+      
+        
+          
+          <li class="nav-item d-none d-lg-inline-flex">
+            <a class="nav-link" href="/"  aria-label="">
+              <i class="fas fa-" aria-hidden="true"></i>
+            </a>
+          </li>
+        
+      
+
+      
+      
+      <li class="nav-item">
+        <a class="nav-link js-search" href="#" aria-label="Search"><i class="fas fa-search" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+      
+      <li class="nav-item dropdown theme-dropdown">
+        <a href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-label="Display preferences">
+          <i class="fas fa-moon" aria-hidden="true"></i>
+        </a>
+        <div class="dropdown-menu">
+          <a href="#" class="dropdown-item js-set-theme-light">
+            <span>Light</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-dark">
+            <span>Dark</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-auto">
+            <span>Automatic</span>
+          </a>
+        </div>
+      </li>
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  </div>
+
+  <div class="page-body">
+    <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+
+<div class="article-container pt-3">
+  <h1>So, you think you have big data</h1>
+
+  
+
+  
+
+
+<div class="article-metadata">
+
+  
+  
+  
+  
+  <div>
+    
+
+  <span >
+      <a href="/authors/jpiaskowski/">Julia Piaskowski</a></span>
+  </div>
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    Jan 1, 0001
+  </span>
+  
+
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/category/big-data/">big data</a>, <a href="/category/r/">R</a>, <a href="/category/parallel-computing/">parallel computing</a></span>
+  
+
+</div>
+
+  
+
+
+
+
+
+</div>
+
+
+<div class="article-header container featured-image-wrapper mt-4 mb-4" style="max-width: 1200px; max-height: 900px;">
+  <div style="position: relative">
+    <img src="/posts/big-data/featured_hu46e723612b3ac62c1f8c01f86e1e8b88_609774_1200x0_resize_q75_lanczos.jpg" alt="" class="featured-image">
+    
+  </div>
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      <p>I hear this <em>alot</em> from folks; they have data “so big” that they cannot use their desktop computer or even R for that matter. And perhaps they do have a large data set, which is a wonderful thing that will give them extensive analytical power. But computing power has grown quite a bit as well, as have the tools for working with large data sets (in this <a href="https://youtu.be/GELhdezYmP0?si=eWD_-SZ-NsP_T5F4" target="_blank" rel="noopener">video</a>, the speaker calls big data &ldquo;dead&rdquo;). We can often accomplish quite a bit using a standard desktop computer. If your computer can run Slack (a notorious memory hog), it can also probably analyze your large data set.</p>
+<p>The University of Idaho does have a <a href="https://researchcomputing.uidaho.edu/high-performance-computing/" target="_blank" rel="noopener">high powered computing resources</a>. These are powerful and useful, but there is a level of overhead to using that it is not always worth the effort. It takes time to learn, you have a script ready to go and then must submit the job through a <a href="https://arcca.github.io/slurm_advanced_topics/05-requesting-resources/index.html" target="_blank" rel="noopener">slurm</a> request, a cumbersome process that also requires you have a log in (that you must apply for) to authenticate into the system. All doable things, but it takes time - precious, valuable time we have in limited supply. And you still have your script ready and error-free, something you should do on a local system (i.e. your PC) anyways given the iterative nature of troubleshooting a new programming script.</p>
+<h3 id="tips-and-tricks-for-big-data">Tips and Tricks for Big Data</h3>
+<p>I have repeatedly pushed the limits of what my desktop installation of R can do, so I have a few ideas for how to make the most of your desktop computing system.</p>
+<ol>
+<li>
+<p>Use a data format that is efficient. CSV is simpler and more compact (for hard drive storage) than XLS or XLSX. Text files (.txt) are very compact! Also, be aware that just because something is slow to open in Excel does not mean it will be slow to import into R.</p>
+</li>
+<li>
+<p>Use packages that work well with larger data sets. The function <code>read_csv()</code> from <a href="https://readr.tidyverse.org/" target="_blank" rel="noopener">readr</a> is faster than <code>read.csv()</code>. <code>fread()</code> from <a href="https://rdatatable.gitlab.io/data.table/" target="_blank" rel="noopener">data.table</a> is honestly amazing at how fast it can read a file into R (and its complement <code>fwrite()</code> can likewise write an object to file with incredible alacrity).</p>
+</li>
+<li>
+<p>Consider saving data as R objects (e.g. .RData). These are high compressed formats that can be read back into R quickly and preserve all the formatting changes you may have made (e.g. if you have converted any variables to factors).This is a great timesaver if you have a data set that is the result of extensive pre-processing. Once the data set is processed, save it as an .RData object you can later load for downstream analysis.</p>
+</li>
+<li>
+<p>If you have really enormous data sets, consider converting it to a <a href="https://r4ds.hadley.nz/arrow" target="_blank" rel="noopener">parquet, arrow or duckdb</a> file. This falls into the “<a href="https://arrow-user2022.netlify.app/" target="_blank" rel="noopener">bigger than memory workflows</a>” toolbox. When R imports a file, it creates an (R-specific) object for the file contents that is held in your computer’s memory (RAM). A general rule of thumb is that you can use up to one-third of your computer’s physical memory on R processes and after that, your system will slow to a crawl. I have successfully used the <a href="https://arrow.apache.org/docs/r/" target="_blank" rel="noopener">arrow</a> package to wrangle a data set 10 million rows long on my desktop computer of middling power. The <a href="https://youtu.be/GELhdezYmP0?si=eWD_-SZ-NsP_T5F4" target="_blank" rel="noopener">video</a> referenced above also provides a general introduction to these tools and their advantages</p>
+</li>
+<li>
+<p>Get comfortable using R on the command line (that is, the terminal). You can directly call R scripts from a terminal to run a series of R commands including loading the data, analyzing it, and outputting the results to file. This can be faster than manually running each line of a code in an interactive R session. This is how you can convert things to parquet files and other tasks without the overhead of running a GUI like RStudio.</p>
+</li>
+<li>
+<p>For building scripts, use a reduced version of your target data set. This is helpful for troubleshooting code. Most often, a reduced data set is sufficient for developing and testing code. When it comes time to analyze the full data set, you can call your finalized script from the terminal.</p>
+</li>
+<li>
+<p>If you’re running an iterative process that has outputs you want to save from each iteration, you can write those results to file after each iteration rather than building one huge object that is written to file once the entire process is done. The standard function <code>write.table()</code> has an option to append results to the end of an existing table. This has helped me quite a few times! It has the added advantage of providing partial outputs even if your R process is interrupted and terminates early due to coding errors, power outages, etc.</p>
+</li>
+<li>
+<p>Take advantage of fast parallel procedures: the apply family: <code>lapply()</code>, <code>apply()</code>, <code>mclapply()</code>, and so on;  <a href="https://purrr.tidyverse.org/" target="_blank" rel="noopener">purrr</a> functions; and functions from the <a href="https://future.futureverse.org/" target="_blank" rel="noopener">futures</a> package. I happen to lovelovelove apply functions, but many folks find <strong>purrr</strong> functions to be incredibly handy (and they do handle post processing of the iterative outputs much better than apply).</p>
+</li>
+<li>
+<p>Consider using multiple computer cores. Reading up on the <a href="https://stat.ethz.ch/R-manual/R-devel/library/parallel/doc/parallel.pdf" target="_blank" rel="noopener">parallel package</a> can help with how to optimize your computer’s cores when using R.</p>
+</li>
+</ol>
+<p>Also, check out the <a href="https://CRAN.R-project.org/view=HighPerformanceComputing" target="_blank" rel="noopener">CRAN task view on high performance computing</a> for a comprehensive list of packages for maximizing computer performance when using R. There are a few dozen packages described there that can assist in a wide array of high performance computing tasks from paralellizing your operations to modelling applications specifically developed for very large data sets.</p>
+<p>There is more that can be done to increase the speed of R (e.g. code profiling), but the tips above are a great starting point and will probably resolve many of your problems. Items 1-3 will take you far, item 4 can be a lifesaver for large data sets and the rest are largely application specific (i.e. they help under certain circumstances).</p>
+
+    </div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+
+
+
+  
+  
+  
+  
+  
+  <div class="media author-card content-widget-hr">
+    
+      
+      <a href="/authors/jpiaskowski/"><img class="avatar mr-3 avatar-circle" src="/authors/jpiaskowski/avatar_hue4a77a7c1beaa41bc4aa3fc7c99a9d6f_6498082_270x270_fill_lanczos_center_2.png" alt="Julia Piaskowski"></a>
+    
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="/authors/jpiaskowski/">Julia Piaskowski</a></h5>
+      <h6 class="card-subtitle">Statistician</h6>
+      <p class="card-text">My research interests include plant genetics, spatial statistics and how to implement open science and reproducible research practices routinely.</p>
+      <ul class="network-icon" aria-hidden="true">
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/#contact" >
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://twitter.com/SeedsandBreeds" target="_blank" rel="noopener">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://scholar.google.com/citations?user=PMN2WZEAAAAJ" target="_blank" rel="noopener">
+        <i class="fas fa-graduation-cap"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://github.com/jpiaskowski" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://www.linkedin.com/in/julia-piaskowski-4623145a" target="_blank" rel="noopener">
+        <i class="fab fa-linkedin"></i>
+      </a>
+    </li>
+  
+</ul>
+
+    </div>
+  </div>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+
+
+
+
+
+
+<style type="text/css" media="screen">
+    .revue-embed {
+    background: #FEF7DF;
+    /*font-family: 'Lato', sans-serif;
+    color: #FDFCFB;*/
+    text-align: center;
+    border-radius: 5px;
+}
+
+form {
+    width: 80%;
+    margin: 0.5em auto;
+}
+
+.revue-header {
+    font-size: 26px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding-top: 0.5em;
+    padding-bottom: 1em;
+}
+
+.revue-description {
+    font-size: 15px;
+    letter-spacing: 1px;
+    line-height: 1.3em;
+    margin: -2px 0 45px;
+}
+
+.revue-input {
+    display: flex;
+    align-items: center;
+    padding-bottom: 2em;
+}
+
+.button {
+    height: 44px;
+    border: none;
+}
+
+#member_email {
+    width: 65%;
+    font-size: 14px;
+    background: #FDFCFB;
+    font-family: inherit;
+    color: #737373; 
+    letter-spacing: 1px;
+    text-indent: 5%;
+    border-radius: 5px 0 0 5px;
+}
+
+#member_submit {
+    width: 35%;
+    height: 46px;
+    font-size: 14px;
+    background: #FB4646;
+    font-family: inherit;
+    font-weight: bold;
+    color: inherit;
+    letter-spacing: 1px;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    transition: background .3s ease-in-out;
+}
+
+#member_submit:hover {
+    background: #3AEBDA;
+}
+
+input:focus {
+    outline: none;
+    outline: 2px solid #3AEBDA;
+    box-shadow: 0 0 2px #3AEBDA;
+}
+
+</style>
+<link href='https://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+
+<div id="revue-embed" class="revue-embed">
+    <form action="https://buttondown.email/api/emails/embed-subscribe/Uidaho-stat-programs" 
+          method="post" 
+          id="revue-form" 
+          name="revue-form"
+          target="popupwindow" 
+          onsubmit="window.open('https://buttondown.email/Uidaho-stat-programs', 'popupwindow', 'scrollbars=yes,width=800,height=600');return true">
+      
+      
+      
+        <div class="revue-header">
+            <p>Sign up for our newsletter</p>
+        </div>
+        <div class="revue-description">
+            <p>Agricultural statistical content focused on R and SAS, along with info about upcoming workshops, lectures, and trainings relevant to these topics</p>
+            <p>Sent quarterly (thereabouts)</p>
+        </div>
+        <div class="revue-input">
+            <input type="email" class="button" name="email" id="member_email" placeholder="Your email address">
+            <input type="hidden" name="embed" value="1">
+            <input type="submit" class="button" id="member_submit" value="Subscribe"/>
+        </div>
+    
+</div>
+
+
+        
+
+
+  </div>
+</article>
+  </div>
+
+  <div class="page-footer">
+    
+    
+    <div class="container">
+      <footer class="site-footer">
+  
+
+  <p class="powered-by">
+    Copyright @ 2025 by the <a href="https://www.uidaho.edu/cals/statistical-programs">University of Idaho Statistical Programs</a>. <br> Built with <a href="https://wowchemy.com/">Wowchemy</a>, a free open-source web builder.
+  </p>
+
+  
+  
+
+
+
+
+
+
+
+</footer>
+
+    </div>
+    
+  </div>
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+      
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/instant.page/5.1.0/instantpage.min.js" integrity="sha512-1+qUtKoh9XZW7j+6LhRMAyOrgSQKenQ4mluTR+cvxXjP1Z54RxZuzstR/H9kgPXQsVB8IW7DMDFUJpzLjvhGSQ==" crossorigin="anonymous"></script>
+
+      
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      
+
+      
+      
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.8.4/mermaid.min.js" integrity="sha512-as1BF4+iHZ3BVO6LLDQ7zrbvTXM+c/1iZ1qII/c3c4L8Rn5tHLpFUtpaEtBNS92f+xGsCzsD7b62XP3XYap6oA==" crossorigin="anonymous" title="mermaid"></script>
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/highlight.min.js" integrity="sha512-TDKKr+IvoqZnPzc3l35hdjpHD0m+b2EC2SrLEgKDRWpxf2rFCxemkgvJ5kfU48ip+Y+m2XVKyOCD85ybtlZDmw==" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/r.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/python.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/latex.min.js"></script>
+        
+      
+
+    
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.js" integrity="sha512-SeiQaaDh73yrb56sTW/RgVdi/mMqNeM2oBwubFHagc5BkixSpP1fvqF47mKzPGWYSSy4RwbBunrJBQ4Co8fRWA==" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+    
+      
+      <script id="search-hit-fuse-template" type="text/x-template">
+        <div class="search-hit" id="summary-{{key}}">
+          <div class="search-hit-content">
+            <div class="search-hit-name">
+              <a href="{{relpermalink}}">{{title}}</a>
+              <div class="article-metadata search-hit-type">{{type}}</div>
+              <p class="search-hit-description">{{snippet}}</p>
+            </div>
+          </div>
+        </div>
+      </script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+      
+    
+
+    
+    
+
+    
+    
+    
+    
+
+    <script src="/js/_vendor/bootstrap.bundle.min.96b79e4fd55cfeb144bda37cb9dee866.js"></script>
+
+    
+    
+      
+      
+      
+      
+      
+      
+      
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+      
+      
+    
+    
+    <script src="/en/js/wowchemy.min.e20609e6ad3f7fce339ee2e74f13682b.js"></script>
+
+    
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+
+
+
+</body>
+</html>
