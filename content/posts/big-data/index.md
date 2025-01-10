@@ -6,7 +6,7 @@ categories:
 - big data
 - R
 - parallel computing
-date: "2024-0110T00:00:00Z"
+date: "2025-0110T00:00:00Z"
 draft: false
 image:
   focal_point: ""
