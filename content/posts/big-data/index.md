@@ -13,7 +13,7 @@ image:
   placement: 2
   preview_only: false
 subtitle: 
-summary: "Tips and Tricks for Handling Large Data Sets on a Home Computer"
+summary: "Tips and tricks forhandling large data sets on a home computer"
 ---
 
 I hear this *alot* from folks: they have data “so big” that they cannot use their desktop computer or even R for that matter. And perhaps they do have a large data set, which is a wonderful thing that will give them extensive analytical power. But computing power has grown quite a bit as well, as have the tools for working with large data sets (in this [video](https://youtu.be/GELhdezYmP0?si=eWD_-SZ-NsP_T5F4), the speaker calls big data "dead"). We can often accomplish quite a bit using a standard desktop computer. If your computer can run Slack (a notorious memory hog), it can also probably analyze your large data set. 
