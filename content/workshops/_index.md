@@ -14,7 +14,12 @@ outputs: html
 
 <br>
 
-*There are no upcoming workshops at this time.*
+### Upcoming Workshops
+
+[**Introduction to Scientific Programming in R**](https://agstats.io/workshops/introduction-to-r/)    
+August 18-22, 2005    
+*in person*     
+Moscow, Idaho     
 
 <br>
 

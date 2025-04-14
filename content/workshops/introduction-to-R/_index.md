@@ -1,14 +1,16 @@
 ---
 title: "Introduction to Scientific Programming in R"
-date: "2024-04-09"
+date: "2025-04-14"
 linkTitle: Introduction to R
 summary: "Carpentries-style introductory workshop to R for scientists"
 type: page
 ---
 
-#### *Registration has closed.*
- 
-<br>
+<center>
+
+### [*Register Here*](https://forms.office.com/Pages/ResponsePage.aspx?id=Y2u8fpJXGUqyCwS4JgSIU4wu2zJ48y9EhXqQao7oTL1UOTI1T0VHMkVYSDJFVzhaUDAxMk5BOERPSS4u)
+
+</center>
 
 ### Workshop content
 
@@ -21,8 +23,6 @@ In this workshop, participants will learn practical R programming skills for sci
 -   navigate R help files
 -   plot data
 -   do repeat actions in R (time permitting)
-
-Check out the [course website](https://idahoagstats.github.io/r-for-ag-scientists/). 
 
 
 ### Who is this workshop for?
@@ -40,7 +40,7 @@ This workshop is intended for beginner R users. No previous experience in R or a
 
 ### When
 
-May 20-24, 2024\
+May 20-24, 2025\
 Monday - Friday
 9 am - 12 pm | 1 pm - 4 pm Pacific Time
 

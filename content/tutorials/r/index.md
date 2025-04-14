@@ -14,7 +14,7 @@ type: page
 -   [Reshaping Data](https://idahoagstats.github.io/r-for-ag-scientists/lessons/reshaping.html) and [Merging Data](https://idahoagstats.github.io/r-for-ag-scientists/lessons/data-merging.html)
 -   [Data Aggregation and Summary](https://idahoagstats.github.io/r-for-ag-scientists/lessons/data-aggregation.html)
 -   [Creating Publication-Quality Plots in R](https://idahoagstats.github.io/r-for-ag-scientists/lessons/ggplotting.html)
--   [How to Write an R Function](blog/writing-R-functions)
+-   [How to Write an R Function](https://agstats.io/posts/writing-r-functions/)
 -   [How to Repeat Operation in R](https://idahoagstats.github.io/r-for-ag-scientists/lessons/repeating-actions.html)
 
 ### Meta Tutorials
@@ -24,7 +24,7 @@ type: page
 -   [Finding Help When You're Stuck in R](../../posts/getting-help-in-r)
 -   [Keeping up With Changes in R](../../posts/keeping-up-with-r)
 
-### Additional Resources 
+### Additional Resources
 
 #### Agricultural Statistics
 
@@ -33,16 +33,16 @@ type: page
 -   [Data Science for Agriculture in R](https://schmidtpaul.github.io/DSFAIR/)
 -   [Mixed Models for Agriculture in R](https://schmidtpaul.github.io/MMFAIR/)
 
-#### General R 
+#### General R
 
--  [Tips for Learning R](../../posts/learning-r)
--  [R GUIs](../../posts/r-gui)
--  [RStudio cheatsheets](https://www.rstudio.com/resources/cheatsheets/)   
--  [R Graphics Cookbook](https://r-graphics.org/) (a ggplot resource)   
--  [Rmarkdown: the Definitive Guide](https://bookdown.org/yihui/rmarkdown/)   
--  [Rweekly Blog](https://rweekly.org/) (great place to learn about updates to the R ecosystem)   
--  [R Studio Resources](https://education.rstudio.com/learn/beginner/) (there's so much here!)    
--  [RStudio YouTube Channel](https://www.youtube.com/c/RStudioPBC)   
--  [Happy Git with R](https://happygitwithr.com/)   
--  [Advanced R](https://adv-r.hadley.nz/) (book, it is rather advanced)  
-- [Reproducible Research](https://ecorepsci.github.io/reproducible-science/): git, GitHub, SQL, dependency management in R, general R usage
+-   [Tips for Learning R](../../posts/learning-r)
+-   [R GUIs](../../posts/r-gui)
+-   [RStudio cheatsheets](https://www.rstudio.com/resources/cheatsheets/)  
+-   [R Graphics Cookbook](https://r-graphics.org/) (a ggplot resource)  
+-   [Rmarkdown: the Definitive Guide](https://bookdown.org/yihui/rmarkdown/)  
+-   [Rweekly Blog](https://rweekly.org/) (great place to learn about updates to the R ecosystem)  
+-   [R Studio Resources](https://education.rstudio.com/learn/beginner/) (there's so much here!)  
+-   [RStudio YouTube Channel](https://www.youtube.com/c/RStudioPBC)  
+-   [Happy Git with R](https://happygitwithr.com/)  
+-   [Advanced R](https://adv-r.hadley.nz/) (book, it is rather advanced)  
+-   [Reproducible Research](https://ecorepsci.github.io/reproducible-science/): git, GitHub, SQL, dependency management in R, general R usage
