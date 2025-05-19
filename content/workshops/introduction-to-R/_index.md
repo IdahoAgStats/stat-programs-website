@@ -20,10 +20,9 @@ In this workshop, participants will learn practical R programming skills for sci
 -   understand data types and object types
 -   filter, reshape, merge and manipulate your data
 -   mathematically transform data
--   navigate R help files
 -   plot data
--   do repeat actions in R (time permitting)
-
+-   navigate R help files
+-   use generative AI tools to assist in coding
 
 ### Who is this workshop for?
 
@@ -40,7 +39,7 @@ This workshop is intended for beginner R users. No previous experience in R or a
 
 ### When
 
-May 20-24, 2025\
+August 18-22, 2025\
 Monday - Friday
 9 am - 12 pm | 1 pm - 4 pm Pacific Time
 
