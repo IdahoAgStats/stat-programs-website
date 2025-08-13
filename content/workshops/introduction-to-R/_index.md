@@ -8,7 +8,9 @@ type: page
 
 <center>
 
-### [*Register Here*](https://forms.office.com/Pages/ResponsePage.aspx?id=Y2u8fpJXGUqyCwS4JgSIU4wu2zJ48y9EhXqQao7oTL1UOTI1T0VHMkVYSDJFVzhaUDAxMk5BOERPSS4u)
+### *Registration Closed*
+
+#### [Course Website](https://idahoagstats.github.io/r-for-ag-scientists/) 
 
 </center>
 
