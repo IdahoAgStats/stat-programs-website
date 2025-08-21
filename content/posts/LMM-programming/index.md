@@ -53,7 +53,7 @@ Here are the links of the sources on how to install these tools:
     programming questions.
     
     -   [ellmer](https://ellmer.tidyverse.org/)
-    -   [Gander](https://posit.co/blog/introducing-gander/)
+    -   [Gander](https://simonpcouch.github.io/gander/)
 
 
 ## Programming tasks that we can accomplish with AI tools
