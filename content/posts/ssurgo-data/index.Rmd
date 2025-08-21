@@ -1,0 +1,379 @@
+---
+title: A Practical Guide to Retrieving SSURGO Soil Data in R
+authors:
+  - skazemi
+categories:
+  - R
+  - Soil Data
+  - SSURGO
+draft: true
+date: "2025-06-06T00:00:00Z"
+image:
+  caption: ""
+  focal_point: ""
+lastMod: "2025-06-06T00:00:00Z"
+subtitle: How to query, process, and summarize soil data from SSURGO in R.
+summary: "This detailed tutorial walks through how to retrieve and summarize SSURGO soil data using spatial coordinates in R. It includes custom function writing and automation over multiple locations."
+tags: []
+---
+
+Working with agricultural data often requires accurate soil information. Instead of manually searching soil survey data, we can access the **SSURGO** (Soil Survey Geographic Database) through the `soilDB` package in R using spatial queries.
+
+This guide shows how to:
+- Query the SSURGO database for a specific point
+- Retrieve soil attributes like texture, bulk density, Soil series classification, Soil depth,soil organic matter and Water holding capacity 
+- Write a reusable function
+- Apply it to a whole dataset
+---
+
+
+
+### Required Packages
+
+We’ll need the following R packages installed and loaded:
+```{r setup, include=FALSE}
+library(FedData)
+library(dplyr)
+library(sf)
+library(readr)
+library(soilDB)
+```
+These libraries enable querying soil databases (soilDB), manipulating data (dplyr), and handling spatial formats (sf).
+
+
+#Step 1: Get Soil Data for a Single Point
+Start with a test location. We'll use latitude and longitude to generate a spatial point in Well-Known Text (WKT) format and query the SDA (Soil Data Access) API for its MUKEY — a key that uniquely identifies a soil map unit.
+```{r}
+# Coordinates for the example point
+lon <- -97.0
+lat <- 47.0
+my_point <- sprintf("POINT(%f %f)", lon, lat)
+
+# Get MUKEY (Map Unit Key)
+sql <- sprintf("SELECT mukey FROM SDA_Get_Mukey_from_intersection_with_WktWgs84('%s')", my_point)
+mukey_result <- SDA_query(sql)
+mukey <- mukey_result$mukey[1]
+print(mukey)
+```
+This code:
+- Formats the point as WKT (Well-Known Text)
+- Sends a SQL query to the Soil Data Access API
+- Extracts the Map Unit Key (`mukey`) for the location
+- What does mukey[1] mean?
+
+When we query the SSURGO database using spatial coordinates, the result may include more than one map unit (MUKEY) — especially if the point falls on the border of two or more soil map units. The result is returned as a data frame To keep things simple, we just select the first MUKEY using: 
+mukey <- mukey_result$mukey[1].
+
+
+
+#Step 2: Retrieve Soil Properties by MUKEY
+Once we have the `mukey`, we can extract soil attributes using another SQL query.
+```{r}
+sql_comp <- sprintf("
+  SELECT c.mukey, c.compname, c.comppct_r, ch.hzdept_r, ch.hzdepb_r,
+         ch.awc_r, ch.om_r, ch.dbthirdbar_r
+  FROM component c
+  INNER JOIN chorizon ch ON c.cokey = ch.cokey
+  WHERE c.mukey = '%s'", mukey)
+```
+Once we have the mukey, we can request detailed information about the soil properties associated with that map unit. This involves two steps: first, we write a SQL query to retrieve data from multiple SSURGO tables.
+
+component table (c):
+
+Holds general information about each soil component (e.g. name, percent of the map unit, key ID).
+
+compname: soil series name
+
+comppct_r: the percentage this component contributes to the map unit
+
+chorizon table (ch):
+
+Contains detailed data about individual soil horizons (layers) within each component.
+
+hzdept_r and hzdepb_r: top and bottom depths of each horizon
+
+awc_r: available water capacity (how much water the soil can store)
+
+om_r: organic matter content
+
+dbthirdbar_r: bulk density (mass per volume, dry weight)
+
+INNER JOIN ch ON c.cokey = ch.cokey:
+
+Links the component table to the horizon table using cokey, the component key.
+
+This allows us to pull horizon-level data for each component.
+
+WHERE c.mukey = '%s':
+
+Filters the results so we only get data for the specified map unit key (mukey).
+
+The result is a long data frame where each row represents a single horizon from a component within the selected map unit.
+
+
+```{r}
+soil_properties <- SDA_query(sql_comp)
+
+soil_summary <- soil_properties %>%
+  group_by(mukey) %>%
+  summarise(
+    soil_series = first(compname),
+    soil_depth_cm = max(hzdepb_r, na.rm = TRUE),
+    awc = round(mean(awc_r, na.rm = TRUE), 2),
+    organic_matter = round(mean(om_r, na.rm = TRUE), 2),
+    bulk_density = round(mean(dbthirdbar_r, na.rm = TRUE), 2),
+    .groups = "drop"
+  )
+
+print(soil_summary)
+```
+then we summarize the results in R to make them easier to interpret.
+
+group_by(mukey):
+
+Groups the data by map unit (though usually there's only one in this context).
+
+soil_series = first(compname):
+
+Uses the first component name as a representative "soil series."
+
+we could refine this by choosing the most dominant component (e.g., with the highest comppct_r), but here we keep it simple.
+
+soil_depth_cm = max(hzdepb_r):
+
+Calculates the total depth by finding the bottom of the deepest horizon.
+
+awc, organic_matter, bulk_density:
+
+These are averaged across all horizons to create a single summary value per map unit.
+
+round() is used to make the output cleaner (e.g., 1.47 instead of 1.472365).
+
+.groups = "drop":
+
+Ensures that the result is a flat data frame (not a grouped tibble).
+
+This step transforms multiple horizons into one easy-to-use row of summary metrics.
+
+#Step 3: Automate Soil Data Retrieval with a Custom Function 
+We can now write a custom function that can take any lat/lon and return a row of soil data, rather than repeating the same SSURGO query logic for every location manually. This makes it easy to retrieve soil data for many locations in a clean and reusable way.
+```{r}
+get_soil_info_from_coords <- function(trial_id, lon, lat) {
+  tryCatch({
+    wkt <- sprintf("POINT(%f %f)", lon, lat)
+
+    sql_mukey <- sprintf(
+      "SELECT mukey FROM SDA_Get_Mukey_from_intersection_with_WktWgs84('%s')", wkt
+    )
+    mukey_result <- SDA_query(sql_mukey)
+    if (nrow(mukey_result) == 0) return(NULL)
+
+    mukey <- mukey_result$mukey[1]
+
+    sql_comp <- sprintf("
+      SELECT c.mukey, c.compname, ch.chkey, ch.hzdept_r, ch.hzdepb_r,
+             ch.awc_r, ch.om_r, ch.dbthirdbar_r, tg.texture
+      FROM component c
+      INNER JOIN chorizon ch ON c.cokey = ch.cokey
+      LEFT JOIN chtexturegrp tg ON ch.chkey = tg.chkey
+      WHERE c.mukey = '%s'", mukey)
+
+    soil_props <- SDA_query(sql_comp)
+    if (nrow(soil_props) == 0) return(NULL)
+
+    surface_texture <- if ("texture" %in% names(soil_props)) {
+      soil_props %>%
+        filter(hzdept_r == min(hzdept_r, na.rm = TRUE)) %>%
+        pull(texture) %>% .[1]
+    } else { NA_character_ }
+
+    summarise(soil_props,
+      trial_id = trial_id,
+      soil_series = first(compname),
+      surface_texture = surface_texture,
+      soil_depth_cm = max(hzdepb_r, na.rm = TRUE),
+      awc = round(mean(awc_r, na.rm = TRUE), 2),
+      organic_matter = round(mean(om_r, na.rm = TRUE), 2),
+      bulk_density = round(mean(dbthirdbar_r, na.rm = TRUE), 2)
+    )
+  }, error = function(e) {
+    message(sprintf("Error processing trial %s: %s", trial_id, e$message))
+    return(NULL)
+  })
+}
+```
+
+How this function works:
+Inputs: It takes three inputs: a unique trial_id, and the geographic coordinates (lon, lat) for a sampling or trial location.
+
+WKT Conversion: It converts the lat/lon to a spatial format ("POINT(lon lat)") understood by the SSURGO API.
+
+MUKEY Query: It retrieves the map unit key (mukey) that corresponds to that location.
+
+Soil Properties Query: It fetches detailed soil horizon information for the mukey from SSURGO’s component and horizon tables.
+
+Surface Texture: If texture data exists, it extracts the surface horizon’s texture type (the shallowest layer).
+
+Summarization: It calculates summary statistics across horizons, including:
+
+Total soil depth (hzdepb_r)
+
+Mean available water capacity (awc_r)
+
+Organic matter content (om_r)
+
+Bulk density (dbthirdbar_r)
+
+Output: The function returns a single-row data frame with all relevant soil information for one location.
+
+Error Handling: If anything goes wrong (e.g., no mukey found, or failed query), it gracefully returns NULL and prints a helpful message.
+
+By encapsulating this entire workflow into a function, we make it easy to apply the same logic to many locations using a simple loop or lapply().
+
+
+
+# Step 4: Apply to Real Metadata(Dataset of Locations)
+Assume we have a dataset `my_data` with `trial_id`, `trial_latitude`, and `trial_longitude`.
+
+```{r}
+head(my_data)
+```
+  trial_id   trial_latitude   trial_longitude
+  T001       47.12            -97.45
+  T002       47.35            -97.20
+  ...
+
+
+We can now apply the get_soil_info_from_coords() function to each row:
+```{r}
+soil_results_list <- lapply(1:nrow(my_data), function(i) {
+  row <- my_data[i, ]
+  get_soil_info_from_coords(
+    trial_id = row$trial_id,
+    lon = row$trial_longitude,
+    lat = row$trial_latitude
+  )
+})
+
+# Combine all the rows of results
+soil_data <- do.call(rbind, soil_results_list)
+```
+
+# Step 5: Merge with Trial Data
+Now that we've gathered soil metrics for each location, merge it back with our original dataset:
+```{r}
+my_data_with_soil <- my_data %>%
+  left_join(soil_data, by = "trial_id")
+```
+Now our trial data includes matched soil metrics like texture, AWC, OM, and bulk density.
+
+
+# Summary
+
+This tutorial covered how to:
+- Query SSURGO using SDA and coordinates
+- Extract soil variables from SQL
+- Write a robust, reusable R function
+- Apply it to real-world trial data
+
+By wrapping the logic in a function, we save time and reduce errors in repeated data extraction tasks.
+
+This method is especially useful for agronomic field trials, ecological sampling, or geospatial modeling projects.
+---
+
+## Simulated Soil Data for Visualization
+ Just want to try the visualizations quickly, here’s a sample dataset with realistic values based on SSURGO outputs.
+```{r}
+soil_data <- tibble::tibble(
+  trial_id = c("T001", "T002", "T003", "T004", "T005"),
+  trial_latitude = c(47.12, 47.35, 47.55, 47.25, 47.45),
+  trial_longitude = c(-97.45, -97.20, -97.30, -97.15, -97.40),
+  soil_series = c("Barnes", "Fargo", "Bearden", "Barnes", "Fargo"),
+  surface_texture = c("silty clay loam", "clay loam", "loam", "silt loam", "clay loam"),
+  soil_depth_cm = c(150, 180, 120, 160, 170),
+  awc = c(0.15, 0.17, 0.13, 0.16, 0.18),
+  organic_matter = c(3.2, 4.0, 2.8, 3.5, 3.8),
+  bulk_density = c(1.3, 1.2, 1.4, 1.3, 1.25)
+)
+```
+
+# Step 6: Visualizing Simulated Soil Data
+
+
+#### 1. Barplot of Soil Series by Trial count
+```{r}
+ggplot(soil_data, aes(x = soil_series)) +
+  geom_bar(fill = "steelblue") +
+  labs(title = "Number of Trials per Soil Series",
+       x = "Soil Series",
+       y = "Trial Count") +
+  theme_minimal()
+
+```
+
+#### 2. Point Plot of AWC
+```{r}
+ggplot(soil_data, aes(x = trial_id, y = awc)) +
+  geom_point(size = 3, color = "steelblue") +
+  labs(title = "AWC by Trial ID", x = "Trial ID", y = "AWC (cm/cm)") +
+  theme_minimal()
+```
+
+#### 3. Boxplot of Soil Depth by Soil Series
+```{r}
+ggplot(soil_data, aes(x = soil_series, y = soil_depth_cm)) +
+  geom_boxplot() +
+  labs(title = "Soil Depth by Soil Series",
+       x = "Soil Series",
+       y = "Depth (cm)") +
+  theme_minimal()
+```
+#### 4. Boxplot of Organic Matter Distribution
+```{r}
+ggplot(soil_data, aes(x = soil_series, y = organic_matter)) +
+  geom_boxplot() +
+  labs(title = "Organic Matter by Soil Series",
+       x = "Soil Series",
+       y = "Organic Matter (%)") +
+  theme_minimal()
+```
+#### 5. Surface Texture Frequency
+```{r}
+soil_data %>%
+  count(surface_texture) %>%
+  ggplot(aes(x = reorder(surface_texture, -n), y = n)) +
+  geom_col(fill = "coral") +
+  labs(title = "Surface Texture Distribution",
+       x = "Surface Texture",
+       y = "Number of Trials") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+
+---
+
+# Step 6: Mapping Soil Variables
+
+Let’s map our soil data spatially to see where different conditions exist.
+
+#### 1. Map: Soil Depth at Trial Locations
+For this example, we’ll use the built-in maps package to draw a basic background map of a region. We can customize the region argument to fit our study area.
+```{r}
+library(maps)
+base_map <- map_data("state", region = c("north dakota", "minnesota"))
+
+ggplot() +
+  geom_polygon(data = base_map,
+               aes(x = long, y = lat, group = group),
+               fill = "white", color = "gray") +
+  geom_point(data = soil_data,
+             aes(x = trial_longitude, y = trial_latitude, color = soil_series),
+             size = 4, alpha = 0.8) +
+  coord_fixed(1.3) +
+  labs(title = "Trial Locations by Soil Series",
+       x = "Longitude", y = "Latitude") +
+  theme_minimal()
+```
+
+These visualizations help us explore how soil properties vary across geography and between trial sites.
