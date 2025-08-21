@@ -214,6 +214,6 @@ continue to evolve, tips or practices working today might not be effective in fu
 Overflow](https://stackoverflow.com/questions).
 
 
-*️*Important:*** Please make sure to follow the [UI guidelines](https://support.uidaho.edu/TDClient/40/Portal/KB/ArticleDet?ID=3464) for using AI.*
+**Important:** *Please make sure to follow the [UI guidelines](https://support.uidaho.edu/TDClient/40/Portal/KB/ArticleDet?ID=3464) for using AI.*
 
 
