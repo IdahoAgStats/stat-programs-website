@@ -1,0 +1,1313 @@
+<!DOCTYPE html><html lang="en-us" >
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  
+  
+  
+    <meta name="generator" content="Wowchemy 5.0.0-beta.3 for Hugo" />
+  
+
+  
+
+  
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Statistical Programs" />
+
+  
+  
+  
+    
+  
+  <meta name="description" content="Overview Generative AI tools specifically Large Language Models (LLMs) (e.g., ChatGPT, Claude, or GitHub Copilot) have become increasingly popular in the R programming world. However, the effectiveness of these tools is often questioned and can vary widely among users." />
+
+  
+  <link rel="alternate" hreflang="en-us" href="/posts/lmm-programming/" />
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+
+  
+  
+  
+    <meta name="theme-color" content="#1565c0" />
+  
+
+  
+  
+    
+    <script src="/js/mathjax-config.js"></script>
+  
+
+  
+  
+  
+  
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/academicons@1.9.1/css/academicons.min.css" integrity="sha512-W0xM4mr6dEP9nREo7Z9z+9X70wytKvMGeDsj7ps2+xg5QPrEBXC8tAW1IFnzjR6eoJ90JmCnFzerQJTLzIEHjA==" crossorigin="anonymous">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha256-FMvZuGapsJLjouA6k7Eo2lusoAX9i0ShlWFG6qt7SLc=" crossorigin="anonymous">
+
+    
+    
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/github.min.css" crossorigin="anonymous" title="hl-light" media="print" onload="this.media='all'">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" media="print" onload="this.media='all'" disabled>
+        
+      
+    
+
+    
+    
+    
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.css" integrity="sha512-1xoFisiGdy9nvho8EgXuXvnpR5GAMSjFwp40gSRE3NwdUdIMIKuPa7bqoUhLD0O/5tPNhteAsE5XyyMi5reQVA==" crossorigin="anonymous" media="print" onload="this.media='all'">
+    
+
+    
+
+    
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+  
+
+  
+  
+  
+    
+      
+      <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap" media="print" onload="this.media='all'">
+    
+  
+
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/wowchemy.003d2be57501b5669ca58ef75468ece2.css" />
+
+  
+
+
+
+  
+
+  
+
+  
+
+
+
+
+  
+  
+  
+
+  
+    <link rel="alternate" href="/posts/lmm-programming/index.xml" type="application/rss+xml" title="Idaho Ag Stats" />
+  
+
+  
+    <link rel="manifest" href="/index.webmanifest" />
+  
+
+  <link rel="icon" type="image/png" href="/media/icon_hu7ba84dbfc1f77034a85f055c8517ec9c_4951_32x32_fill_lanczos_center_2.png" />
+  <link rel="apple-touch-icon" type="image/png" href="/media/icon_hu7ba84dbfc1f77034a85f055c8517ec9c_4951_180x180_fill_lanczos_center_2.png" />
+
+  <link rel="canonical" href="/posts/lmm-programming/" />
+
+  
+  
+  
+  
+  
+  
+  
+  
+    
+  
+  
+  <meta property="twitter:card" content="summary_large_image" />
+  
+  <meta property="og:site_name" content="Idaho Ag Stats" />
+  <meta property="og:url" content="/posts/lmm-programming/" />
+  <meta property="og:title" content="Using Large Langugae Models in R Programming | Idaho Ag Stats" />
+  <meta property="og:description" content="Overview Generative AI tools specifically Large Language Models (LLMs) (e.g., ChatGPT, Claude, or GitHub Copilot) have become increasingly popular in the R programming world. However, the effectiveness of these tools is often questioned and can vary widely among users." /><meta property="og:image" content="/posts/lmm-programming/featured.jpg" />
+    <meta property="twitter:image" content="/posts/lmm-programming/featured.jpg" /><meta property="og:locale" content="en-us" />
+  
+    
+      <meta
+        property="article:published_time"
+        content="2025-08-21T00:00:00&#43;00:00"
+      />
+    
+    <meta property="article:modified_time" content="2025-08-21T00:00:00&#43;00:00">
+  
+
+  
+
+
+
+  
+
+  
+
+  
+
+<link rel="alternate" type="application/rss+xml" href="/posts/lmm-programming/index.xml" title="Idaho Ag Stats" />
+
+
+
+  <title>Using Large Langugae Models in R Programming | Idaho Ag Stats</title>
+</head>
+
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   " data-wc-page-id="c5eac46ac08a2669c4040da8dc7af14a" >
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <script src="/js/wowchemy-init.min.eca9bbc7a71accd5ebd9eee0ff004132.js"></script>
+
+  
+
+
+<aside class="search-modal" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#" aria-label="Close"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search" class="form-control"
+        aria-label="Search...">
+        
+      </div>
+
+      
+      
+
+      
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+
+  <div class="page-header">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container-xl">
+
+    
+    <div class="d-none d-lg-inline-flex">
+      <a class="navbar-brand" href="/">Idaho Ag Stats</a>
+    </div>
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+    <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+      <a class="navbar-brand" href="/">Idaho Ag Stats</a>
+    </div>
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+        <li class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"><span>Tutorials</span><span class="caret"></span>
+          </a>
+          <div class="dropdown-menu">
+            
+              <a class="dropdown-item" href="/tutorials/r"><span>R</span></a>
+            
+              <a class="dropdown-item" href="/tutorials/sas"><span>SAS</span></a>
+            
+              <a class="dropdown-item" href="/tutorials/stats"><span>General Ag Stats</span></a>
+            
+          </div>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link  active" href="/posts"><span>Blog</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/workshops"><span>Workshops</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+
+        
+        
+        
+        
+
+        
+          
+            
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/index.xml"><i class='fa fa-rss'></i><span></span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+
+      
+      
+        
+          
+          <li class="nav-item d-none d-lg-inline-flex">
+            <a class="nav-link" href="/"  aria-label="">
+              <i class="fas fa-" aria-hidden="true"></i>
+            </a>
+          </li>
+        
+      
+
+      
+      
+      <li class="nav-item">
+        <a class="nav-link js-search" href="#" aria-label="Search"><i class="fas fa-search" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+      
+      <li class="nav-item dropdown theme-dropdown">
+        <a href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-label="Display preferences">
+          <i class="fas fa-moon" aria-hidden="true"></i>
+        </a>
+        <div class="dropdown-menu">
+          <a href="#" class="dropdown-item js-set-theme-light">
+            <span>Light</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-dark">
+            <span>Dark</span>
+          </a>
+          <a href="#" class="dropdown-item js-set-theme-auto">
+            <span>Automatic</span>
+          </a>
+        </div>
+      </li>
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  </div>
+
+  <div class="page-body">
+    <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+
+<div class="article-container pt-3">
+  <h1>Using Large Langugae Models in R Programming</h1>
+
+  
+
+  
+
+
+<div class="article-metadata">
+
+  
+  
+  
+  
+  <div>
+    
+
+  <span >
+      <a href="/authors/hkaur/">Harpreet Kaur</a></span>
+  </div>
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    Aug 21, 2025
+  </span>
+  
+
+  
+
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/category/ai/">AI</a>, <a href="/category/programming/">programming</a>, <a href="/category/large-language-models/">large language models</a></span>
+  
+
+</div>
+
+  
+
+
+
+
+
+</div>
+
+
+<div class="article-header article-container featured-image-wrapper mt-4 mb-4" style="max-width: 720px; max-height: 611px;">
+  <div style="position: relative">
+    <img src="/posts/lmm-programming/featured_hu5459c0360c2b0cb7a147d2df0eb350ca_2062552_720x0_resize_q75_lanczos.jpg" alt="" class="featured-image">
+    <span class="article-header-caption">Image: Karsten Wuerth</span>
+  </div>
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      <h2 id="overview">Overview</h2>
+<p>Generative AI tools specifically <strong>Large Language Models (LLMs)</strong> (e.g., ChatGPT, Claude, or GitHub Copilot) have become increasingly popular in the R programming world. However, the effectiveness of these tools is often questioned and can vary widely among users.</p>
+<p>Everyone has their own opinion on how effective these tools are for R programming, based on their experiences. Some people find them incredibly helpful, while others think they are a waste of time. One’s experience with R programming, familiarity with AI tools, and the specific tasks they are trying to accomplish can greatly influence their perception of AI’s effectiveness.</p>
+<p><strong>Note:</strong>  <em>Please note that the knowledge base of these AI tools is unclear, and the underlying information lacks transparency. This could raise concerns about the quality of AI-generated responses, e.g., it might still generate answers using deprecated packages and functions.</em></p>
+<p>In this blog post, I will share my insights on using AI tools for R programming, including how to effectively write prompts, troubleshoot code, and best practices for leveraging AI assistance. The goal of this blog post is to help you with:</p>
+<ul>
+<li>AI tools for R programming</li>
+<li>Using AI for R programming
+<ul>
+<li>Generate R code</li>
+<li>R code explanation</li>
+<li>Troubleshooting R code</li>
+<li>R code optimization</li>
+</ul>
+</li>
+<li>Best practices</li>
+</ul>
+<h2 id="ai-tools-for-r-programming">AI tools for R programming</h2>
+<p>Common AI tools available for R programming include GitHub Copilot, Claude, OpenAI’s ChatGPT, or LLM add-in packages for RStudio (such as gander, ellmer). The ChatGPT or Claude are LLM-based chatbots and can be used as a standalone tool and GitHub Copilot is an add-in for RStudio IDE.</p>
+<p>Here are the links of the sources on how to install these tools:</p>
+<ul>
+<li>
+<p>GitHub Copilot: <a href="https://docs.posit.co/ide/user/ide/guide/tools/copilot.html" target="_blank" rel="noopener">Installation
+guide</a></p>
+<ul>
+<li>This is a great add-in AI tool for: live code suggestion, code
+completion, or generating an entire function based on the
+context of analysis.</li>
+</ul>
+</li>
+<li>
+<p>R packages for using LLM: These packages allows you to directly
+interact with LLMs from within RStudio, which can assist in
+programming questions.</p>
+<ul>
+<li><a href="https://ellmer.tidyverse.org/" target="_blank" rel="noopener">ellmer</a></li>
+<li><a href="https://simonpcouch.github.io/gander/" target="_blank" rel="noopener">Gander</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="programming-tasks-that-we-can-accomplish-with-ai-tools">Programming tasks that we can accomplish with AI tools</h2>
+<h3 id="generate-r-code">Generate R code</h3>
+<p>We can use these tools for generating code to perform specific tasks in R, including: data wrangling, statistical analysis, data visualization, and more. We can also look for help in generating specific functions, or entire scripts based on the our requirements. However, the clarity in writing prompts can significantly affect the response of AI tools.</p>
+<p>For example, using prompts like “create a plot in R” vs. “create a boxplot using ggplot2” can yield quite different results. Therefore, it’s crucial to utilize these tools for R programming with a clear action plan. In addition to that your choice of AI tool can also affect the output. Here, I have obtained quite different outputs from <a href="https://chatgpt.com/share/689bb1ab-78c4-8008-b07d-444c938a9368" target="_blank" rel="noopener">ChatGPT</a> and <a href="https://claude.ai/public/artifacts/bb1c6a07-8bf2-42ed-b1c4-84aa829a2d5d" target="_blank" rel="noopener">Claude</a> for the same prompt (‘create a plot in R’). We have obtained a detailed response from Claude with specific examples for different kinds of plots, while ChatGPT provided a more generic response with base R functions.</p>
+<h3 id="r-code-explanation-ai-tools">R code explanation AI tools</h3>
+<p>AI tools can be helpful in understanding R code syntax as we can obtain faster explanations for specific functions, packages, or their parameters. This can be particularly useful for new R users or when working with unfamiliar packages.</p>
+<p>Example:</p>
+<blockquote>
+<p>I am following an online <a href="https://bookdown.org/jgscott/DSGI/data-wrangling.html" target="_blank" rel="noopener">guide</a> for data wrangling (using the tidyverse package), and I’m confused about what the author is trying to achieve with a long loop of code. I pasted the code in ChatGPT and asked for an explanation of the code. Here’s a detailed answer for the code explanation line-by-line from <a href="https://chatgpt.com/share/689108db-7128-8008-b73a-812816507194" target="_blank" rel="noopener">ChatGPT</a>.</p>
+</blockquote>
+<h3 id="troubleshoot-r-code-with-ai-assistance">Troubleshoot R code with AI assistance</h3>
+<p>Often, we spent hours debugging R code by searching through package documentation or Stack Overflow. While these sources remain reliable, AI assistance can provide a faster explanation and solution of the error. The errors in R programming could be a simple error as a typo in a function name, or it could be a mispecification of the function arguments. The quickest way to figure out that error is: we can paste the error from R output and ask AI for the error explanation and solution to fix it or a suggestion for an alternative approach. AI tool can help you in troubleshooting R code by analyzing error messages, suggesting potential fixes, and providing explanations for common issues. But, remember that these tools cannot debug all kinds of errors,
+some errors require expert’s advice.</p>
+<h3 id="r-code-explanation">R code explanation</h3>
+<p>If you are new to R programming and not very familiar with R packages documentation, AI tools can be an excellent resource for understanding how to use specific functions and packages.</p>
+<p>Here’s an example prompt for using ChatGPT for R package and code explanation:</p>
+<blockquote>
+<p>explanation of functions in dplyr package for data wrangling</p>
+</blockquote>
+<p><a href="https://chatgpt.com/share/688a660b-ac24-8008-ad8b-9c6f3c33b8fd" target="_blank" rel="noopener">This</a> was the first response from ChatGPT.</p>
+<p>In addition to that, AI tools can also be used to understand how to use functions/packages in R, what parameters they take, and how to interpret the results. This can be especially useful when learning new packages.</p>
+<blockquote>
+<p><strong>Prompt</strong>: Can you explain how to use the <code>ggplot()</code> function in R to create a boxplot for different treatments? Please provide an example code and explain the parameters used in the function.</p>
+</blockquote>
+<p>Here’s an explanation of <code>ggplot()</code> function from <a href="https://chatgpt.com/share/6890e809-f000-8008-8822-02e47bf8f4dc" target="_blank" rel="noopener">ChatGPT</a>.</p>
+<p>Or, you can also take the output of the analysis and ask for the explanation of output and interpretation.</p>
+<h3 id="for-advanced-r-programming">For advanced R programming</h3>
+<p>If you’re a seasoned R programmer and want to improve your coding efficiency, you can benefit from AI assistance in several ways, such as, reproducible workflow, automate repetitive coding tasks, or code
+optimization.</p>
+<h2 id="best-practices-for-ai-assisted-r-programming">Best practices for AI assisted R programming</h2>
+<p>While these tools can be helpful for R programming tasks, the suggested code/packages should be reviewed carefully, especially for accuracy and appropriateness for contexts. The tool you are using may not always understand the context of your task and can provide inefficient or incorrect solutions.</p>
+<p>To ensure that you get the most out of AI tools for R programming, it’s important to follow some best practices:</p>
+<h3 id="know-your-ai-tool">Know your AI tool</h3>
+<p>As mentioned before, we are not very familiar with algorithms and the knowledge base of these tools. They vary widely based on the specific AI model, its training data, and how it interprets your prompts.</p>
+<p>Thus, it’s important to understand whether the response given by one tool is effective or not.</p>
+<p>Here’s an example of the output from same prompt with ChatGPT and GitHub
+Copilot:</p>
+<blockquote>
+<p><strong>Prompt</strong>: Create summary statistics for iris data</p>
+</blockquote>
+<p>Response in
+<a href="https://chatgpt.com/share/68912382-8068-8008-83e4-0edf51b811a0" target="_blank" rel="noopener">ChatGPT</a></p>
+<p>Output from GitHub Copilot:</p>
+<pre><code class="language-{r,">    # create summary statistics for iris data
+    # using the iris data set 
+    # # load the iris data set
+    data(iris)
+    # create a summary statistics function
+    summary_stats &lt;- function(data) {
+      summary_data &lt;- data.frame(
+        Mean = sapply(data[, -5], mean),
+        Median = sapply(data[, -5], median),
+        SD = sapply(data[, -5], sd),
+        Min = sapply(data[, -5], min),
+        Max = sapply(data[, -5], max)
+      )
+      return(summary_data)
+    }
+    # apply the summary statistics function to the iris data set
+    summary_iris &lt;- summary_stats(iris)
+    # print the summary statistics
+    print(summary_iris)
+
+                Mean Median        SD Min Max
+Sepal.Length 5.843333   5.80 0.8280661 4.3 7.9
+Sepal.Width  3.057333   3.00 0.4358663 2.0 4.4
+Petal.Length 3.758000   4.35 1.7652982 1.0 6.9
+Petal.Width  1.199333   1.30 0.7622377 0.1 2.5
+</code></pre>
+<p>Here, we can see that both tools provided a solution for the task we requested, but the output from GitHub Copilot is more structured and includes a step-wise approach.</p>
+<p>Before using AI tools for R programming, familiarize yourself with the specific tool you are using. Therefore, it’s important to understand the capabilities and limitations of these tools.</p>
+<h2 id="ai-trends">AI trends</h2>
+<p><code>print()</code> in R code is often suggested by AI tools. I don’t think we need it as many times AI suggests it.</p>
+<h3 id="optimize-prompts-for-r-programming-tasks">Optimize prompts for R programming tasks</h3>
+<p>When using AI tools for R programming, write clear and specific prompts to get the best results. Here are some tips for writing effective prompts:</p>
+<ul>
+<li>
+<p>Be clear and concise: se simple language to describe your programming task.</p>
+</li>
+<li>
+<p>Providing context, even as simple as &ldquo;use the dplyr package to filter data&rdquo;, can help in getting more successful suggestions.</p>
+</li>
+<li>
+<p>If you are aware of the desired outcome, include it in your prompt. But it’s not easy for new learners and it’s hard to articulate in prompts. Alternatively, if you’re unsure of the correct answer, continue refining the prompt until you achieve the desired results.</p>
+</li>
+<li>
+<p>Another potential trick is to start over a new chat. Every new prompt in the thread is analyzed in the context of previous prompts. If you’re struggling to get a desired response, try starting a new chat.</p>
+</li>
+</ul>
+<p>Here’s an example of bad, good, &amp; excellent prompts along with a response from ChatGPT:</p>
+<blockquote>
+<p><strong>Bad prompt</strong>: “Filter data in R”
+<a href="https://chatgpt.com/share/689cd9ba-1cd0-8008-b537-a38ba07824ef" target="_blank" rel="noopener">Response</a></p>
+</blockquote>
+<blockquote>
+<p><strong>Good prompt</strong>: “How to filter rows in a data frame where a column is greater than 10 in R?.”
+<a href="https://chatgpt.com/share/689cd92b-47c4-8008-af0a-a9a4d4abc380" target="_blank" rel="noopener">Response</a></p>
+</blockquote>
+<blockquote>
+<p><strong>Excellent prompt</strong>: “I have a data frame with columns ‘Name’, ‘Age’, &gt; and ‘Score’. How can I filter for rows where Age is over 30 and Score &gt; is less than 5 using dplyr package? Please provide a code example in R.”
+<a href="https://chatgpt.com/share/689cd96d-1440-8008-9cb5-f9e714833046" target="_blank" rel="noopener">Response</a></p>
+</blockquote>
+<h3 id="validate-your-output">Validate your output</h3>
+<p>It’s possible that AI tools can generate outdated R syntax or provide wrong package/function names. Constantly review and verify the generated codes and packages with R documentation. Here are the few common issues
+that can occur:</p>
+<ul>
+<li>
+<p>Simple errors: typos in the function names or incorrectly formatted ode (e.g., missing parentheses, commas, etc.</p>
+</li>
+<li>
+<p>Recommending deprecated packages/functions or using functions that are not available in the specified package.</p>
+</li>
+<li>
+<p>Issues with incorrect data types or structures: I have faced this multiple times. The AI tool you are using can not know about your data structure (unless you upload/explain it) and it can provide code that might not work. This can happen while working with a numeric data class when it should be factor/character class.</p>
+</li>
+</ul>
+<h2 id="use-ai-tools-as-an-assistant-not-a-replacement">Use AI tools as an assistant, not a replacement</h2>
+<p>Remember that these tools are supposed to assist in R programming tasks but not a replacement for one’s understanding of R. These tools can help in enhancing your skills and productivity, but don’t rely entirely on
+these for all your programming needs.</p>
+<p>Here are a few ways to verify the packages/functions:</p>
+<ul>
+<li>
+<p>Load the suggested package and run the function[1] and compare your output to the examples provided in the R documentation or textbook examples. This will help you in confirming the expected package functions and results.</p>
+</li>
+<li>
+<p>Run the output code line-by-line; by executing the generated response line-by-line, you will be able to inspect the functionality of each function and its arguments. In addition to that, you will also be able to identify errors as sometimes R silently ignores errors by providing a <code>warning</code> only. In that scenario, your code will still execute, but the outcome might not be valid. This typically happens while working on a statistical analysis.</p>
+</li>
+</ul>
+<h2 id="final-thoughts">Final thoughts</h2>
+<p>AI tools can be handy for R programming tasks, from generating code to explaining functions and troubleshooting issues. However, it’s important to use these tools effectively by writing clear prompts, validating the generated code, and understanding the limitations of the AI tools.</p>
+<p>Please note that this is not a definite guide for using AI tools for R programming, but rather a starting point for beginners who want to explore AI tools for R programming. Also, the landscape of AI tools
+continue to evolve, tips or practices working today might not be effective in future.</p>
+<blockquote>
+<p>Here are the best sources to check the R functions/packages: <a href="https://www.rdocumentation.org/" target="_blank" rel="noopener">R documentation</a>, <a href="https://cran.r-project.org/" target="_blank" rel="noopener">CRAN</a>, or <a href="https://stackoverflow.com/questions" target="_blank" rel="noopener">Stack
+Overflow</a>.</p>
+</blockquote>
+<p><strong>Important:</strong> <em>Please make sure to follow the <a href="https://support.uidaho.edu/TDClient/40/Portal/KB/ArticleDet?ID=3464" target="_blank" rel="noopener">UI guidelines</a> for using AI.</em></p>
+
+    </div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+
+
+
+  
+  
+  
+  
+  
+  <div class="media author-card content-widget-hr">
+    
+      
+      <a href="/authors/hkaur/"><img class="avatar mr-3 avatar-circle" src="/authors/hkaur/avatar_huf244f89a9acdd6c0a3af7c6073465941_1831664_270x270_fill_q75_lanczos_center.JPG" alt="Harpreet Kaur"></a>
+    
+
+    <div class="media-body">
+      <h5 class="card-title"><a href="/authors/hkaur/">Harpreet Kaur</a></h5>
+      <h6 class="card-subtitle">Statistician</h6>
+      <p class="card-text">My research interests include agronomy, soil fertility, and applied statistics.</p>
+      <ul class="network-icon" aria-hidden="true">
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/#contact" >
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="/" >
+        <i class="fas fa-"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://scholar.google.com/citations?user=OEz1hwQAAAAJ&amp;hl=en" target="_blank" rel="noopener">
+        <i class="fas fa-graduation-cap"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://github.com/Sidhuharp97" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://www.linkedin.com/in/harpreet-kaur-6b9888148/" target="_blank" rel="noopener">
+        <i class="fab fa-linkedin"></i>
+      </a>
+    </li>
+  
+</ul>
+
+    </div>
+  </div>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+
+
+
+
+
+
+<style type="text/css" media="screen">
+    .revue-embed {
+    background: #FEF7DF;
+    /*font-family: 'Lato', sans-serif;
+    color: #FDFCFB;*/
+    text-align: center;
+    border-radius: 5px;
+}
+
+form {
+    width: 80%;
+    margin: 0.5em auto;
+}
+
+.revue-header {
+    font-size: 26px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding-top: 0.5em;
+    padding-bottom: 1em;
+}
+
+.revue-description {
+    font-size: 15px;
+    letter-spacing: 1px;
+    line-height: 1.3em;
+    margin: -2px 0 45px;
+}
+
+.revue-input {
+    display: flex;
+    align-items: center;
+    padding-bottom: 2em;
+}
+
+.button {
+    height: 44px;
+    border: none;
+}
+
+#member_email {
+    width: 65%;
+    font-size: 14px;
+    background: #FDFCFB;
+    font-family: inherit;
+    color: #737373; 
+    letter-spacing: 1px;
+    text-indent: 5%;
+    border-radius: 5px 0 0 5px;
+}
+
+#member_submit {
+    width: 35%;
+    height: 46px;
+    font-size: 14px;
+    background: #FB4646;
+    font-family: inherit;
+    font-weight: bold;
+    color: inherit;
+    letter-spacing: 1px;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    transition: background .3s ease-in-out;
+}
+
+#member_submit:hover {
+    background: #3AEBDA;
+}
+
+input:focus {
+    outline: none;
+    outline: 2px solid #3AEBDA;
+    box-shadow: 0 0 2px #3AEBDA;
+}
+
+</style>
+<link href='https://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+
+<div id="revue-embed" class="revue-embed">
+    <form action="https://buttondown.email/api/emails/embed-subscribe/Uidaho-stat-programs" 
+          method="post" 
+          id="revue-form" 
+          name="revue-form"
+          target="popupwindow" 
+          onsubmit="window.open('https://buttondown.email/Uidaho-stat-programs', 'popupwindow', 'scrollbars=yes,width=800,height=600');return true">
+      
+      
+      
+        <div class="revue-header">
+            <p>Sign up for our newsletter</p>
+        </div>
+        <div class="revue-description">
+            <p>Agricultural statistical content focused on R and SAS, along with info about upcoming workshops, lectures, and trainings relevant to these topics</p>
+            <p>Sent quarterly (thereabouts)</p>
+            
+            <p>Not sure if you want to sign up? Read our 
+              <a href="https://buttondown.com/Uidaho-stat-programs/archive/">newsletter archive</a> </p>
+        </div>
+        <div class="revue-input">
+            <input type="email" class="button" name="email" id="member_email" placeholder="Your email address">
+            <input type="hidden" name="embed" value="1">
+            <input type="submit" class="button" id="member_submit" value="Subscribe"/>
+        </div>
+    
+</div>
+
+
+        
+
+
+  </div>
+</article>
+  </div>
+
+  <div class="page-footer">
+    
+    
+    <div class="container">
+      <footer class="site-footer">
+  
+
+  <p class="powered-by">
+    Copyright @ 2025 by the <a href="https://www.uidaho.edu/cals/statistical-programs">University of Idaho Statistical Programs</a>. <br> Built with <a href="https://wowchemy.com/">Wowchemy</a>, a free open-source web builder.
+  </p>
+
+  
+  
+
+
+
+
+
+
+
+</footer>
+
+    </div>
+    
+  </div>
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+      
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/instant.page/5.1.0/instantpage.min.js" integrity="sha512-1+qUtKoh9XZW7j+6LhRMAyOrgSQKenQ4mluTR+cvxXjP1Z54RxZuzstR/H9kgPXQsVB8IW7DMDFUJpzLjvhGSQ==" crossorigin="anonymous"></script>
+
+      
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      
+
+      
+      
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/8.8.4/mermaid.min.js" integrity="sha512-as1BF4+iHZ3BVO6LLDQ7zrbvTXM+c/1iZ1qII/c3c4L8Rn5tHLpFUtpaEtBNS92f+xGsCzsD7b62XP3XYap6oA==" crossorigin="anonymous" title="mermaid"></script>
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/highlight.min.js" integrity="sha512-TDKKr+IvoqZnPzc3l35hdjpHD0m+b2EC2SrLEgKDRWpxf2rFCxemkgvJ5kfU48ip+Y+m2XVKyOCD85ybtlZDmw==" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/r.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/python.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.2.0/languages/latex.min.js"></script>
+        
+      
+
+    
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.js" integrity="sha512-SeiQaaDh73yrb56sTW/RgVdi/mMqNeM2oBwubFHagc5BkixSpP1fvqF47mKzPGWYSSy4RwbBunrJBQ4Co8fRWA==" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+    
+      
+      <script id="search-hit-fuse-template" type="text/x-template">
+        <div class="search-hit" id="summary-{{key}}">
+          <div class="search-hit-content">
+            <div class="search-hit-name">
+              <a href="{{relpermalink}}">{{title}}</a>
+              <div class="article-metadata search-hit-type">{{type}}</div>
+              <p class="search-hit-description">{{snippet}}</p>
+            </div>
+          </div>
+        </div>
+      </script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+      
+    
+
+    
+    
+
+    
+    
+    
+    
+
+    <script src="/js/_vendor/bootstrap.bundle.min.f81d0a1705048649befc8b595e455a94.js"></script>
+
+    
+    
+      
+      
+      
+      
+      
+      
+      
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+      
+      
+    
+    
+    <script src="/en/js/wowchemy.min.e20609e6ad3f7fce339ee2e74f13682b.js"></script>
+
+    
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+
+
+
+</body>
+</html>

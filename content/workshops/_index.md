@@ -16,10 +16,7 @@ outputs: html
 
 ### Upcoming Workshops
 
-[**Introduction to Scientific Programming in R**](https://agstats.io/workshops/introduction-to-r/)    
-August 18-22, 2025    
-*in person*     
-Moscow, Idaho     
+There are no upcoming workshops scheduled at this time.     
 
 <br>
 
