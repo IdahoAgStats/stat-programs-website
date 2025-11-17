@@ -22,7 +22,7 @@ summary: "How to find help when you run into trouble using R"
 
 If you have been programming for any amount of time, you have learned that you are likely to encounter errors programming in R and resolving those coding errors can be challenging. 
 
-For most everyone, goggling an error message is the first step. This is not a bad choice as it often leads you to people who have already encountered the error and solved it. But, it can also lead you to a labyrinth of different, possible conflicting, possibly incomprehensible solutions. Additionally, it is not always the most time efficient method to solve a coding problem. 
+For most everyone, googling an error message is the first step. This is not a bad choice as it often leads you to people who have already encountered the error and solved it. But, it can also lead you to a labyrinth of different, possible conflicting, possibly incomprehensible solutions. Additionally, it is not always the most time efficient method to solve a coding problem. 
 
 ## Some Alternatives
 

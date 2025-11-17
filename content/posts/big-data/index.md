@@ -41,7 +41,7 @@ I have repeatedly pushed the limits of what my desktop installation of R can do,
 
 9. Consider using multiple computer cores. Reading up on the [parallel package](https://stat.ethz.ch/R-manual/R-devel/library/parallel/doc/parallel.pdf) can help with how to optimize your computer’s cores when using R.
 
-Also, check out the [CRAN task view on high performance computing](	https://CRAN.R-project.org/view=HighPerformanceComputing) for a comprehensive list of packages for maximizing computer performance when using R. There are a few dozen packages described there that can assist in a wide array of high performance computing tasks from paralellizing your operations to modelling applications specifically developed for very large data sets. 
+Also, check out the [CRAN task view on high performance computing](	https://CRAN.R-project.org/view=HighPerformanceComputing) for a comprehensive list of packages for maximizing computer performance when using R. There are a few dozen packages described there that can assist in a wide array of high performance computing tasks from parallelizing your operations to modelling applications specifically developed for very large data sets. 
 
 There is more that can be done to increase the speed of R (e.g. code profiling), but the tips above are a great starting point and will probably resolve many of your problems. Items 1-3 will take you far, item 4 can be a lifesaver for large data sets and the rest are largely application specific (i.e. they help under certain circumstances). 
 
