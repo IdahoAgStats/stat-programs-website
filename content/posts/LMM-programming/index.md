@@ -1,5 +1,5 @@
 ---
-title: Using Large Langugae Models in R Programming
+title: Using Large Language Models in R Programming
 authors:
   - hkaur
 categories:

@@ -1,9 +1,9 @@
 
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Using Large Langugae Models in R Programming on Idaho Ag Stats</title>
+    <title>Using Large Language Models in R Programming on Idaho Ag Stats</title>
     <link>/posts/lmm-programming/</link>
-    <description>Recent content in Using Large Langugae Models in R Programming on Idaho Ag Stats</description>
+    <description>Recent content in Using Large Language Models in R Programming on Idaho Ag Stats</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>Copyright @ {year} by the [University of Idaho Statistical Programs](https://www.uidaho.edu/cals/statistical-programs). &lt;br&gt; Built with [Wowchemy](https://wowchemy.com/), a free open-source web builder.</copyright>
