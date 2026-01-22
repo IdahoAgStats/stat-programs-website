@@ -6,7 +6,7 @@ categories:
   - AI
   - programming
   - large language models
-draft: false
+draft: true
 date: "2025-08-21T00:00:00Z"
 image:
   caption: "Image: Karsten Wuerth"
