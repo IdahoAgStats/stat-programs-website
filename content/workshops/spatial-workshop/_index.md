@@ -85,4 +85,4 @@ Please download these in advance so you can run the R and/or SAS scripts in the 
 
 {{< cta cta_text="begin the workshop" cta_link="why-spatial" >}}
 
-*This workshop is licensed under the Creative Commons Attribution-NonCommercial 4.0 International License. To view a copy of this license, visit http://creativecommons.org/licenses/by-nc/4.0/.*
+*This workshop is licensed under the [Creative Commons Attribution-NonCommercial 4.0 International License](http://creativecommons.org/licenses/by-nc/4.0/). 
