@@ -11,7 +11,7 @@ type: book
 
 ## Details
 
-🗓 Feb 23 | Mar 3 | Mar 10 | Mar 24        
+🗓 Feb 24 | Mar 3 | Mar 10 | Mar 24        
 🕓 Tuesday, 3-4 pm Pacific Time     
 ⎈ Zoom      
 
