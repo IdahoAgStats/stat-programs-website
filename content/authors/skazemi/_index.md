@@ -31,7 +31,7 @@ social:
   link: https://scholar.google.com/citations?user=rTBAL8gAAAAJ&hl=en
 - icon: linkedin
   icon_pack: fab
-  link: https://www.linkedin.com/jobs/view/4297019761/?trk=eml-email_job_alert_digest_01-primary_job_list-0-jobcard_body_15514240420&refId=92qK3yHzM5xebVURM23Kbg%3D%3D&trackingId=GpZdv2%2FDQ0oGYf4FbPjZyA%3D%3D
+  link: link: https://www.linkedin.com/in/samira-kazemi-b4689b336/
 
 superuser: false
 
