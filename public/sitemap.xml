@@ -31,8 +31,35 @@
     <loc>/workshops/spatial-workshop/conclusion/</loc>
     <lastmod>2021-11-07T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>/posts/retrieve-ssurgo-data/</loc>
+    <lastmod>2026-02-18T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/authors/</loc>
+    <lastmod>2026-02-18T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/posts/</loc>
+    <lastmod>2026-02-18T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/categories/</loc>
+    <lastmod>2026-02-18T00:00:00+00:00</lastmod>
+  </url><url>
     <loc>/</loc>
-    <lastmod>2025-04-14T00:00:00+00:00</lastmod>
+    <lastmod>2026-02-18T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/category/r/</loc>
+    <lastmod>2026-02-18T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/authors/skazemi/</loc>
+    <lastmod>2026-02-18T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/category/soil-data/</loc>
+    <lastmod>2026-02-18T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/category/spatial/</loc>
+    <lastmod>2026-02-18T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>/category/ssurgo/</loc>
+    <lastmod>2026-02-18T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/workshops/introduction-to-r/</loc>
     <lastmod>2025-04-14T00:00:00+00:00</lastmod>
@@ -40,25 +67,13 @@
     <loc>/workshops/</loc>
     <lastmod>2025-04-14T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>/authors/</loc>
-    <lastmod>2025-01-10T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>/category/big-data/</loc>
-    <lastmod>2025-01-10T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/posts/</loc>
-    <lastmod>2025-01-10T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/categories/</loc>
     <lastmod>2025-01-10T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/authors/jpiaskowski/</loc>
     <lastmod>2025-01-10T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/category/parallel-computing/</loc>
-    <lastmod>2025-01-10T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>/category/r/</loc>
     <lastmod>2025-01-10T00:00:00+00:00</lastmod>
   </url><url>
     <loc>/posts/big-data/</loc>
@@ -147,8 +162,6 @@
     <loc>/tutorials/stats/</loc>
   </url><url>
     <loc>/tutorials/r/</loc>
-  </url><url>
-    <loc>/authors/skazemi/</loc>
   </url><url>
     <loc>/tutorials/sas/</loc>
   </url><url>

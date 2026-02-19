@@ -31,7 +31,7 @@ social:
   link: https://scholar.google.com/citations?user=rTBAL8gAAAAJ&hl=en
 - icon: linkedin
   icon_pack: fab
-  link: link: https://www.linkedin.com/in/samira-kazemi-b4689b336/
+  link: https://www.linkedin.com/in/samira-kazemi-b4689b336/
 
 superuser: false
 
