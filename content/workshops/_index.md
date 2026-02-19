@@ -14,12 +14,6 @@ outputs: html
 
 <br>
 
-### Upcoming Workshops
 
-There are no upcoming workshops scheduled at this time.     
-
-<br>
-
-### Previous Workshops
 
 

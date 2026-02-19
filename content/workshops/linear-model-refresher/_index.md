@@ -1,18 +1,19 @@
 ---
-date: "Spring, 2026"
+date: "2026-02-23"
 linkTitle: 
 summary: "A 4-part webinar series reviewing  oft-forgotten foundational aspects of linear models: evaluating assumptions of normality and homoscedasticity, how to interpret standard model output and how to make optimal use of statistical inference."
 title: "The Missing Pieces of ANOVA, Regression and Other Linear Models"
 type: book
 ---
 
-{{< figure src="featured.jpg" >}}
+
+<img src="featured.jpg" >
 
 ## Details
 
-🗓 Feb 23 | Mar 3 | Mar 
-🕓 Tuesday, 3-4 pm Pacific Time
-⎈ Zoom
+🗓 Feb 23 | Mar 3 | Mar 10 | Mar 24        
+🕓 Tuesday, 3-4 pm Pacific Time     
+⎈ Zoom      
 
 
 ## What will be taught
@@ -38,27 +39,18 @@ Attendees are not expected to follow along with coding, but all scripts will be 
 ## Schedule
 
 | Date  |      Topic   | 
-|-------|:-------------|
-| Feb 24  |  Model Assumptions: Normality. *How do we identify this and what
-do we do when it’s violated? What can we do about outliers? An
-exploration of this and brief discussion of generalized linear
-models.* | 
-| Mar 3  |  Model Assumptions: Equal Variance. *How do we identify this and
-what do we do when it’s violated? How to identify and model
-heteroscedasticity and what to do it for repeated
-measures/longitudinal data.* |   
-| Mar 10 | Linear Model Outputs: What Does It All Mean? *Understanding
-how to read and interpret output from a linear model. This will cover
-different model types (ANOVA, regression, repeated measures).* | 
-| Mar 24 | Making Sense of Your Estimates. *Treatment effects are frequently
-the final outcomes of a statistical analysis. Let’s talk about how to
-leverage these results to answer your research objectives.* |
+|-----------|-------------|
+| Feb 24  |  Model Assumptions: Normality. *How do we identify this and what do we do when it’s violated? What can we do about outliers? An exploration of this and brief discussion of generalized linear models.* | 
+| Mar 3  |  Model Assumptions: Equal Variance. *How do we identify this and what do we do when it’s violated? How to identify and model heteroscedasticity and what to do it for repeated measures/longitudinal data.* |   
+| Mar 10 | Linear Model Outputs: What Does It All Mean? *Understanding how to read and interpret output from a linear model. This will cover different model types (ANOVA, regression, repeated measures).* | 
+| Mar 24 | Making Sense of Your Estimates. *Treatment effects are frequently the final outcomes of a statistical analysis. Let’s talk about how to leverage these results to answer your research objectives.* |
 
 
 
 ## Meet Your Instructor
 
-{{< mention "jpiaskowski" >}} is an agricultural statistician at the University of Idaho, Software Carpentry Certified Instructor and long-time R programmer. 
+{{< mention "jpiaskowski" >}} is an agricultural statistician at the University of Idaho, Software Carpentry Certified Instructor and a long-time R programmer. 
 
+-----------------------------------------------------
 
-*This workshop is licensed under the [Creative Commons Attribution-NonCommercial 4.0 International License](http://creativecommons.org/licenses/by-nc/4.0/). 
+*This workshop is licensed under the [Creative Commons Attribution-NonCommercial 4.0 International License](http://creativecommons.org/licenses/by-nc/4.0/).* 
