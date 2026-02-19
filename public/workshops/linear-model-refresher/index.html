@@ -33,10 +33,10 @@
   
     
   
-  <meta name="description" content="Educational resources supporting agricultural data and analysis" />
+  <meta name="description" content="A 4-part webinar series reviewing  oft-forgotten foundational aspects of linear models: evaluating assumptions of normality and homoscedasticity, how to interpret standard model output and how to make optimal use of statistical inference." />
 
   
-  <link rel="alternate" hreflang="en-us" href="/workshops/" />
+  <link rel="alternate" hreflang="en-us" href="/workshops/linear-model-refresher/" />
 
   
 
@@ -281,7 +281,7 @@
   <link rel="icon" type="image/png" href="/media/icon_hu7ba84dbfc1f77034a85f055c8517ec9c_4951_32x32_fill_lanczos_center_2.png" />
   <link rel="apple-touch-icon" type="image/png" href="/media/icon_hu7ba84dbfc1f77034a85f055c8517ec9c_4951_180x180_fill_lanczos_center_2.png" />
 
-  <link rel="canonical" href="/workshops/" />
+  <link rel="canonical" href="/workshops/linear-model-refresher/" />
 
   
   
@@ -292,20 +292,17 @@
   
   
     
-    
   
   
-  <meta property="twitter:card" content="summary" />
+  <meta property="twitter:card" content="summary_large_image" />
   
   <meta property="og:site_name" content="Idaho Ag Stats" />
-  <meta property="og:url" content="/workshops/" />
-  <meta property="og:title" content="Workshops | Idaho Ag Stats" />
-  <meta property="og:description" content="Educational resources supporting agricultural data and analysis" /><meta property="og:image" content="/media/icon_hu7ba84dbfc1f77034a85f055c8517ec9c_4951_512x512_fill_lanczos_center_2.png" />
-    <meta property="twitter:image" content="/media/icon_hu7ba84dbfc1f77034a85f055c8517ec9c_4951_512x512_fill_lanczos_center_2.png" /><meta property="og:locale" content="en-us" />
+  <meta property="og:url" content="/workshops/linear-model-refresher/" />
+  <meta property="og:title" content="The Missing Pieces of ANOVA, Regression and Other Linear Models | Idaho Ag Stats" />
+  <meta property="og:description" content="A 4-part webinar series reviewing  oft-forgotten foundational aspects of linear models: evaluating assumptions of normality and homoscedasticity, how to interpret standard model output and how to make optimal use of statistical inference." /><meta property="og:image" content="/workshops/linear-model-refresher/featured.jpg" />
+    <meta property="twitter:image" content="/workshops/linear-model-refresher/featured.jpg" /><meta property="og:locale" content="en-us" />
   
     
-      <meta property="og:updated_time" content="2025-04-14T00:00:00&#43;00:00" />
-    
   
 
   
@@ -319,11 +316,11 @@
 
 
 
-  <title>Workshops | Idaho Ag Stats</title>
+  <title>The Missing Pieces of ANOVA, Regression and Other Linear Models | Idaho Ag Stats</title>
 </head>
 
 
-<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   " data-wc-page-id="52c708d9dad48db8062d07d6906c18dc" >
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   " data-wc-page-id="484242622d8e7789849ebc548775dfbe" >
 
   
   
@@ -593,100 +590,300 @@
 
 
 
-
-
-
-
-
-
+<div class="container-fluid docs">
+  <div class="row flex-xl-nowrap">
+    <div class="col-12 col-md-3 col-xl-2 docs-sidebar">
+      <form class="docs-search d-flex align-items-center">
+  <button class="btn docs-toggle d-md-none p-0 mr-md-3 w-100" type="button" data-toggle="collapse" data-target="#docs-nav" aria-controls="docs-nav" aria-expanded="false" aria-label="Toggle section navigation">
+    <div class="d-flex">
+      <span class="d-md-none pl-1 flex-grow-1 text-left overflow-hidden">
+        
+          Workshops
+        
+      </span>
+      <span><i class="fas fa-chevron-down"></i></span>
+    </div>
+  </button>
 
   
-
+  <button class="form-control sidebar-search js-search d-none d-md-flex">
+    <i class="fas fa-search pr-2"></i>
+    <span class="sidebar-search-text">Search...</span>
+    <span class="sidebar-search-shortcut">/</span>
+  </button>
   
+</form>
+
+<nav class="collapse docs-links" id="docs-nav">
+  
+  
+  
+  
+  
+  
+
   
   
     
-  
-<div class="universal-wrapper pt-3">
-  <h1>Workshops</h1>
+
+    
+      
+
+      <ul class="nav docs-sidenav">
+        <li><a href="/workshops/"><i class="fas fa-arrow-left pr-1"></i>Workshops</a></li>
+      </ul>
+
+      
+      
+
 
   
+    
+    
+    
+    
+      
+    
+    
 
+    
+      <div class="docs-toc-item">
+        <a class="docs-toc-link  active" href="/workshops/linear-model-refresher/">The Missing Pieces of ANOVA, Regression and Other Linear Models</a>
+    
+
+    
+      </div>
+    
+
+    
+  
+</nav>
+
+    </div>
+
+    
+    
+    <div class="d-none d-xl-block col-xl-2 docs-toc">
+      <ul class="nav toc-top">
+        <li><a href="#" id="back_to_top" class="docs-toc-title">Contents</a></li>
+      </ul>
+
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#details">Details</a></li>
+    <li><a href="#what-will-be-taught">What will be taught</a></li>
+    <li><a href="#workshop-overview">Workshop overview</a></li>
+    <li><a href="#intended-audience-and-how-to-prepare">Intended audience and how to prepare</a></li>
+    <li><a href="#schedule">Schedule</a></li>
+    <li><a href="#meet-your-instructor">Meet Your Instructor</a></li>
+  </ul>
+</nav>
+
+      
+    </div>
+    
+
+    <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 docs-content" role="main">
+
+      <article class="article">
+
+        <div class="docs-article-container">
+          
+            
+  <nav class="d-none d-md-flex" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      
+  
+  
+
+  <li class="breadcrumb-item">
+    <a href="/">
+      
+        Home
+      
+    </a>
+  </li>
+
+
+  <li class="breadcrumb-item">
+    <a href="/workshops/">
+      
+        Workshops
+      
+    </a>
+  </li>
+
+
+      <li class="breadcrumb-item active" aria-current="page">
+        The Missing Pieces of ANOVA, Regression and Other Linear Models
+      </li>
+    </ol>
+  </nav>
+
+
+          
+
+          <h1>The Missing Pieces of ANOVA, Regression and Other Linear Models</h1>
+
+          <div class="article-style">
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+<figure  >
+  <div class="d-flex justify-content-center">
+    <div class="w-100" ><img alt="" srcset="
+               /workshops/linear-model-refresher/featured_hu4e39de6c4a0389fe722ac30504ce9c97_102951_9de6aec28840870b5c7bda15dbd213d1.jpg 400w,
+               /workshops/linear-model-refresher/featured_hu4e39de6c4a0389fe722ac30504ce9c97_102951_fb5d738ec794068fd3c5821ca14c8294.jpg 760w,
+               /workshops/linear-model-refresher/featured_hu4e39de6c4a0389fe722ac30504ce9c97_102951_1200x1200_fit_q75_lanczos.jpg 1200w"
+               src="/workshops/linear-model-refresher/featured_hu4e39de6c4a0389fe722ac30504ce9c97_102951_9de6aec28840870b5c7bda15dbd213d1.jpg"
+               width="380"
+               height="760"
+               loading="lazy" data-zoomable /></div>
+  </div></figure>
+<h2 id="details">Details</h2>
+<p>🗓 Feb 23 | Mar 3 | Mar 
+🕓 Tuesday, 3-4 pm Pacific Time
+⎈ Zoom</p>
+<h2 id="what-will-be-taught">What will be taught</h2>
+<ul>
+<li>How to evaluate the model assumption of normality and hot to handle deviations from this assumption.</li>
+<li>How to evaluate the model assumption of equal variance;</li>
+<li>How and when to model heteroscedasticity</li>
+<li>How to interpret common outputs from linear models</li>
+<li>Working with model estimates, aka &ldquo;least squares means&rdquo;, &ldquo;estimated marginal means&rdquo; and &ldquo;emmeans&rdquo; to answer your scientific questions</li>
+</ul>
+<h2 id="workshop-overview">Workshop overview</h2>
+<p>You’ve taken the stats class, but what do you remember? Can you confidently run an ANOVA and interpret the results, even when things look wonky? Are p-values the only thing you look at? (Your model can tell you so much more!) Experiments require a massive effort to design, set-up and see through to the end. Make that effort worth it with a solid analysis. This is a general topical webinar and does not require knowledge of specific statistical program. Examples will be shown in R, but</p>
+<h2 id="intended-audience-and-how-to-prepare">Intended audience and how to prepare</h2>
+<p>This workshop is open to scientists, students, technicians and anyone else who analyzes data requiring a linear model. Previous experience using linear models to any extent is assumed, but deep mastery is not (this is a refresher webinar series, after all).</p>
+<p>Attendees are not expected to follow along with coding, but all scripts will be made available after the workshop (when applicable). The webinars will be recorded and posted online.</p>
+<h2 id="schedule">Schedule</h2>
+<table>
+<thead>
+<tr>
+<th>Date</th>
+<th style="text-align:left">Topic</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Feb 24</td>
+<td style="text-align:left">Model Assumptions: Normality. *How do we identify this and what</td>
+</tr>
+<tr>
+<td>do we do when it’s violated? What can we do about outliers? An</td>
+<td></td>
+</tr>
+<tr>
+<td>exploration of this and brief discussion of generalized linear</td>
+<td></td>
+</tr>
+<tr>
+<td>models.*</td>
+<td></td>
+</tr>
+<tr>
+<td>Mar 3</td>
+<td style="text-align:left">Model Assumptions: Equal Variance. *How do we identify this and</td>
+</tr>
+<tr>
+<td>what do we do when it’s violated? How to identify and model</td>
+<td></td>
+</tr>
+<tr>
+<td>heteroscedasticity and what to do it for repeated</td>
+<td></td>
+</tr>
+<tr>
+<td>measures/longitudinal data.*</td>
+<td></td>
+</tr>
+<tr>
+<td>Mar 10</td>
+<td style="text-align:left">Linear Model Outputs: What Does It All Mean? *Understanding</td>
+</tr>
+<tr>
+<td>how to read and interpret output from a linear model. This will cover</td>
+<td></td>
+</tr>
+<tr>
+<td>different model types (ANOVA, regression, repeated measures).*</td>
+<td></td>
+</tr>
+<tr>
+<td>Mar 24</td>
+<td style="text-align:left">Making Sense of Your Estimates. *Treatment effects are frequently</td>
+</tr>
+<tr>
+<td>the final outcomes of a statistical analysis. Let’s talk about how to</td>
+<td></td>
+</tr>
+<tr>
+<td>leverage these results to answer your research objectives.*</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="meet-your-instructor">Meet Your Instructor</h2>
+<p><a href="/authors/jpiaskowski/">Julia Piaskowski</a> is an agricultural statistician at the University of Idaho, Software Carpentry Certified Instructor and long-time R programmer.</p>
+<p>*This workshop is licensed under the <a href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">Creative Commons Attribution-NonCommercial 4.0 International License</a>.</p>
+
+          </div>
+
+          
+
+
+
+          
+          
+          <div class="article-widget">
+            
+<div class="post-nav">
+  
   
 </div>
 
+          </div>
+          
+        </div>
+
+        <div class="body-footer">
+          <p>Last updated on Jan 1, 0001</p>
+
+          
 
 
-<div class="universal-wrapper">
-  
-  <div class="article-style"><br>
-<h3 id="upcoming-workshops">Upcoming Workshops</h3>
-<p>There are no upcoming workshops scheduled at this time.</p>
-<br>
-<h3 id="previous-workshops">Previous Workshops</h3>
-</div>
-  
+
+
+
+          
+
+
+
+
+          
+
 
   
   
-    
-    
-    
-    <div>
-      <h2><a href="/workshops/introduction-to-r/" >Introduction to Scientific Programming in R</a></h2>
-      <div class="article-style">
-        
-          Carpentries-style introductory workshop to R for scientists
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/workshops/what-they-forgot/" >What They Forgot to Teach You About R</a></h2>
-      <div class="article-style">
-        
-          Carpentries-style workshop on how to make your R processes easier to write, debug and repeat
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/workshops/spatial-workshop/" >Spatial Recipes for Field Trials</a></h2>
-      <div class="article-style">
-        
-          Routine inclusion of spatial statistics in planned field experiments
-        
-      </div>
-    </div>
-  
-    
-    
-    
-    <div>
-      <h2><a href="/workshops/linear-model-refresher/" >The Missing Pieces of ANOVA, Regression and Other Linear Models</a></h2>
-      <div class="article-style">
-        
-          A 4-part webinar series reviewing  oft-forgotten foundational aspects of linear models: evaluating assumptions of normality and homoscedasticity, how to interpret standard model output and how to make optimal use of statistical inference.
-        
-      </div>
-    </div>
-  
 
-  
 
-</div>
-  </div>
 
-  <div class="page-footer">
-    
-    
-    <div class="container">
+        </div>
+
+      </article>
+
       <footer class="site-footer">
   
 
@@ -705,7 +902,15 @@
 
 </footer>
 
-    </div>
+
+    </main>
+  </div>
+</div>
+
+  </div>
+
+  <div class="page-footer">
+    
     
   </div>
 
@@ -777,6 +982,11 @@
     
 
     
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.2.2/anchor.min.js" integrity="sha512-I7w3ZdSFzw5j3jU3ZkNikBNeIrl3i+hEuEdwNmqUJvwNcaBUNcijnP2gd9DtGlgVYDplfjGoD8vTNsID+lCjqg==" crossorigin="anonymous"></script>
+    <script>
+      anchors.add();
+    </script>
     
 
     
