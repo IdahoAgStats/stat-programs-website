@@ -1,0 +1,437 @@
+---
+title: "Model Assumptions: Normality"
+subtitle: "⚔<br/>(how to evaluate)"
+author: "Julia Piaskowski"
+date: "2026-02-24"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    mathjax: null
+    nature:
+      highlightStyle: github
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+```
+
+## Commons Questions/Concerns
+
+> My data is not normal. I did a Shapiro-Wilk test on the data and it failed that test. What transformation should I use?
+
+
+
+---
+
+```{r}
+data(rothamsted.oats, package = "agridat")
+hist(rothamsted.oats$grain, main = "Oats study, n = 96", xlab = "(( Shapiro-wilk p-value = 0.000082 ))", col = "gold")
+mtext("grain yield", side = 3)
+```
+
+---
+
+```{r echo=FALSE}
+data("Penicillin", package = "lme4")
+hist(Penicillin$diameter, main = "Penicillin study, n = 144", xlab = "(( Shapiro-wilk p-value = 0.00086 ))", col = "gold")
+mtext("bacterial grown (diameter, mm)", side = 3)
+```
+
+---
+
+```{r echo=FALSE}
+data(Pastes, package = "lme4")
+hist(Pastes$strength, main = "Pastes study, n = 60", xlab = "(( Shapiro-wilk p-value = 0.029 ))", col = "gold")
+mtext("paste strength", side = 3)
+```
+
+---
+```{r echo=FALSE}
+data(npk)
+hist(npk$yield, main = "NPK study, n = 24", col = "gold", xlab = "(( Shapiro-wilk p-value = 0.87 ))")
+mtext("Crop yield", side = 3)
+```
+
+---
+## Linear Model Review
+
+$$Y_i = \beta_0 + \beta_1 X_i + \epsilon_i$$
+
+$Y_i$ = dependant variable (there is only 1)
+
+$X_i$ = independent variable(s) (there may be many)
+
+$B_0$ = model intercept, the overall mean of $Y$
+
+$B_1$ = how $Y$ changes with $X$ 
+
+$\epsilon_i$ = model residual, the gap between the predicted value for $Y_i$ and its observed value
+
+
+## The Model Residual Is Important
+
+$$ e_i \sim N(0, \sigma)$$
+
+- The residuals are normally distributed with a mean of zero and some standard deviation that we will estimate during the model-fitting process. 
+
+- All model residuals share this same distribution and distributional properties! That is, they are identically distributed. 
+
+- The residuals are independent of each other (i.e. they are uncorrelated with each other)
+
+- The residuals should have no correlation with other model paramters (e.g. treatment effects)
+
+
+
+
+---
+## Example Analyses 1
+
+```{r}
+par(mfrow = c(1,2))
+m2 <- lmer(grain ~ trt + (1|block), data = rothamsted.oats)
+qqnorm(rstudent(m2), main = "qq-plot of Oats Fertilizer study"); qqline(rstudent(m2))
+hist(rstudent(m2), main = "studentized residuals", col = "darkcyan", xlab = "(( Shapiro-wilk p-value = 0.28 ))")
+```
+
+---
+## Example Analyses 2
+
+```{r}
+par(mfrow = c(1,2))
+m3 <- lmer(diameter ~ (1|plate) + (1|sample), data = Penicillin)
+qqnorm(rstudent(m3), main = "qq-plot of Penicillin study"); qqline(rstudent(m3))
+hist(rstudent(m3), main = "studentized residuals", col = "darkcyan", xlab = "(( Shapiro-wilk p-value = 0.30 ))")
+```
+
+---
+## Example Analyses 3
+
+```{r}
+par(mfrow = c(1,2))
+m1 <- lmer(strength ~ (1|batch) + (1|cask), data = Pastes)
+qqnorm(rstudent(m1), main = "qq-plot of Pastes study"); qqline(rstudent(m1))
+hist(rstudent(m1), main = "studentized residuals", col = "darkcyan", xlab = "(( Shapiro-wilk p-value = 0.02 ))")
+```
+
+---
+## Early Lessons
+
+- Often, the residuals are normally distributed, and hence model expectations are met!
+
+- Linear models are considered robust to modest departures from normality; that is, the estimates will be fine and the results from ANOVA will be correct.
+
+- The Shapiro-Wilk test is not reliable; it's very sensitive to the size of the data set; large data sets may fail just based on sampling variation, small data sets pass because there are too few observations to adequately test.
+
+---
+
+
+# When you encounter an R error: 
+
+1. Check package documentation
+1. Ask around: RStudio community, R4DS slack, Stack Overflow, your local oracle
+1. Check source code (maybe)
+
+#### You will probably need to work with debugging functions eventually
+
+---
+class: center, middle, inverse
+
+## debugging = removing code errors  
+<br> 
+# How do you debug?  
+
+---
+# Retrace your steps
+
+1. Go through a process step-by-step and see where things went wrong
+1. Start with the action that occurred that first and proceed to the second action, the third, etc...
+
+---
+# Retrace Example
+
+```{r include=FALSE, echo=FALSE}
+library(dplyr); library(tidyr); library(purrr)
+```
+
+
+[Agricultural Data from Tidy Tuesday](https://github.com/rfordatascience/tidytuesday/tree/master/data/2020/2020-09-01)
+```{r, eval=FALSE, include=FALSE, echo=TRUE}
+# install.packages"(tidytuesdayR")
+agdata <- tidytuesdayR::tt_load('2020-09-01')
+saveRDS(agdata, file = "data/agdata.rds")
+```
+
+
+```{r, error=TRUE}
+library(dplyr); library(tidyr); library(purrr)
+agdata <- readRDS(here::here("static", "slides", "data", "agdata.rds"))
+yields <- agdata[[4]]
+colnames(yields) <- gsub("\\(tonnes per hectare\\)", "", names(yields))
+
+wheat <- yields %>% tidyr::pivot_wider(id_cols = Year, 
+                                  names_from = Entity,
+                                  values_from = Wheat) %>% 
+  purrr::discard(~all(is.na(.))) %>% 
+  mutate(ethiopia = case_when(
+    is.na(Ethiopia) ~ `Ethiopia PDR`,
+    TRUE ~ Ethiopia)) %>% select(-Ethiopia, -`Ethiopia PDR`)
+```
+
+<mark>What went wrong? </mark>
+
+---
+# Fixed:
+
+```{r, highlight.output=2}
+yields <- agdata[[4]]
+colnames(yields) <- gsub(" \\(tonnes per hectare\\)", "", names(yields))
+
+wheat <- yields %>% tidyr::pivot_wider(id_cols = Year, 
+                                  names_from = Entity,
+                                  values_from = Wheat) %>% 
+  purrr::discard(~all(is.na(.))) %>% 
+  mutate(ethiopia = case_when(
+    is.na(Ethiopia) ~ `Ethiopia PDR`,
+    TRUE ~ Ethiopia)) %>% select(-Ethiopia, -`Ethiopia PDR`)
+```
+
+---
+# Another retrace example
+
+**Working with nested functions makes debugging hard**
+
+#### Hard: 
+```{r eval=FALSE}
+result <- function4(function3(function2(function1(my_object, extra_args = 1),more_args = TRUE), even_more_args = "show_me_the_money"), final_arg = FALSE)
+```
+--
+#### Easier
+```{r eval=FALSE}
+pre_result1 <- function1(my_object, extra_args = 1)
+pre_result2 <- function2(pre_result1, more_args = TRUE)
+pre_result3 <- function3(pre_result2, even_more_args = "show_me_the_money")
+result <- function4(pre_result3, final_arg = FALSE)
+```
+*(Lesson: avoid writing nested functions)*  
+
+---
+# Consider writing a function if....
+
+* You need to do something repeatedly
+* That thing that needs to be repeated has several steps
+* If you have to *cut-paste-replace* more than twice, consider a function to automate that process
+
+
+---
+# Why write functions? 
+
+* To save yourself work  
+* To avoid mistakes
+<br><br>
+  
+👍  DRY = **D**on't **R**epeat **Y**ourself  
+<br>
+  
+👎  WET = **W**rite **E**verything **T**wice / **We** **E**njoy **T**yping  
+
+---
+# Crash course in functions
+
+R functions follow a general structure:
+
+```{r, eval=FALSE, out.width='75%'}
+my_function_name <- function(arg1, arg2) {
+  final_output <- action(arg1, arg2)
+  return(final_output)
+}
+```
+
+Their usage:
+```{r, eval = FALSE}
+my_result <- my_function_name(arg1 = ..., arg2 = ...)
+```
+
+---
+# Crash course in functions
+
+* Let's define a function (plotting)
+* And describe the arguments it takes
+
+```{r}
+my_function_name <- function(arg1, arg2) {
+  # arg1 & arg2 = numeric vectors of identical lengths
+  plot(arg1, arg2)
+}
+```
+
+---
+# Crash course in functions
+
+* Call the function just written: 
+ 
+```{r, out.height="60%"}
+my_function_name(1:10, 1:10 + rnorm(10))
+```
+
+*(functions are usually more complicated than this example)* 
+
+.footnote[[longer function writing tutorial](https://agstats.io/post/writing-r-functions/) on writing functions]
+
+---
+class: center, middle,  inverse
+
+# [exercise](exercises/exercise-4.html)
+
+---
+## What to do when function errors happen
+
+* `traceback`
+
+```{r, error=TRUE}
+f <- function(x) x + 1
+g <- function(x) f(x)^3
+g("a")
+
+#traceback()
+```
+
+
+---
+class: center, middle, inverse
+
+
+# [mini-exercise](exercises/exercise-5.html)
+
+
+---
+# Trace
+
+* sometimes you only want R to alert you when something specific happens - this is where [trace](https://stat.ethz.ch/R-manual/R-devel/library/base/htmlgi/trace.html) can be helpful
+* this examines `print()` when it receives numeric input that is greater than 3. 
+
+```{r}
+trace(print, quote(if (is.numeric(x) && x > 3) 
+  cat("We have a problem: \n")), print = FALSE)
+```
+
+```{r}
+print(4)
+```
+
+Remember to turn `trace` off: 
+```{r,}
+untrace(print)
+```
+
+---
+## What to do when function errors happen
+
+* sprinkle `print()` and/or `str()` statements in your function
+(not a formal debug method, just something that works)
+
+```{r}
+log_hist <- function(var, color = "darkcyan", do_log=TRUE) {
+  if(do_log == TRUE) {
+    print("doing the log var")
+    logvar = log(var)
+    str(logvar)
+    hist(logvar, col = color); abline(v = mean(logvar), lwd = 2, col = "red3")
+  }
+  else hist(var, col = color); abline(v = mean(var), lwd = 2, col = "red3")
+}
+```
+
+--
+
+```{r, error=TRUE}
+log_hist(rnorm(100), do_log=TRUE)
+```
+
+---
+## `browse()`
+
+A more powerful way to examine objects in a function:
+
+```{r}
+fertil <- agdata[[2]]
+colnames(fertil) <- c("country", "code", "year", 
+                      "cereal_yield", "N_appl")
+```
+
+```{r}
+my_lm_fun <- function(df, y, cty) {
+  m1 = lm(y ~ year, data = df,
+          subset = df[,df$country == cty])
+  a1 = anova(m1)
+  r2 = summary(m1)$r2
+  return(list(coefficients = coef(m1),
+              anova = a1, rsq = r2))
+}
+```
+
+```{r, error=TRUE}
+my_lm_fun(df = fertil, country = "Canada")
+```
+
+---
+class: center, middle, inverse
+
+# [exercise](exercises/exercise-6.html)
+
+---
+## How do you examine an error for a function you didn't write? 
+
+* `debug()` 
+
+```{r, eval=FALSE}
+debug(stats::lm)
+```
+
+```{r, eval=FALSE}
+test <- lm(cereal_yield ~ N_appl, data = fertil)
+```
+
+Turn if off: 
+```{r, eval=FALSE}
+undebug(stats::lm)
+```
+
+---
+# You can put this in your .Rprofile!
+
+e.g. 
+```{r, eval=FALSE}
+options(error = traceback)
+```
+or
+```{r, eval=FALSE}
+options(error = browser)
+```
+
+....and more
+
+
+---
+class: center, middle, inverse
+
+<iframe src="https://giphy.com/embed/ReImZejkBnqYU" width="530" height="300" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/angry-computer-frustrated-ReImZejkBnqYU">image credit: GIPHY</a></p>
+
+## Keep Calm and Debug On
+
+---
+# Miscellaneous R tip: running R scripts in a terminal
+
+```{r, eval=FALSE}
+Rscript -e "Sys.Date()"
+```
+
+```{r, eval = FALSE}
+Rscript path/to/my/script.R 
+```
+
+
+**Why do this?**
+
+You might be running a long process that does not require your supervision or an interactive RStudio session. R can use *a lot* of memory just running processes, but RStudio, the graphical user interface, is also a memory hog. 
+
