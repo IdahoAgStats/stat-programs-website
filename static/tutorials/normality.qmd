@@ -1,60 +1,86 @@
 ---
-title: "Model Assumptions: Normality"
-subtitle: "⚔<br/>(how to evaluate)"
-author: "Julia Piaskowski"
-date: "2026-02-24"
-output:
-  xaringan::moon_reader:
-    lib_dir: libs
-    mathjax: null
-    nature:
-      highlightStyle: github
-      countIncrementalSlides: false
+format: 
+  revealjs:
+    theme: [default]
+    aspectratio: 16x9
+    slide-number: true
+    css: custom.css
+    embed-resources: true
+    logo: images/UI_Main_horizontal_4c.png
+editor: source
+execute:
+  echo: false
+  message: false
+  warning: false
 ---
 
-```{r setup, include=FALSE, message=FALSE}
-options(htmltools.dir.version = FALSE)
-library(lme4); library(nlme); library(infer); library(dplyr)
-library(ggplot2)
+```{r}
+#| include: false
+library(lme4); library(nlme); library(infer); library(dplyr); library(ggplot2)
+
+cex_axis = 1.5
+cex_lab = 1.5
+
 ```
 
-## Commons Questions/Concerns
+::: {.r-stack background-color="#FDDC5C" .hide-logo}
 
-> My data is not normal. I did a Shapiro-Wilk test on the data and it failed that test. What transformation should I use?
+:::: {.columns}
+
+::: {.column width="30%"}
+<br> 
+![](images/UI_Main_stacked_4c.png)
+:::
+
+::: {.column width="70%"}
+<br>
+
+## Assessing the Linear Modelling Assumption of Normality
+
+<br> <br> 
+*Julia Piaskowski*
+
+*February 24, 2026* 
+<br> <br> 
+
+:::
+
+::::
+:::
 
 
----
 ![](images/normal_dist.jpg){width=80%}
-```{r echo=FALSE,out.width = "80%"}
-knitr::include_graphics("images/normal_dist.jpg")
-```
+
+::: {.right-align}
+[Imasge source](https://www.freecodecamp.org/news/normal-distribution-explained/)
+:::
 
 
----
+----------------------------------------------------------------
 
 ```{r echo=FALSE}
 data(rothamsted.oats, package = "agridat")
-hist(rothamsted.oats$grain, main = "Oats study, n = 96", xlab = "(( Shapiro-wilk p-value = 0.000082 ))", col = "gold")
+hist(rothamsted.oats$grain, main = "Oats study, n = 96", xlab = "(( Shapiro-wilk p-value = 0.000082 ))", col = "gold", cex.lab = cex_lab, cex.axis = cex_axis)
 mtext("grain yield", side = 3)
 ```
 
----
+----------------------------------------------------------------
 
 ```{r echo=FALSE}
 data("Penicillin", package = "lme4")
-hist(Penicillin$diameter, main = "Penicillin study, n = 144", xlab = "(( Shapiro-wilk p-value = 0.00086 ))", col = "gold")
+hist(Penicillin$diameter, main = "Penicillin study, n = 144", xlab = "(( Shapiro-wilk p-value = 0.00086 ))", col = "gold", cex.lab = cex_lab, cex.axis = cex_axis)
 mtext("bacterial grown (diameter, mm)", side = 3)
 ```
 
----
+----------------------------------------------------------------
 
 ```{r echo=FALSE}
 data(Pastes, package = "lme4")
-hist(Pastes$strength, main = "Pastes study, n = 60", xlab = "(( Shapiro-wilk p-value = 0.029 ))", col = "gold")
+hist(Pastes$strength, main = "Pastes study, n = 60", xlab = "(( Shapiro-wilk p-value = 0.029 ))", col = "gold", cex.lab = cex_lab, cex.axis = cex_axis)
 mtext("paste strength", side = 3)
 ```
 
----
+
 ## Linear Model Review
 
 $$Y_i = \beta_0 + \beta_1 X_i + \epsilon_i$$
@@ -69,7 +95,7 @@ $B_1$ = how $Y$ changes with $X$
 
 $\epsilon_i$ = model residual, the gap between the predicted value for $Y_i$ and its observed value
 
----
+
 ## The Model Residual Is Important
 
 $$ e_i \sim N(0, \sigma)$$
@@ -83,7 +109,7 @@ $$ e_i \sim N(0, \sigma)$$
 - The residuals should have no correlation with other model parameters (e.g. treatment effects)
 
 
----
+
 ## The Distribution of $Y$
 
 Technically in a linear model, $\bar{y_{i.}}$, the mean value for a population, follows a normal distribution for a set of known parameters:
@@ -93,38 +119,38 @@ $$ \bar{y_{i.}} \sim 𝑁(x_i \beta,  \sigma^2/r_i) $$
 
 We often cannot observe this distribution well with our limited number of reps. But we if repeated a study ab infinite number of times, a normal distribution for $\bar{y_{i.}}$ would likely be observed. 
 
----
+
 ## Example Analyses 1
 
 ```{r}
 library(lme4)
 par(mfrow = c(1,2))
 m1 <- lmer(grain ~ trt + (1|block), data = rothamsted.oats)
-qqnorm(rstudent(m1), main = "qq-plot of Oats Fertilizer study"); qqline(rstudent(m1))
-hist(rstudent(m1), main = "studentized residuals", col = "#20b2aa", xlab = "(( Shapiro-wilk p-value = 0.28 ))")
+qqnorm(rstudent(m1), main = "qq-plot of Oats Fertilizer study", cex.lab = cex_lab, cex.axis = cex_axis); qqline(rstudent(m1))
+hist(rstudent(m1), main = "studentized residuals", col = "#20b2aa", xlab = "(( Shapiro-wilk p-value = 0.28 ))", cex.lab = cex_lab, cex.axis = cex_axis)
 ```
 
----
+
 ## Example Analyses 2
 
 ```{r}
 par(mfrow = c(1,2))
 m2 <- lmer(diameter ~ (1|plate) + (1|sample), data = Penicillin)
-qqnorm(rstudent(m2), main = "qq-plot of Penicillin study"); qqline(rstudent(m2))
-hist(rstudent(m2), main = "studentized residuals", col = "#20b2aa", xlab = "(( Shapiro-wilk p-value = 0.30 ))")
+qqnorm(rstudent(m2), main = "qq-plot of Penicillin study", cex.lab = cex_lab, cex.axis = cex_axis); qqline(rstudent(m2))
+hist(rstudent(m2), main = "studentized residuals", col = "#20b2aa", xlab = "(( Shapiro-wilk p-value = 0.30 ))", cex.lab = cex_lab, cex.axis = cex_axis)
 ```
 
----
+
 ## Example Analyses 3
 
 ```{r}
 par(mfrow = c(1,2))
 m3 <- lmer(strength ~ (1|batch) + (1|cask), data = Pastes)
-qqnorm(rstudent(m3), main = "qq-plot of Pastes study"); qqline(rstudent(m3))
-hist(rstudent(m3), main = "studentized residuals", col = "#20b2aa", xlab = "((Shapiro-wilk = 0.02 ))")
+qqnorm(rstudent(m3), main = "qq-plot of Pastes study", cex.lab = cex_lab, cex.axis = cex_axis); qqline(rstudent(m3))
+hist(rstudent(m3), main = "studentized residuals", col = "#20b2aa", xlab = "((Shapiro-wilk = 0.02 ))", cex.lab = cex_lab, cex.axis = cex_axis)
 ```
 
----
+
 ## Early Lessons
 
 - Often, the residuals are normally distributed, and hence model expectations are met!
@@ -134,7 +160,7 @@ hist(rstudent(m3), main = "studentized residuals", col = "#20b2aa", xlab = "((Sh
 - The Shapiro-Wilk test is not great for asessing normality; it's very sensitive to the size of the data set; large data sets may fail just based on sampling variation, small data sets pass because there are too few observations to adequately test.
 
 
----
+
 ## Sampling Variation & Normality
 
 The function `rnorm()` can be used to generate random values that follow a normal distribution, that we can test for normality using `shapiro.test()`.
@@ -144,16 +170,16 @@ The function `rnorm()` can be used to generate random values that follow a norma
 shapiro.test(rnorm(60))
 ```
 
----
+
 ## Sampling Variation & Normality
 
 ```{r echo=FALSE}
 stest <- replicate(200, shapiro.test(rnorm(60))$p.value)
 hist(stest, main = "P-values from Shapiro-Wilk Test of Gaussian Data", 
-     xlab = "from 200 simulations (n = 60 each)",col = "#b2ec5d")
+     xlab = "from 200 simulations (n = 60 each)",col = "#b2ec5d", cex.lab = cex_lab, cex.axis = cex_axis)
 ```
 
----
+
 ## The Central Limit Theorum
 
 > In probability theory, the central limit theorem states that, under appropriate conditions, the distribution of a normalized version of the sample mean converges to a standard normal distribution.  
@@ -161,7 +187,6 @@ hist(stest, main = "P-values from Shapiro-Wilk Test of Gaussian Data",
 
 
 
----
 ## What Data Are Truly Not Normal?
 
 - Count data (unless the values are very high, e.g. hundreds)   
@@ -171,7 +196,7 @@ hist(stest, main = "P-values from Shapiro-Wilk Test of Gaussian Data",
 - Data that has many zeros
 - Extremely skewed data
 
----
+
 ## Count data
 
 - Things you count: insects, calves born, trips to the grocery store 
@@ -181,21 +206,22 @@ hist(stest, main = "P-values from Shapiro-Wilk Test of Gaussian Data",
 ```{r echo=FALSE}
 par(mfrow = c(1,2))
 data(grouseticks); hist(grouseticks$TICKS, xlab = "grousetick counts", main = "Poisson variable", 
-                        col = "violetred")
+                        col = "violetred", cex.lab = cex_lab, cex.axis = cex_axis)
 full_mod1  <- lmer(TICKS~YEAR+HEIGHT+(1|BROOD)+(1|LOCATION),data=grouseticks)
 
-qqnorm(rstudent(full_mod1), main = "Normality not met"); qqline(rstudent(full_mod1))
+qqnorm(rstudent(full_mod1), main = "Normality not met", cex.lab = cex_lab, cex.axis = cex_axis); qqline(rstudent(full_mod1))
 ```
 
----
+
 ## No Data Variability
 
 ```{r}
+#| echo: false
 x = c(rep(100, 95), 95, 99, 90, 90, 75)
-hist(x, xlim = c(0, 100), main = "histogram when variability is low", xlab = "percentage data", col = "violetred")
+hist(x, xlim = c(0, 100), main = "histogram when variability is low", xlab = "percentage data", col = "violetred", cex.lab = cex_lab, cex.axis = cex_axis)
 ```
 
----
+
 ## Binomial data
 
 - These are a set number of evaluations where only two possible outcomes are possible for each
@@ -206,14 +232,13 @@ hist(x, xlim = c(0, 100), main = "histogram when variability is low", xlab = "pe
 par(mfrow = c(1,2))
 binom = data.frame(y = c(rbinom(20, 20, p = 0.5), rbinom(20, 20, p = 0.77)),
                    xvar = rep(c("A", "B"), each = 20))
-hist(binom$y, main = "Binomial trait",xlab = "p1 = 0.50, p2 = 0.77", col = "violetred", sub = "20 trials each")
+hist(binom$y, main = "Binomial trait",xlab = "p1 = 0.50, p2 = 0.77", col = "violetred", sub = "20 trials each", cex.lab = cex_lab, cex.axis = cex_axis)
 bin_mod <- gls(y ~ xvar, data = binom)
-qqnorm(resid(bin_mod), main = "Normality not met"); qqline(resid(bin_mod))
+qqnorm(resid(bin_mod), main = "Normality not met", cex.lab = cex_lab, cex.axis = cex_axis); qqline(resid(bin_mod))
 ```
 
----
-## Alternatives for Non-normal data
 
+## Alternatives for Non-normal data
 
 #### Categorical
 
@@ -227,7 +252,7 @@ qqnorm(resid(bin_mod), main = "Normality not met"); qqline(resid(bin_mod))
 - common in relative abundance data from metagenomics
 - zero-inflated models (complicated)
 
----
+
 ## Skewed Distributions
 
 - extreme tails on the left or more commonly, the right side of histograms
@@ -237,13 +262,13 @@ qqnorm(resid(bin_mod), main = "Normality not met"); qqline(resid(bin_mod))
 par(mfrow = c(1,2))
 set.seed(208)
 gamm_dat <- rgamma(500, shape = 2)
-hist(gamm_dat, main = "Gamma-distributed trait",col = "violetred", xlab = "n = 500, shape = 2")
+hist(gamm_dat, main = "Gamma-distributed trait",col = "violetred", xlab = "n = 500, shape = 2", cex.lab = cex_lab, cex.axis = cex_axis)
 ln_dat <- rlnorm(500, meanlog = 5, sdlog = 1)
-hist(ln_dat, main = "Lognormal-distributed trait",col = "violetred", xlab = "n = 500, mean = 5, sd = 1", breaks = 20)
+hist(ln_dat, main = "Lognormal-distributed trait",col = "violetred", xlab = "n = 500, mean = 5, sd = 1", breaks = 20, cex.lab = cex_lab, cex.axis = cex_axis)
 ```
 
 
----
+
 ## Alternatives for Non-normal data
 
 #### Non-parametric hypothesis tests
@@ -258,7 +283,7 @@ hist(ln_dat, main = "Lognormal-distributed trait",col = "violetred", xlab = "n =
 
 - only conducting a hypothesis test, no estimation
 
----
+
 ## Alternatives for Non-normal data
 
 #### Bootstrapping
@@ -273,12 +298,13 @@ hist(ln_dat, main = "Lognormal-distributed trait",col = "violetred", xlab = "n =
 set.seed(100)
 sim_dat <- rnorm(500, mean = 10)
 sim_stat <- sum(sim_dat>=12.25)/length(sim_dat)
-hist(sim_dat, breaks = 10, col = "#ffb347", xlab = "test statistics", main = "Distribution in the null world", sub = "d = 12.25, p(d >= 12.25) = 0.016"); abline(v = 12.25, col = "#009150", lwd = 6)
+hist(sim_dat, breaks = 10, col = "#ffb347", xlab = "test statistics", main = "Distribution in the null world", 
+     sub = "d = 12.25, p(d >= 12.25) = 0.016"); abline(v = 12.25, col = "#009150", lwd = 6, cex.lab = cex_lab, cex.axis = cex_axis)
 ```
 
 [Andrew Heiss' Null Worlds](https://nullworlds.andrewheiss.com/)
 
----
+
 ## Bootstrapping Example
 
 #### Alfalfa data set
@@ -293,11 +319,13 @@ alf_mod <- lme(Yield ~ Variety + Date,
 ```
 
 ```{r}
+#| echo: false
 par(mfrow = c(2, 1))
-hist(Alfalfa$Yield, col = "#ffb347", main = "Alfalfa yield", xlab = NULL)
+hist(Alfalfa$Yield, col = "#ffb347", main = "Alfalfa yield", xlab = NULL, cex.lab = cex_lab, cex.axis = cex_axis)
 qqnorm(resid(alf_mod)); qqline(resid(alf_mod))
 ```
----
+
+
 ## Permutations
 
 
@@ -316,21 +344,19 @@ sim_func <- function(){
 perms <- replicate(500, sim_func(), simplify = FALSE)
 ```
 
----
+
 ## ANOVA
 
 ```{r}
-# Conduct anova
-perm_anova <- lapply(perms, anova, type = "marginal") |> 
-# some data formatting
-  dplyr::bind_rows() |> 
+perm_anova <- lapply(perms, anova, type = "marginal") |>  # Conduct anova
+  dplyr::bind_rows() |> # some data formatting
   tibble::rownames_to_column(var = "variable") |> 
   mutate(variable = stringr::str_extract(variable, "[A-Za-z]+")) |> 
-# remove the intercept (optional step)
-  dplyr::filter(variable != "Intercept")
+  dplyr::filter(variable != "Intercept") # remove the intercept (optional step)
 ```
 
 ```{r}
+#| echo: false
 knitr::include_graphics("images/permanova_screenshot.png")
 ```
 
@@ -340,7 +366,7 @@ knitr::include_graphics("images/permanova_screenshot.png")
 ```
 
 
----
+----------------------------------------------------------------
 
 ```{r include=FALSE}
 raw_f <- alf_aov$`F-value`[-1]
@@ -363,16 +389,9 @@ ggplot(data = perm_anova, aes(x = `F-value`)) +
 ```
 
 
----
 ## The R package 'infer'
 
-#### [infer](https://infer.tidymodels.org/index.html) link
-
-
-```{r echo=FALSE}
-knitr::include_graphics("images/infer.png")
-```
-
+[![infer](images/infer.png){width=60%}](https://infer.tidymodels.org/index.html)
 
 - provides functions for permutation, automatic calculation of target statistics and visualization
 - very limited in functionality: can only calculate ANOVA statistics for one independent variable at a time. 
@@ -380,7 +399,7 @@ knitr::include_graphics("images/infer.png")
 - this package works fine for one-way ANOVA, simple linear regression and multiple linear regression. 
 - it is ill-suited for multiple-way factorial studies 
 
----
+
 ## Outliers
 
 *Is this an outlier?*
@@ -390,10 +409,21 @@ knitr::include_graphics("images/infer.png")
 - Data removal is a tricky process that may introduce bias or accusation of bias. In general, be very judicious when excluding outlying data points from an analysis. 
 - If a single extreme data point is driving an analytical conclusion, it is definitely worth conducting a sensitivity analysis to see what happens when the extreme data point is excluded. 
 
----
+
 ## Outliers
 
----
+```{r}
+Alfalfa$alf_res <- residuals(alf_mod, type = "normalized")
+```
+
+```{r}
+#| echo: false
+hist(Alfalfa$alf_res, main = NULL, xlab = "Studenized residuals", cex.axis = cex_axis, cex.lab = cex_lab,
+     xlim = c(-4.5, 4.5)); abline(v = -4, col = "red2"); abline(v = 4, col = "red2")
+```
+
+
+
 ## Final Thoughts
 
 - The assumption of normality is largely for the model residuals
@@ -404,6 +434,7 @@ knitr::include_graphics("images/infer.png")
 - Manual bootstraps are an (cumbersome) option
 - The best choice is always to find the correct distribution for your data
 - The optimal approach is to use science not statistics to justify data removal. 
+
 
 
 
