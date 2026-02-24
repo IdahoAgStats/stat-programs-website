@@ -315,14 +315,16 @@ qqnorm(resid(alf_mod)); qqline(resid(alf_mod))
 ## Permutations
 
 
-```{r}
+```{r include=FALSE, echo=TRUE}
+set.seed(208) 
+
 sim_func <- function(){
   N = nrow(Alfalfa)
   Alfalfa$yield2 <- sample(Alfalfa$Yield, size = N, replace = FALSE)
-  perm_mod <- lme(yield2 ~ Variety + Date,
+  try(perm_mod <- lme(yield2 ~ Variety + Date,
                random = ~1|Block/Date,
-               data = Alfalfa)
-  return(perm_mod)
+               data = Alfalfa))
+  if(exists("perm_mod")) return(perm_mod)
 }
 
 perms <- replicate(500, sim_func(), simplify = FALSE)
@@ -368,9 +370,9 @@ fvals <- data.frame(variable = c("Variety", "Date"),
 
 ```{r}
 ggplot(data = perm_anova, aes(x = `F-value`)) +
-  geom_histogram(color = "white", fill = "#bfc1c2") +
+  geom_histogram(color = "white", fill = "#bfc1c2", bins = 25) +
   facet_grid(. ~ variable, scales = "free") +
-  geom_vline(data = fvals, mapping = aes(xintercept = Fvalue), col = "red2", linewidth = 1.5) + 
+  geom_vline(data = fvals, mapping = aes(xintercept = Fvalue), col = "red2", linewidth = 1) + 
   theme_classic(base_size = 14)
 ```
 
@@ -393,7 +395,6 @@ knitr::include_graphics("../images/infer.png")
 - it is ill-suited for multiple-way factorial studies 
 
 
-
 ---
 ## Final Thoughts
 
@@ -404,13 +405,5 @@ knitr::include_graphics("../images/infer.png")
 - non-parametric tests are an option, but they are overall low-information solution
 - Manual bootstraps are an option, 
 - The best choice is always to find the correct distribution for your data
-
-
-
-
-
-
-
-
 
 
