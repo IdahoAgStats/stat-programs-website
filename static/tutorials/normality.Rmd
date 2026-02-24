@@ -12,8 +12,10 @@ output:
       countIncrementalSlides: false
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include=FALSE, message=FALSE}
 options(htmltools.dir.version = FALSE)
+library(lme4); library(nlme); library(infer); library(dplyr)
+library(ggplot2)
 ```
 
 ## Commons Questions/Concerns
@@ -47,18 +49,11 @@ mtext("paste strength", side = 3)
 ```
 
 ---
-```{r echo=FALSE}
-data(npk)
-hist(npk$yield, main = "NPK study, n = 24", col = "gold", xlab = "(( Shapiro-wilk p-value = 0.87 ))")
-mtext("Crop yield", side = 3)
-```
-
----
 ## Linear Model Review
 
 $$Y_i = \beta_0 + \beta_1 X_i + \epsilon_i$$
 
-$Y_i$ = dependant variable (there is only 1)
+$Y_i$ = dependent variable (there is only 1)
 
 $X_i$ = independent variable(s) (there may be many)
 
@@ -79,19 +74,27 @@ $$ e_i \sim N(0, \sigma)$$
 
 - The residuals are independent of each other (i.e. they are uncorrelated with each other)
 
-- The residuals should have no correlation with other model paramters (e.g. treatment effects)
+- The residuals should have no correlation with other model parameters (e.g. treatment effects)
 
 
+---
+## The Distribution of $Y$
 
+Technically in a linear model, $\bar{y_{i.}}$, the mean value for a population, follows a normal distribution for a set of known parameters:
+
+
+$$ \bar{y_{i.}} \sim 𝑁(x_i \beta,  \sigma^2/r_i) $$
+We often cannot observe this distribution well with our limited number of reps. But we if repeated a study ab infinite number of times, a normal distribution for $\bar{y_{i.}}$ would likely be observed. 
 
 ---
 ## Example Analyses 1
 
 ```{r}
+library(lme4)
 par(mfrow = c(1,2))
-m2 <- lmer(grain ~ trt + (1|block), data = rothamsted.oats)
-qqnorm(rstudent(m2), main = "qq-plot of Oats Fertilizer study"); qqline(rstudent(m2))
-hist(rstudent(m2), main = "studentized residuals", col = "darkcyan", xlab = "(( Shapiro-wilk p-value = 0.28 ))")
+m1 <- lmer(grain ~ trt + (1|block), data = rothamsted.oats)
+qqnorm(rstudent(m1), main = "qq-plot of Oats Fertilizer study"); qqline(rstudent(m1))
+hist(rstudent(m1), main = "studentized residuals", col = "#20b2aa", xlab = "(( Shapiro-wilk p-value = 0.28 ))")
 ```
 
 ---
@@ -99,9 +102,9 @@ hist(rstudent(m2), main = "studentized residuals", col = "darkcyan", xlab = "(( 
 
 ```{r}
 par(mfrow = c(1,2))
-m3 <- lmer(diameter ~ (1|plate) + (1|sample), data = Penicillin)
-qqnorm(rstudent(m3), main = "qq-plot of Penicillin study"); qqline(rstudent(m3))
-hist(rstudent(m3), main = "studentized residuals", col = "darkcyan", xlab = "(( Shapiro-wilk p-value = 0.30 ))")
+m2 <- lmer(diameter ~ (1|plate) + (1|sample), data = Penicillin)
+qqnorm(rstudent(m2), main = "qq-plot of Penicillin study"); qqline(rstudent(m2))
+hist(rstudent(m2), main = "studentized residuals", col = "#20b2aa", xlab = "(( Shapiro-wilk = 0.30 ))")
 ```
 
 ---
@@ -109,9 +112,9 @@ hist(rstudent(m3), main = "studentized residuals", col = "darkcyan", xlab = "(( 
 
 ```{r}
 par(mfrow = c(1,2))
-m1 <- lmer(strength ~ (1|batch) + (1|cask), data = Pastes)
-qqnorm(rstudent(m1), main = "qq-plot of Pastes study"); qqline(rstudent(m1))
-hist(rstudent(m1), main = "studentized residuals", col = "darkcyan", xlab = "(( Shapiro-wilk p-value = 0.02 ))")
+m3 <- lmer(strength ~ (1|batch) + (1|cask), data = Pastes)
+qqnorm(rstudent(m3), main = "qq-plot of Pastes study"); qqline(rstudent(m3))
+hist(rstudent(m3), main = "studentized residuals", col = "#20b2aa", xlab = "((Shapiro-wilk = 0.02 ))")
 ```
 
 ---
@@ -123,315 +126,291 @@ hist(rstudent(m1), main = "studentized residuals", col = "darkcyan", xlab = "(( 
 
 - The Shapiro-Wilk test is not reliable; it's very sensitive to the size of the data set; large data sets may fail just based on sampling variation, small data sets pass because there are too few observations to adequately test.
 
----
 
-
-# When you encounter an R error: 
-
-1. Check package documentation
-1. Ask around: RStudio community, R4DS slack, Stack Overflow, your local oracle
-1. Check source code (maybe)
-
-#### You will probably need to work with debugging functions eventually
 
 ---
-class: center, middle, inverse
+## There is another distributional test
 
-## debugging = removing code errors  
-<br> 
-# How do you debug?  
+#### Kolmogorov-Smirnov
+
+`ks.test(resid(m1), "pnorm")`
+
+| model | Kolmogorov-Smirnov | Shapiro-Wilk
+|---|----------|----------|
+|m1 | 3.6e-13 | 0.28  | 
+|m2 | 3.9e-5 | 0.30  |
+|m3 | 1.2e-5  | 0.02  |
+
+**It works for other distributions:**
+
+`ks.test(runif(40), "punif")`
+
+(uniform distribution example)
+
 
 ---
-# Retrace your steps
+## Sampling Variation & Normality
 
-1. Go through a process step-by-step and see where things went wrong
-1. Start with the action that occurred that first and proceed to the second action, the third, etc...
+The function `rnorm()` can be used to generate random values that follow a normal distribution, that we can test for normality using `shapiro.test()`.
 
----
-# Retrace Example
-
-```{r include=FALSE, echo=FALSE}
-library(dplyr); library(tidyr); library(purrr)
-```
-
-
-[Agricultural Data from Tidy Tuesday](https://github.com/rfordatascience/tidytuesday/tree/master/data/2020/2020-09-01)
-```{r, eval=FALSE, include=FALSE, echo=TRUE}
-# install.packages"(tidytuesdayR")
-agdata <- tidytuesdayR::tt_load('2020-09-01')
-saveRDS(agdata, file = "data/agdata.rds")
-```
-
-
-```{r, error=TRUE}
-library(dplyr); library(tidyr); library(purrr)
-agdata <- readRDS(here::here("static", "slides", "data", "agdata.rds"))
-yields <- agdata[[4]]
-colnames(yields) <- gsub("\\(tonnes per hectare\\)", "", names(yields))
-
-wheat <- yields %>% tidyr::pivot_wider(id_cols = Year, 
-                                  names_from = Entity,
-                                  values_from = Wheat) %>% 
-  purrr::discard(~all(is.na(.))) %>% 
-  mutate(ethiopia = case_when(
-    is.na(Ethiopia) ~ `Ethiopia PDR`,
-    TRUE ~ Ethiopia)) %>% select(-Ethiopia, -`Ethiopia PDR`)
-```
-
-<mark>What went wrong? </mark>
-
----
-# Fixed:
-
-```{r, highlight.output=2}
-yields <- agdata[[4]]
-colnames(yields) <- gsub(" \\(tonnes per hectare\\)", "", names(yields))
-
-wheat <- yields %>% tidyr::pivot_wider(id_cols = Year, 
-                                  names_from = Entity,
-                                  values_from = Wheat) %>% 
-  purrr::discard(~all(is.na(.))) %>% 
-  mutate(ethiopia = case_when(
-    is.na(Ethiopia) ~ `Ethiopia PDR`,
-    TRUE ~ Ethiopia)) %>% select(-Ethiopia, -`Ethiopia PDR`)
+```{r}
+# generating 60 random values from the normal distribution (mean = 0, sd = 1) 
+shapiro.test(rnorm(60))
 ```
 
 ---
-# Another retrace example
+## Sampling Variation & Normality
 
-**Working with nested functions makes debugging hard**
-
-#### Hard: 
-```{r eval=FALSE}
-result <- function4(function3(function2(function1(my_object, extra_args = 1),more_args = TRUE), even_more_args = "show_me_the_money"), final_arg = FALSE)
+```{r echo=FALSE}
+stest <- replicate(200, shapiro.test(rnorm(60))$p.value)
+hist(stest, main = "P-values from Shapiro-Wilk Test of Gaussian Data", 
+     xlab = "from 200 simulations (n = 60 each)",col = "#b2ec5d")
 ```
---
-#### Easier
-```{r eval=FALSE}
-pre_result1 <- function1(my_object, extra_args = 1)
-pre_result2 <- function2(pre_result1, more_args = TRUE)
-pre_result3 <- function3(pre_result2, even_more_args = "show_me_the_money")
-result <- function4(pre_result3, final_arg = FALSE)
+
+---
+## The Central Limit Theorum
+
+> In probability theory, the central limit theorem (CLT) states that, under appropriate conditions, the distribution of a normalized version of the sample mean converges to a standard normal distribution. This holds even if the original variables themselves are not normally distributed. 
+> [Wikipedia](https://en.wikipedia.org/wiki/Central_limit_theorem)
+
+(original theorum development is in French, starting in 1733)
+
+---
+## What Data is Truly Not Normal?
+
+- Count data (unless the values are very high, e.g. hundreds)   
+- Data that lacks variability; most data points are a single value (emergence and crop stand data) 
+- Data that is binomial (yes/no)
+- Data with categorical outcomes (rating scales)
+- Data that has many zeros
+- very skewed data
+
+---
+## Count data
+
+- Things you count: insects, calves born, trips to the grocery store 
+- no negative values, no values between counts
+- requires a generalized linear model (these are hard to fit)
+
+```{r echo=FALSE}
+par(mfrow = c(1,2))
+data(grouseticks); hist(grouseticks$TICKS, xlab = "grousetick counts", main = "Poisson variable", 
+                        col = "violetred")
+full_mod1  <- lmer(TICKS~YEAR+HEIGHT+(1|BROOD)+(1|LOCATION),data=grouseticks)
+
+qqnorm(rstudent(full_mod1), main = "Normality not met"); qqline(rstudent(full_mod1))
 ```
-*(Lesson: avoid writing nested functions)*  
 
 ---
-# Consider writing a function if....
+## No Data Variability
 
-* You need to do something repeatedly
-* That thing that needs to be repeated has several steps
-* If you have to *cut-paste-replace* more than twice, consider a function to automate that process
+```{r}
+x = c(rep(100, 95), 95, 99, 90, 90, 75)
+hist(x, xlim = c(0, 100), main = "histogram when variability is low", xlab = "percentage data", col = "violetred")
+```
+
+---
+## Binomial data
+
+- These are a preset number of evaluations where there only two possible outcomes
+- Scientists may express this as percentage of time one outcome resulted: number of plants that survived after a cold shock, number of insects that choose something. 
+
+
+```{r echo=FALSE}
+par(mfrow = c(1,2))
+binom = data.frame(y = c(rbinom(20, 20, p = 0.5), rbinom(20, 20, p = 0.77)),
+                   xvar = rep(c("A", "B"), each = 20))
+hist(binom$y, main = "Binomial trait",xlab = "p1 = 0.50, p2 = 0.77", col = "violetred", sub = "20 trials each")
+bin_mod <- gls(y ~ xvar, data = binom)
+qqnorm(resid(bin_mod), main = "Normality not met"); qqline(resid(bin_mod))
+```
+
+---
+## Alternatives for Non-normal data
+
+
+#### Categorical
+
+- Likert scales (strong disagree to agree)
+- disease rating (very resistant to very tolerant)
+- special models: multinomial, ordinal (very complicated)
+
+#### Many zero's
+
+- common in count data 
+- common in relative abundance data from metagenomics
+- zero-inflated models (complicated)
+
+---
+## Skewed Distributions
+
+- extreme tails on the left or more commonly, the right side of histograms
+- no single solution, many other distributions that support skewed distributions: beta (for percentage), lognormal, exponential, tweedie,... (complicated)
+
+```{r echo=FALSE}
+par(mfrow = c(1,2))
+set.seed(208)
+gamm_dat <- rgamma(500, shape = 2)
+hist(gamm_dat, main = "Gamma-distributed trait",col = "violetred", xlab = "n = 500, shape = 2")
+ln_dat <- rlnorm(500, meanlog = 5, sdlog = 1)
+hist(ln_dat, main = "Lognormal-distributed trait",col = "violetred", xlab = "n = 500, mean = 5, sd = 1", breaks = 20)
+```
 
 
 ---
-# Why write functions? 
+## Alternatives for Non-normal data
 
-* To save yourself work  
-* To avoid mistakes
-<br><br>
-  
-👍  DRY = **D**on't **R**epeat **Y**ourself  
-<br>
-  
-👎  WET = **W**rite **E**verything **T**wice / **We** **E**njoy **T**yping  
+#### Non-parametric hypothesis tests
+
+*No distributional assumptions*
+
+- Mann-Whitney $U$ test/Wilcoxon rank-sum test for 2 samples: `wilcox.test()`
+- Kruskall-Wallis for 3+ samples: `kruskal.test()`
+- Wilcoxon signed-rank test for paired samples: `wilcox.test(..., paired = TRUE)`
+
+#### Drawbacks
+
+- only conducting a hypothesis test, no estimation
 
 ---
-# Crash course in functions
+## Alternatives for Non-normal data
 
-R functions follow a general structure:
+#### Bootstrapping
 
-```{r, eval=FALSE, out.width='75%'}
-my_function_name <- function(arg1, arg2) {
-  final_output <- action(arg1, arg2)
-  return(final_output)
+1. Calculate the test statistic from your data (e.g. difference in treatment means)
+
+2. Simulate data in which the test statistic is null (e.g. the difference in treatment means is zero)
+
+3. Find out how often your test statistic occurs in th4e simulated data; the probability of this occurring is your p-value
+
+```{r echo=FALSE}
+set.seed(100)
+sim_dat <- rnorm(500, mean = 10)
+sim_stat <- sum(sim_dat>=12.25)/length(sim_dat)
+hist(sim_dat, breaks = 10, col = "#ffb347", xlab = "test statistics", main = "Distribution in the null world", sub = "d = 12.25, p(d >= 12.25) = 0.016"); abline(v = 12.25, col = "#009150", lwd = 6)
+```
+
+[Andrew Heiss' Null Worlds](https://nullworlds.andrewheiss.com/)
+
+---
+## Bootstrapping Example
+
+#### Alfalfa data set
+
+- split plot: main plot is date of harvest (4 levels), split plot is variety (3 levels)
+```{r}
+data("Alfalfa", package = "nlme")
+
+alf_mod <- lme(Yield ~ Variety + Date,
+               random = ~1|Block/Date,
+               data = Alfalfa)
+```
+
+```{r}
+par(mfrow = c(2, 1))
+hist(Alfalfa$Yield, col = "#ffb347", main = "Alfalfa yield", xlab = NULL)
+qqnorm(resid(alf_mod)); qqline(resid(alf_mod))
+```
+---
+## Permutations
+
+
+```{r}
+sim_func <- function(){
+  N = nrow(Alfalfa)
+  Alfalfa$yield2 <- sample(Alfalfa$Yield, size = N, replace = FALSE)
+  perm_mod <- lme(yield2 ~ Variety + Date,
+               random = ~1|Block/Date,
+               data = Alfalfa)
+  return(perm_mod)
 }
-```
 
-Their usage:
-```{r, eval = FALSE}
-my_result <- my_function_name(arg1 = ..., arg2 = ...)
+perms <- replicate(500, sim_func(), simplify = FALSE)
 ```
 
 ---
-# Crash course in functions
-
-* Let's define a function (plotting)
-* And describe the arguments it takes
+## ANOVA
 
 ```{r}
-my_function_name <- function(arg1, arg2) {
-  # arg1 & arg2 = numeric vectors of identical lengths
-  plot(arg1, arg2)
-}
-```
-
----
-# Crash course in functions
-
-* Call the function just written: 
- 
-```{r, out.height="60%"}
-my_function_name(1:10, 1:10 + rnorm(10))
-```
-
-*(functions are usually more complicated than this example)* 
-
-.footnote[[longer function writing tutorial](https://agstats.io/post/writing-r-functions/) on writing functions]
-
----
-class: center, middle,  inverse
-
-# [exercise](exercises/exercise-4.html)
-
----
-## What to do when function errors happen
-
-* `traceback`
-
-```{r, error=TRUE}
-f <- function(x) x + 1
-g <- function(x) f(x)^3
-g("a")
-
-#traceback()
-```
-
-
----
-class: center, middle, inverse
-
-
-# [mini-exercise](exercises/exercise-5.html)
-
-
----
-# Trace
-
-* sometimes you only want R to alert you when something specific happens - this is where [trace](https://stat.ethz.ch/R-manual/R-devel/library/base/htmlgi/trace.html) can be helpful
-* this examines `print()` when it receives numeric input that is greater than 3. 
-
-```{r}
-trace(print, quote(if (is.numeric(x) && x > 3) 
-  cat("We have a problem: \n")), print = FALSE)
+# Conduct anova
+perm_anova <- lapply(perms, anova, type = "marginal") |> 
+# some data formatting
+  dplyr::bind_rows() |> 
+  tibble::rownames_to_column(var = "variable") |> 
+  mutate(variable = stringr::str_extract(variable, "[A-Za-z]+")) |> 
+# remove the intercept (optional step)
+  dplyr::filter(variable != "Intercept")
 ```
 
 ```{r}
-print(4)
+knitr::include_graphics("../images/permanova_screenshot.png")
 ```
 
-Remember to turn `trace` off: 
-```{r,}
-untrace(print)
-```
-
----
-## What to do when function errors happen
-
-* sprinkle `print()` and/or `str()` statements in your function
-(not a formal debug method, just something that works)
 
 ```{r}
-log_hist <- function(var, color = "darkcyan", do_log=TRUE) {
-  if(do_log == TRUE) {
-    print("doing the log var")
-    logvar = log(var)
-    str(logvar)
-    hist(logvar, col = color); abline(v = mean(logvar), lwd = 2, col = "red3")
-  }
-  else hist(var, col = color); abline(v = mean(var), lwd = 2, col = "red3")
-}
+(alf_aov <- anova(alf_mod, type = "marginal"))
 ```
 
---
-
-```{r, error=TRUE}
-log_hist(rnorm(100), do_log=TRUE)
-```
 
 ---
-## `browse()`
 
-A more powerful way to examine objects in a function:
+```{r include=FALSE}
+raw_f <- alf_aov$`F-value`[-1]
+pval1 = perm_anova |> filter(variable == "Date") |> select(`F-value`) |> 
+  summarise(sum(`F-value` > raw_f[1])/n()) |> pull()
+pval2 = perm_anova |> filter(variable == "Variety") |> select(`F-value`) |> 
+  summarise(sum(`F-value` > raw_f[2])/n()) |> pull()
 
-```{r}
-fertil <- agdata[[2]]
-colnames(fertil) <- c("country", "code", "year", 
-                      "cereal_yield", "N_appl")
+fvals <- data.frame(variable = c("Variety", "Date"),
+                    Fvalue = raw_f,
+                    pvals = as.character(c(pval1, pval2)))
 ```
 
 ```{r}
-my_lm_fun <- function(df, y, cty) {
-  m1 = lm(y ~ year, data = df,
-          subset = df[,df$country == cty])
-  a1 = anova(m1)
-  r2 = summary(m1)$r2
-  return(list(coefficients = coef(m1),
-              anova = a1, rsq = r2))
-}
+ggplot(data = perm_anova, aes(x = `F-value`)) +
+  geom_histogram(color = "white", fill = "#bfc1c2") +
+  facet_grid(. ~ variable, scales = "free") +
+  geom_vline(data = fvals, mapping = aes(xintercept = Fvalue), col = "red2", linewidth = 1.5) + 
+  theme_classic(base_size = 14)
 ```
-
-```{r, error=TRUE}
-my_lm_fun(df = fertil, country = "Canada")
-```
-
----
-class: center, middle, inverse
-
-# [exercise](exercises/exercise-6.html)
-
----
-## How do you examine an error for a function you didn't write? 
-
-* `debug()` 
-
-```{r, eval=FALSE}
-debug(stats::lm)
-```
-
-```{r, eval=FALSE}
-test <- lm(cereal_yield ~ N_appl, data = fertil)
-```
-
-Turn if off: 
-```{r, eval=FALSE}
-undebug(stats::lm)
-```
-
----
-# You can put this in your .Rprofile!
-
-e.g. 
-```{r, eval=FALSE}
-options(error = traceback)
-```
-or
-```{r, eval=FALSE}
-options(error = browser)
-```
-
-....and more
 
 
 ---
-class: center, middle, inverse
+## The R package 'infer'
 
-<iframe src="https://giphy.com/embed/ReImZejkBnqYU" width="530" height="300" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/angry-computer-frustrated-ReImZejkBnqYU">image credit: GIPHY</a></p>
+#### [infer](https://infer.tidymodels.org/index.html) link
 
-## Keep Calm and Debug On
+
+```{r}
+knitr::include_graphics("../images/infer.png")
+```
+
+
+- provides functions for permutation, automatic calculation of target statistics and visualization
+- very limited in functionality: can only calculate ANOVA statistics for one independent variable at a time. 
+- can only compare means when there are exactly two levels
+- this package works fine for one-way ANOVA, simple linear regression and multiple linear regression. 
+- it is ill-suited for multiple-way factorial studies 
+
+
 
 ---
-# Miscellaneous R tip: running R scripts in a terminal
+## Final Thoughts
 
-```{r, eval=FALSE}
-Rscript -e "Sys.Date()"
-```
+- The assumption of normality is largely for the model residuals
+- it's good to check the distribution of the dependent variable, but don't expect normality at that stage
+- most of the time, data are normal enough
+- modest departures from normality can be ignored, anova and estimates are robust to this
+- non-parametric tests are an option, but they are overall low-information solution
+- Manual bootstraps are an option, 
+- The best choice is always to find the correct distribution for your data
 
-```{r, eval = FALSE}
-Rscript path/to/my/script.R 
-```
 
 
-**Why do this?**
 
-You might be running a long process that does not require your supervision or an interactive RStudio session. R can use *a lot* of memory just running processes, but RStudio, the graphical user interface, is also a memory hog. 
+
+
+
+
+
 

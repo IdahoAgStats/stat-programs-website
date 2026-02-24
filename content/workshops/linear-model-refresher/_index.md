@@ -1,5 +1,5 @@
 ---
-date: "2026-02-23"
+date: "2026-02-24"
 linkTitle: 
 summary: "A 4-part webinar series reviewing  oft-forgotten foundational aspects of linear models: evaluating assumptions of normality and homoscedasticity, how to interpret standard model output and how to make optimal use of statistical inference."
 title: "The Missing Pieces of ANOVA, Regression and Other Linear Models"
