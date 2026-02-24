@@ -23,6 +23,11 @@ library(ggplot2)
 > My data is not normal. I did a Shapiro-Wilk test on the data and it failed that test. What transformation should I use?
 
 
+---
+```{r, echo=FALSE}
+hist(rnorm(400, 20), col = "lightblue", main = "histogram of normal variates")
+```
+https://www.freecodecamp.org/news/normal-distribution-explained/
 
 ---
 
@@ -104,7 +109,7 @@ hist(rstudent(m1), main = "studentized residuals", col = "#20b2aa", xlab = "(( S
 par(mfrow = c(1,2))
 m2 <- lmer(diameter ~ (1|plate) + (1|sample), data = Penicillin)
 qqnorm(rstudent(m2), main = "qq-plot of Penicillin study"); qqline(rstudent(m2))
-hist(rstudent(m2), main = "studentized residuals", col = "#20b2aa", xlab = "(( Shapiro-wilk = 0.30 ))")
+hist(rstudent(m2), main = "studentized residuals", col = "#20b2aa", xlab = "(( Shapiro-wilk p-value = 0.30 ))")
 ```
 
 ---
@@ -124,28 +129,7 @@ hist(rstudent(m3), main = "studentized residuals", col = "#20b2aa", xlab = "((Sh
 
 - Linear models are considered robust to modest departures from normality; that is, the estimates will be fine and the results from ANOVA will be correct.
 
-- The Shapiro-Wilk test is not reliable; it's very sensitive to the size of the data set; large data sets may fail just based on sampling variation, small data sets pass because there are too few observations to adequately test.
-
-
-
----
-## There is another distributional test
-
-#### Kolmogorov-Smirnov
-
-`ks.test(resid(m1), "pnorm")`
-
-| model | Kolmogorov-Smirnov | Shapiro-Wilk
-|---|----------|----------|
-|m1 | 3.6e-13 | 0.28  | 
-|m2 | 3.9e-5 | 0.30  |
-|m3 | 1.2e-5  | 0.02  |
-
-**It works for other distributions:**
-
-`ks.test(runif(40), "punif")`
-
-(uniform distribution example)
+- The Shapiro-Wilk test is not great for asessing normality; it's very sensitive to the size of the data set; large data sets may fail just based on sampling variation, small data sets pass because there are too few observations to adequately test.
 
 
 ---
@@ -170,27 +154,27 @@ hist(stest, main = "P-values from Shapiro-Wilk Test of Gaussian Data",
 ---
 ## The Central Limit Theorum
 
-> In probability theory, the central limit theorem (CLT) states that, under appropriate conditions, the distribution of a normalized version of the sample mean converges to a standard normal distribution. This holds even if the original variables themselves are not normally distributed. 
+> In probability theory, the central limit theorem states that, under appropriate conditions, the distribution of a normalized version of the sample mean converges to a standard normal distribution.  
 > [Wikipedia](https://en.wikipedia.org/wiki/Central_limit_theorem)
 
 (original theorum development is in French, starting in 1733)
 
 ---
-## What Data is Truly Not Normal?
+## What Data Are Truly Not Normal?
 
 - Count data (unless the values are very high, e.g. hundreds)   
 - Data that lacks variability; most data points are a single value (emergence and crop stand data) 
 - Data that is binomial (yes/no)
 - Data with categorical outcomes (rating scales)
 - Data that has many zeros
-- very skewed data
+- Extremely skewed data
 
 ---
 ## Count data
 
 - Things you count: insects, calves born, trips to the grocery store 
 - no negative values, no values between counts
-- requires a generalized linear model (these are hard to fit)
+- requires a generalized linear model
 
 ```{r echo=FALSE}
 par(mfrow = c(1,2))
@@ -212,9 +196,9 @@ hist(x, xlim = c(0, 100), main = "histogram when variability is low", xlab = "pe
 ---
 ## Binomial data
 
-- These are a preset number of evaluations where there only two possible outcomes
-- Scientists may express this as percentage of time one outcome resulted: number of plants that survived after a cold shock, number of insects that choose something. 
-
+- These are a set number of evaluations where only two possible outcomes are possible for each
+- The results mmight be expressed this as porportion that one outcome resulted: number of plants that survived after a cold shock, number of insects that choose a volatile compound. 
+- Requires a generalized linear model (logistic regression)
 
 ```{r echo=FALSE}
 par(mfrow = c(1,2))
@@ -392,6 +376,16 @@ knitr::include_graphics("../images/infer.png")
 - this package works fine for one-way ANOVA, simple linear regression and multiple linear regression. 
 - it is ill-suited for multiple-way factorial studies 
 
+--
+## Outliers
+
+*Is this an outlier?*
+
+- Do you know what led to the outlying data point? (Did you drop a sample bag? Did ducks eat your plot? Did your boss insist on something ill advised?). Decide if this is variation that reflects your target inferential conditions or not. 
+- If you do not know what caused an extreme value, run an analysis (e.g. a linear model) and look at the absolute value of the residuals. Create a decision criteria for data removal. My cut-off is usually an absolute values of 4 for studentized residuals (99.99% of data falls with 4 units of the mean). This removes very large values and usually, not too many. Only very large data sets would require a larger cut-off. Only do this once. 
+- Data removal is a tricky process that may introduce bias or accusation of bias. In general, be very judicious when excluding outlying data points from an analysis. 
+- If a single extreme data point is driving an analytical conclusion, it is definitely worth conducting a sensitivity analysis to see what happens when the extreme data point is excluded. 
+
 
 
 ---
@@ -402,15 +396,8 @@ knitr::include_graphics("../images/infer.png")
 - most of the time, data are normal enough
 - modest departures from normality can be ignored, anova and estimates are robust to this
 - non-parametric tests are an option, but they are overall low-information solution
-- Manual bootstraps are an option, 
+- Manual bootstraps are an (cumbersome) option
 - The best choice is always to find the correct distribution for your data
-
-
-
-
-
-
-
-
+- The optimal approach is to use science not statistics to justify data removal. 
 
 
