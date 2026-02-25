@@ -18,8 +18,8 @@ type: book
 
 ## What will be taught
 
-* How to evaluate the model assumption of normality and how to handle deviations from this assumption. 
-* How to evaluate the model assumption of equal variance;
+* How to evaluate the model assumption of normality and how to handle deviations from this assumption 
+* How to evaluate the model assumption of equal variance
 * How and when to model heteroscedasticity
 * How to interpret common outputs from linear models
 * Working with model estimates, aka "least squares means", "estimated marginal means" and "emmeans" to answer your scientific questions
