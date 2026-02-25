@@ -1,0 +1,123 @@
+---
+format: 
+  revealjs:
+    theme: [default]
+    aspectratio: 16x9
+    slide-number: true
+    css: custom.css
+    embed-resources: true
+    logo: images/UI_Main_horizontal_4c.png
+editor: source
+execute:
+  echo: false
+  message: false
+  warning: false
+---
+
+```{r}
+#| include: false
+library(lme4); library(nlme); library(infer); library(dplyr); library(ggplot2)
+
+cex_axis = 1.5
+cex_lab = 1.5
+
+```
+
+::: {.r-stack background-color="#FDDC5C" logo=false}
+
+
+:::: {.columns}
+
+::: {.column width="30%"}
+<br> <br> <br>
+![](images/UI_Main_stacked_4c.png)
+:::
+
+::: {.column width="70%"}
+<br>
+
+## Assessing the Linear Modelling Assumption of Homescedasticity
+
+<br> <br> 
+*Julia Piaskowski*
+
+*March 3, 2026* 
+<br> <br> 
+
+:::
+
+::::
+:::
+
+
+
+
+::: {.r-stack background-color="#FDDC5C" logo=false}
+##
+ <br> <br>
+**"My data is not normal. I did a Shapiro-Wilk test on the data and it failed that test. What transformation should I use?"**
+
+:::
+
+
+## Linear Model Review
+
+$$Y_i = \beta_0 + \beta_1 X_i + \epsilon_i$$
+
+$Y_i$ = dependent variable (there is only 1)
+
+$X_i$ = independent variable(s) (there may be many)
+
+$B_0$ = model intercept, the overall mean of $Y$
+
+$B_1$ = how $Y$ changes with $X$ 
+
+$\epsilon_i$ = model residual, the gap between the predicted value for $Y_i$ and its observed value
+
+
+## The Residual Is Important {.smaller}
+
+$$ \epsilon_i \sim N(0, \sigma)$$
+
+- The residuals are normally distributed with a mean of zero and some standard deviation that we will estimate during the model-fitting process. 
+
+- All model residuals share this same distribution and distributional properties! That is, they are identically distributed. 
+
+- The residuals are independent of each other (i.e. they are uncorrelated with each other)
+
+- The residuals should have no correlation with other model parameters (e.g. treatment effects)
+
+
+
+
+
+## Example Analyses 1
+
+
+
+## Example Analyses 2
+
+
+
+## Example Analyses 3
+
+
+
+
+## Early Lessons
+
+
+
+
+
+
+
+## Final Thoughts {.smaller}
+
+
+
+## Additional Resources
+
+
+
+
