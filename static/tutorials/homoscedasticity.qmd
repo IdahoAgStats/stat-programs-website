@@ -9,14 +9,16 @@ format:
     logo: images/UI_Main_horizontal_4c.png
 editor: source
 execute:
-  echo: false
+  echo: true
   message: false
   warning: false
 ---
 
 ```{r}
 #| include: false
+#| echo: false
 library(lme4); library(nlme); library(infer); library(dplyr); library(ggplot2)
+library(emmeans)
 
 cex_axis = 1.5
 cex_lab = 1.5
@@ -51,11 +53,11 @@ cex_lab = 1.5
 
 
 
-
 ::: {.r-stack background-color="#FDDC5C" logo=false}
 ##
  <br> <br>
-**"My data is not normal. I did a Shapiro-Wilk test on the data and it failed that test. What transformation should I use?"**
+
+### "Residuals were inspected for normality and common variance visually using Q–Q plots and plots of residuals versus predicted values."
 
 :::
 
@@ -81,43 +83,288 @@ $$ \epsilon_i \sim N(0, \sigma)$$
 
 - The residuals are normally distributed with a mean of zero and some standard deviation that we will estimate during the model-fitting process. 
 
-- All model residuals share this same distribution and distributional properties! That is, they are identically distributed. 
+- All model residuals are identically and independent distributed, "i.i.d." -- they are uncorrelated with each other and drawn from the same distribution (that has exactly one variance)
 
-- The residuals are independent of each other (i.e. they are uncorrelated with each other)
+## More on iid
 
-- The residuals should have no correlation with other model parameters (e.g. treatment effects)
+- For every observation, there is a residual: $\{n_1, n_2,...,n_j\}$, $\{e_1, e_2,...,e_j\}$
 
+- imagine we have a data set of 3 observations and hence 3 residuals: $\{e_1, e_2, e_3\}$
 
+- there is a variance-covariance matrix for the residuals:
 
+$$ \epsilon_i \sim N(0, 
+\begin{bmatrix}
+\sigma & 0 & 0 \\
+0 & \sigma  & 0 \\
+0 & 0 & \sigma 
+\end{bmatrix} )$$
 
+- all diagonal elements share a common variance (identical distribution), the off-diagonals are zero (independently distributed)
 
-## Example Analyses 1
+## Why is "iid" Important? 
 
+- ANOVA F-tests rely on this
+- The standard errors of the estimates and pairwise comparisons rely on this assumption
+- unequal error violations can result in higher type I error rate (false positives
+- indpendence violations can resultsd in a higher type II error rate (false negatives)
+
+## Example Analyses 1: Assumptions Met
+
+- Whitepine study, 4 pollen parents crossed with 7 female trees (4 reps), epicotyl length was assessed
+
+```{r}
+
+data("hanover.whitepine", package = "agridat")
+hist(hanover.whitepine$length, main = NULL, xlab = "epicotyl length", cex.lab = cex_lab, col = "#65B362")
+```
+
+## Example Analyses 1: Assumptions Met
+
+```{r}
+library(lme4)
+m1 <- lmer(length ~ male*female + (1|rep), data = hanover.whitepine)
+plot(m1, xlab = "predicted values", ylab = "Pearson residuals",  main = "Standard Residual Plot")
+```
+
+## Example Analyses 1: Assumptions Met
+
+```{r}
+plot(rstudent(m1), col = "blue3", main = "Plot by Data Set Order", ylab = "studentized residuals", xlab = "spreadsheet row"); abline(h = 0)
+```
+## Example Analyses 1: Assumptions Met
+
+```{r}
+plot(m1, resid(., scaled=TRUE) ~fitted(.) | rep, xlab = "predicted values", ylab = "Pearson residuals",  main = "Standard Residual Plot by Rep", abline = 0)
+```
+
+## Example Analyses 1: Assumptions Met
+
+```{r}
+plot(m1, male ~ resid(.,type = "response", scaled=TRUE), main = "Residuals by a Variable", xlab = "standardized Residuals")
+```
 
 
 ## Example Analyses 2
 
+```{r}
+plot(m1, female ~ resid(.,type = "response", scaled=TRUE), main = "Residuals by a Variable", xlab = "standardized Residuals")
+```
+
+::: {.r-stack background-color="#FDDC5C" logo=false}
+##
+ <br> <br>
+ <center>
+
+### What if the iid assumptions are not met?
+
+ </center>
+:::
+
+::: {.r-stack background-color="#FDDC5C" logo=false}
 
 
-## Example Analyses 3
+##
+ <br> <br>
+::: {.custom-blockquote}
+In the "general" linear model days, when a premium was placed on the i.i.d. error paradigm, if we did reject $H_0$, it would set off a minor crisis in the form of a hunt for a variance stabilizing transformation. In contemporary modeling, we simply proceed with inference on estimable functions using the unequal variance model. 
+
+-- Walt Stroup, Marina Ptukhiuna and Julie Garai (2024), *Generalized Linear Mixed Models*, 2nd Ed, Section 7.2.3.1
+:::
+:::
 
 
+## Assumption Not Met: Heteroscedasticity [1] 
+
+- When an experimental factor is causing heteroscedasticity
+- multi-environment agronomic study: 38 plant varieties, 9 locations, 4 reps each (RCBD)
+
+```{r}
+var_ex1 <- read.csv(here::here("static", "tutorials", "data", "MET_trial_variance.csv")) |> 
+  mutate(block = as.character(block))
+hist(var_ex1$yield, main=NA, col = "orange", ylab=NULL, xlab = "seed yield", cex.lab = cex_lab, cex.axis = cex_axis)
+```
+
+## Assumption Not Met: Heteroscedasticity [1] 
+
+```{r}
+boxplot(yield ~ site, data = var_ex1, col = "orange", xlab = "location")
+```
+
+## Assumption Not Met: Heteroscedasticity [1] 
+
+```{r}
+m2 <- lme(yield ~ site:variety + variety, random = ~ 1 |site/block, na.action = na.exclude, data = var_ex1)
+plot(m2)
+```
+
+## Assumption Not Met: Heteroscedasticity [1] 
+
+```{r}
+plot(m2, site  ~ resid(.,type = "response", scaled=TRUE))
+```
+
+## Assumption Not Met: Heteroscedasticity [1] 
+
+*Solution:* model variance for each site with `varIdent()`, an 'nlme' function
+
+```{r}
+m2_new <- lme(yield ~ site:variety + variety, random = ~ 1 |site/block, na.action = na.exclude, data = var_ex1,
+          weights = varIdent(form = ~1|site))
+plot(m2_new)
+```
 
 
-## Early Lessons
+## Assumption Not Met: Heteroscedasticity [1] 
+
+```{r}
+library(emmeans)
+emmeans(m2, ~ variety*site, at = list(variety = "variety_1", site = c("site_1", "site_8", "site_7")))
+emmeans(m2_new, ~ variety*site, at = list(variety = "variety_1", site = c("site_1", "site_8", "site_7")))
+```
+
+## Assumption Not Met: Heteroscedasticity [1] 
+
+```{r}
+anova(m2, type = "marginal") |> as.data.frame() |> slice(2:3)
+anova(m2_new, type = "marginal") |> as.data.frame() |> slice(2:3)
+```
+## Assumption Not Met: Heteroscedasticity [2] 
+
+- When the mean and variance are linked
+- single agronomic study: 38 plant varieties evaluated in one trial, 4 reps each (RCBD)
+
+```{r}
+var_ex2 <- read.csv(here::here("static", "tutorials", "data", "single_trial_variance.csv")) |> 
+  dplyr::mutate(block = as.character(block))
+
+head(var_ex2, n = 4)
+```
+
+## Assumption Not Met: Heteroscedasticity [2] 
+
+```{r}
+hist(var_ex2$yield, col = "#E85D63", main = NULL, xlab = "seed yield",  cex.lab = cex_lab, cex.axis = cex_axis)
+```
+
+## Assumption Not Met: Heteroscedasticity [2] 
+
+```{r}
+m3 <- lme(yield ~ variety, random = ~ 1 |block, na.action = na.exclude, data = var_ex2)
+plot(m3, main = "Classic Funnel Shape")
+```
+
+## Assumption Not Met: Heteroscedasticity [2] 
+
+*Solution:* model variance as a function of the model fitted values using `varPower()`, an 'nlme' function
+
+```{r}
+m3_new <- lme(yield ~ variety, random = ~ 1 |block, na.action = na.exclude, data = var_ex2,
+          weights = varPower())
+plot(m3_new)
+```
+
+## Assumption Not Met: Heteroscedasticity [2] 
+
+```{r}
+#| message: false
+#| warning: false
+emmeans(m3, ~ variety, at = list(variety = c("variety_22", "variety_3", "variety_26"))) 
+emmeans(m3_new, ~ variety, at = list(variety = c("variety_22", "variety_3", "variety_26")))
+```
+
+## Assumption Not Met: Heteroscedasticity [2] 
+
+```{r}
+anova(m3, type = "marginal") |> as.data.frame() |> slice(2)
+anova(m3_new, type = "marginal") |> as.data.frame() |> slice(2)
+```
+
+*Note*: LSD (least significant difference) calculations rely on a single variance term, so LSD cannot be used on these models (and is ill defined for mixed models) 
 
 
+::: {.r-stack background-color="#FDDC5C" logo=false}
 
 
+## Intractable iid Violations
+
+:::
+
+## Log-normal Models
+*Almost normal, just take the (natural) log*
+
+Earthquake acceleration
+
+```{r}
+#| echo: false
+par(mfrow = c(1,2))
+par(mar=c(4.1, 2.1, 1, 2.1))
+data(Earthquake)
+hist(Earthquake$accel, col = "#0093af", ylab = NULL, main = NULL, xlab = "earthquake acceleration")
+hist(log(Earthquake$accel), col = "#0093af", main = NULL, ylab = NULL, xlab = "log acceleration")
+```
 
 
+## Log-normal Models
+
+```{r}
+m4 <- gls(accel ~ Quake, data = Earthquake)
+m4_new <- gls(log(accel) ~ Quake, data = Earthquake)
+```
+
+```{r}
+#| echo: false
+par(mfrow = c(1,2))
+par(mar=c(4.1, 2.1, 1, 2.1))
+
+plot(m4, abline = 0)
+plot(m4_new, abline = 0)
+```
+
+
+## Log-normal Models
+
+```{r}
+anova(m4) |> as.data.frame() |> slice(-1)
+anova(m4_new) |> as.data.frame() |> slice(-1)
+```
+
+## Log-normal Models
+
+```{r}
+emmeans(m4, "Quake", at = list(Quake = c("20", "10", "5")))
+emmeans(m4_new, "Quake", type = "response", at = list(Quake = c("20", "10", "5")))
+```
+
+
+## Other Generalized Models
+
+- Poisson: the mean equals the variance
+- negative binomial, binomial (logistic), gamma, geometric, beta,...(more): the variance is a mathematical function of the mean
+- common deviations: count data (unless even the lowest counts are very high), percent data that might be subject to bounding of the values, binomial outcomes, multinomial outcomes, highly skewed data
+- A generalized linear model is needed; it will use another distribution to describe the behavior of a dependent variable (not the residuals). - This is an entire class to learn how to use these properly
 
 ## Final Thoughts {.smaller}
 
+- In standard linear models, there is an 'iid' assumption (independently and identically distributed): we assume that model residuals shares a single common variance and are uncorrelated with each other
 
+- Violating these assumptions can impact the power of hypothesis testing and the width of confidence intervals 
+
+- Failure to address these violations invalidates the analysis and inference from it
+
+- We can model variance by categorical variable or by a covariate using tools in the R package '[nlme'](https://CRAN.R-project.org/package=nlme)
+
+- Some variables by their nature violate the iid assumption and required generalized linear models to analyze
 
 ## Additional Resources
 
 
+- [Heteroscedasticity Examples](https://idahoagstats.github.io/mixed-models-in-R/chapters/variance-components.html#variance-estimation-under-heteroscedasticity: more details on the data and analysis
+
+- [*Mixed-Effects Models in S and S-PLUS*](https://link.springer.com/book/10.1007/b98882) *thee book* for **nlme**, by José C. Pinheiro and Douglas M. Bates (2000). We used this book extensively for developing this guide. Sadly, it's out of print. However, there are affordable used copies available; some school libraries also carry this. 
+
+- [Zero Inflated Models and Generalized Linear Mixed Models with R](https://www.highstat.com/index.php/books2?view=article&id=19&catid=18) (2012) by Alain Zuur, Anatoly Saveliev, and Elena Ieno
+
+- [GLMM FAQs](https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html) by Ben Bolker ([more resources](https://bbolker.github.io/mixedmodels-misc/) on mixed models from Dr. Bolker)
 
 
