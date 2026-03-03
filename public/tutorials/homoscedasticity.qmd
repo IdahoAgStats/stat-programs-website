@@ -352,9 +352,7 @@ anova(m2, m2_new)
 ## SAS Options
 #### *For evaluating homoscedasticity*
  <br>
-```{sas}
-#| eval: false
-#| echo: true
+```{}
 proc glm data=var_ex1;
   class site variety rep;
   model yield = variety|site rep(site);
@@ -369,9 +367,7 @@ run;
 ## SAS Options
 #### *For modelling heteroscedasticity*
  <br>
-```{sas}
-#| eval: false
-#| echo: true
+```{}
 proc mixed data=var_ex1;
   class site variety rep;
   model yield = site*variety + variety;

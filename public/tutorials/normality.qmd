@@ -473,7 +473,7 @@ My cut-off is usually an absolute values of 4 for studentized residuals (99.99% 
 - Modest departures from normality can be ignored, anova and estimates are robust to this.
 - Non-parametric tests are an option, but they are overall a low-information solution.
 - Manual permutattions. are an (cumbersome) option.
-- The best choice is always to find the correct distribution for your data./
+- The best choice is always to find the correct distribution for your data.
 - The optimal approach is to use science not statistics to justify data removal. 
 
 ## Additional Resources
