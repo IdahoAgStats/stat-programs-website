@@ -352,7 +352,9 @@ anova(m2, m2_new)
 ## SAS Options
 #### *For evaluating homoscedasticity*
  <br>
-```{}
+```{sas}
+#| eval: false
+#| echo: true
 proc glm data=var_ex1;
   class site variety rep;
   model yield = variety|site rep(site);
@@ -367,7 +369,9 @@ run;
 ## SAS Options
 #### *For modelling heteroscedasticity*
  <br>
-```{}
+```{sas}
+#| eval: false
+#| echo: true
 proc mixed data=var_ex1;
   class site variety rep;
   model yield = site*variety + variety;
@@ -439,7 +443,7 @@ emmeans(m4_new, "Quake", type = "response", at = list(Quake = c("20", "10", "5")
 
 ## Final Thoughts {.smaller}
 
-- In standard linear models, there is an 'iid' assumption (independently and identically distributed): we assume that model residuals shares a single common variance and are uncorrelated with each other
+- In standard linear models, there is an 'iid' assumption (independent and identically distributed): we assume that model residuals shares a single common variance and are uncorrelated with each other
 
 - Violating these assumptions can impact the power of hypothesis testing and the width of confidence intervals 
 

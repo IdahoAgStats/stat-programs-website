@@ -443,7 +443,7 @@ emmeans(m4_new, "Quake", type = "response", at = list(Quake = c("20", "10", "5")
 
 ## Final Thoughts {.smaller}
 
-- In standard linear models, there is an 'iid' assumption (independently and identically distributed): we assume that model residuals shares a single common variance and are uncorrelated with each other
+- In standard linear models, there is an 'iid' assumption (independent and identically distributed): we assume that model residuals shares a single common variance and are uncorrelated with each other
 
 - Violating these assumptions can impact the power of hypothesis testing and the width of confidence intervals 
 
