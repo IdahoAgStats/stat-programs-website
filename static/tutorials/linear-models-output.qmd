@@ -17,8 +17,9 @@ execute:
 ```{r}
 #| include: false
 #| echo: false
-library(lme4); library(nlme); library(infer); library(dplyr); library(ggplot2)
-library(emmeans)
+library(lme4); library(lmerTest)
+ library(dplyr); library(ggplot2)
+
 
 cex_axis = 1.5
 cex_lab = 1.5
@@ -91,6 +92,9 @@ dx <- density(x, adjust = 2)
 hist(x, freq = FALSE, col = "gray95", xlab = NULL, main = NULL, ylab = NULL); lines(dx, lwd = 2, col = "red3")
 ```
 
+## Definitions
+
+
 ## Some Notes on Estimation
 
 $$\hat{Y} = \beta_0 + \beta_1 X1 + \beta_2 X2 + ...\beta_k Xk$$
@@ -107,7 +111,42 @@ $\beta_1, \beta_2,...$ = model coefficients
 - How most frequentist statistical equations are "solved"
 - Iterative approach, find the most probable set of model parameters (coefficients and variance terms) that maximizes a likelihood function
 - If a data set is perfectly balanced, maximum likelihood has the same results as ordinary least squares    
-- REML (restricted maximum likelihood) is a special type of MLE for mixed models
+- REML (restricted maximum likelihood) is a special type of MLE for mixed models.
+
+-----------------------------------------------------
+
+::: {.custom-blockquote}
+...a p-value is the probability under a specified statistical model that a statistical summary of the data (e.g., the sample mean difference between two compared groups) would be equal to or more extreme than its observed value.
+:::
+
+<br>
+
+::: {.right-align .smaller}
+-- [American Statistical Association](https://doi.org/10.1080/00031305.2016.1154108)
+:::
+
+-----------------------------------------------------
+
+::: {.custom-blockquote}
+ [A confidence interval percentage] is the frequency with which other unobserved intervals will contain the true effect, not how frequently the one interval being presented will contain future estimates...if all the assumptions used to compute the intervals were correct.
+:::
+
+<br>
+
+::: {.right-align .smaller}
+-- Greenland et al, [2016](https://pmc.ncbi.nlm.nih.gov/articles/PMC4877414/)
+:::
+
+
+::: {.custom-blockquote}
+The confidence level instead reflects the long-run reliability of the method used to generate the interval...,.if the same sampling procedure were repeated 100 times from the same population, approximately 95 of the resulting intervals would be expected to contain the true population mean. The frequentist approach sees the true population mean as a fixed unknown constant, while the confidence interval is calculated using data from a random sample.  
+:::
+
+<br>
+
+::: {.right-align .smaller}
+-- [Wikipedia](https://en.wikipedia.org/wiki/Confidence_interval)
+:::
 
 ::: {.r-stack background-color="#FDDC5C" logo=false}
 
@@ -171,7 +210,6 @@ s1$residuals # raw residuals
 s1$df # degrees of freedom
 s1$aliased # check that no variables are linearly dependent
 s1$fstatistic # model F-test
-s1$cov.unscaled
 ```
 
 *(I tend not to need these unless doing something very specific)*
@@ -264,31 +302,156 @@ Several continous variables effecting differences in a continuous independent va
 data(mtcars)
 m2 <- lm(mpg ~ disp + hp + drat, data = mtcars)
 ```
+
 ## Multiple Linear Regression
 
 ```{r}
 summary(m2)
 ```
 
+## Multiple Linear Regression
+
+```{r}
+drop1(m2)
+```
+
+::: {.r-stack background-color="#FDDC5C" logo=false}
+
+# ANOVA
+*(Regression with categorical variables)*
+:::
+
+
 ## ANOVA
-*<Regression with categorical variables)*
+```{r}
+data(npk)
+head(npk)
+```
+
+## ANOVA
+*(ignoring block)*
+
+N: 2 levels, 0 and 1     
+P: 2 levels, 0 and 1                   
+K: 2 levels, 0 and 1            
+
+$$ Y_{ijk+} = \beta_0 + \beta_1N +\beta_2P + \beta_3K $$
+
+## ANOVA {.smaller}
+*(with block)*
+
+**6 levels of block**
+block 1: 0 only
+block 2: 0 and 1
+....
+block 6: 0 and 1
+*(set one level as level zero or reference level)* 
+
+
+$$ Y_{ijk+} = \beta_0 +...+ \beta_4 Bl2 + \beta_4 Bl3 +   $$
+
+
+
+## ANOVA
+
+```{r}
+m3 <- lm(yield ~N + P + K + block, data = npk)
+summary(m3)
+```
+
+## ANOVA
+
+```{r}
+anova(m3) # type 1 sums of squares
+drop1(m3, test = "F") # type 3 sums of squares
+```
+
+## Sums of Squares
+
+Type 1: depends on order of independent variables
+Type 3: best for factorials
+Type 2: only use if you're sure there are no interactions
+
+**These only matter if the data are unbalanced**
+
+[Decent explanation](https://www.r-bloggers.com/2011/03/anova-%E2%80%93-type-iiiiii-ss-explained/)
+
+::: {.r-stack background-color="#FDDC5C" logo=false}
+
+# Mixed Models
+
+:::
 
 ## Mixed Models
 
 ```{r}
-library(lme4)
+library(lme4); library(lmerTest)
+m4 <- lmer(yield ~N + P + K + (1|block), data = npk)
+m4
 ```
 
-## Repeated Measures
+## Mixed Models
 
 ```{r}
+methods(class = "merMod")
+```
+## Mixed Models
 
+```{r}
+fixef(m4) # fixed effects
+ranef(m4) # random effects
 ```
 
+## Mixed Models
+
+```{r}
+sigma(m4)
+confint(m4)
+```
+
+## Mixed Models
+
+A large number of functions are providing model conditions, not something estimated.
+
+```{r}
+#| eval: false
+getL(m4)
+family(m4)
+na.action(m4) # how missing data were handled
+isREML(m4) # yes/no was REML used?
+formula(m4) # formula used
+getData(m4) # return data set 
+nobs(m4) # data set size
+ngrps(m4) # number of random groups
+```
+
+## Mixed Models
+
+```{r}
+print(VarCorr(m4), comp = c("Variance", "Std.Dev"))
+```
+
+## Mixed Models
+*So many methods*
+
+```{r}
+methods(class = "lmerModLmerTest")
+```
+
+## Mixed Models
+
+- Test random effects with a log likihood ratio test
+```{r}
+ranova(m4)
+```
 
 ## Final Thoughts {.smaller}
 
-- 
+- $R^2$, log likelihood, and AIC/BIC are ways to evaluate model fit
+- the coefficient for regression can be directly interpreted; ANOVA coefficients are more complex
+- Use type 3 sums of squares if you're unclear
+- linear modelling objects have a large amount of output, use `methods()` to explore this content
+ 
 
 ## Additional Resources {.smaller}
 
@@ -297,11 +460,8 @@ John Fox and Sanford Weisberg.
 
 - Learn more about [functions for detecting influential data](https://web.mit.edu/~r/current/arch/i386_linux26/lib/R/library/stats/html/influence.measures.html) 
 
-- 
+- [SAS User Guide to Linear Models](https://documentation.sas.com/doc/en/statug/latest/statug_intromix_sect009.htm)
 
 - [Linear Mixed Model Guide](https://idahoagstats.github.io/mixed-models-in-R/): details on implementation of linear mixed models in R
-
-- [*Mixed-Effects Models in S and S-PLUS*](https://link.springer.com/book/10.1007/b98882) *thee book* for **nlme**, by José C. Pinheiro and Douglas M. Bates (2000). We used this book extensively for developing this guide. Sadly, it's out of print. However, there are affordable used copies available; some school libraries also carry this. 
-
 
 
