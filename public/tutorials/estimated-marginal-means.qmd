@@ -1,0 +1,135 @@
+---
+format: 
+  revealjs:
+    theme: [default]
+    aspectratio: 16x9
+    slide-number: true
+    css: custom.css
+    embed-resources: true
+    logo: images/UI_Main_horizontal_4c.png
+editor: source
+execute:
+  echo: true
+  message: false
+  warning: false
+---
+
+```{r}
+#| include: false
+#| echo: false
+library(lme4); library(nlme); library(infer); library(dplyr); library(ggplot2)
+library(emmeans)
+
+cex_axis = 1.5
+cex_lab = 1.5
+
+```
+
+
+
+:::: {.columns}
+
+::: {.column width="30%"}
+<br> <br> <br>
+![](images/UI_Main_stacked_4c.png)
+:::
+
+::: {.column width="70%"}
+<br>
+
+## Making Sense of Your Estimates?
+
+<br> <br> 
+*Julia Piaskowski*
+
+*March 24, 2026* 
+<br> <br> 
+
+:::
+
+::::
+
+
+
+::: {.r-stack logo=false, background-color="#FDDC5C"}
+##
+ <br> <br>
+
+### "....."
+
+:::
+
+
+## Linear Model Review
+
+$$Y_i = \beta_0 + \beta_1 X_i + \epsilon_i$$
+
+$Y_i$ = dependent variable (there is only 1)
+
+$X_i$ = independent variable(s) (there may be many)
+
+$B_0$ = model intercept, the overall mean of $Y$
+
+$B_1$ = how $Y$ changes with $X$ 
+
+$\epsilon_i$ = model residual, the gap between the predicted value for $Y_i$ and its observed value
+
+
+## The Residual Is Important {.smaller}
+
+$$ \epsilon_i \sim N(0, \sigma)$$
+
+- The residuals are normally distributed with a mean of zero and some standard deviation that we will estimate during the model-fitting process. 
+
+- All model residuals are *independent and identically distributed*, "i.i.d." -- they are uncorrelated with each other and drawn from the same distribution (that has exactly one variance)
+
+```{r}
+#| echo: false
+par(mar = c(0, 0, 0, 0))
+x <- rnorm(500)
+dx <- density(x, adjust = 2)
+hist(x, freq = FALSE, col = "gray95", xlab = NULL, main = NULL, ylab = NULL); lines(dx, lwd = 2, col = "red3")
+```
+
+
+
+::: {.r-stack background-color="#FDDC5C" logo=false}
+
+# New Tpic
+:::
+
+
+----------------------------------------------------------------
+
+
+::: {.custom-blockquote}
+In the "general" linear model days, when a premium was placed on the i.i.d. error paradigm, if we did reject $H_0$, it would set off a minor crisis in the form of a hunt for a variance stabilizing transformation. In contemporary modeling, we simply proceed with inference on estimable functions using the unequal variance model.  
+:::
+
+<br>
+
+::: {.right-align .smaller}
+-- Walt Stroup, Marina Ptukhiuna and Julie Garai (2024), *[Generalized Linear Mixed Models](https://www.taylorfrancis.com/books/mono/10.1201/9780429092060/generalized-linear-mixed-models-walter-stroup-marina-ptukhina-julie-garai)*, 2nd Ed, Section 7.2.3.1
+:::
+
+
+## 
+
+## SAS 
+
+
+
+## Final Thoughts {.smaller}
+
+- 
+
+## Additional Resources {.smaller}
+
+
+
+- [Linear Mixed Model Guide](https://idahoagstats.github.io/mixed-models-in-R/): details on implementation of linear mixed models in R
+
+- [*Mixed-Effects Models in S and S-PLUS*](https://link.springer.com/book/10.1007/b98882) *thee book* for **nlme**, by José C. Pinheiro and Douglas M. Bates (2000). We used this book extensively for developing this guide. Sadly, it's out of print. However, there are affordable used copies available; some school libraries also carry this. 
+
+
+
