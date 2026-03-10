@@ -1,0 +1,307 @@
+---
+format: 
+  revealjs:
+    theme: [default]
+    aspectratio: 16x9
+    slide-number: true
+    css: custom.css
+    embed-resources: true
+    logo: images/UI_Main_horizontal_4c.png
+editor: source
+execute:
+  echo: true
+  message: false
+  warning: false
+---
+
+```{r}
+#| include: false
+#| echo: false
+library(lme4); library(nlme); library(infer); library(dplyr); library(ggplot2)
+library(emmeans)
+
+cex_axis = 1.5
+cex_lab = 1.5
+
+```
+
+
+
+:::: {.columns}
+
+::: {.column width="30%"}
+<br> <br> <br>
+![](images/UI_Main_stacked_4c.png)
+:::
+
+::: {.column width="70%"}
+<br>
+
+## Linear Model Outputs: What Does It All Mean?
+
+<br> <br> 
+*Julia Piaskowski*
+
+*March 10, 2026* 
+<br> <br> 
+
+:::
+
+::::
+
+
+
+::: {.r-stack logo=false, background-color="#FDDC5C"}
+##
+ <br> <br>
+
+### "....."
+
+:::
+
+
+## Linear Model Review
+
+$$Y_i = \beta_0 + \beta_1 X_i + \epsilon_i$$
+
+$Y_i$ = dependent variable (there is only 1)
+
+$X_i$ = independent variable(s) (there may be many)
+
+$B_0$ = model intercept, the overall mean of $Y$
+
+$B_1$ = how $Y$ changes with $X$ 
+
+$\epsilon_i$ = model residual, the gap between the predicted value for $Y_i$ and its observed value
+
+
+## The Residual Is Important {.smaller}
+
+$$ \epsilon_i \sim N(0, \sigma)$$
+
+- The residuals are normally distributed with a mean of zero and some standard deviation that we will estimate during the model-fitting process. 
+
+- All model residuals are *independent and identically distributed*, "i.i.d." -- they are uncorrelated with each other and drawn from the same distribution (that has exactly one variance)
+
+```{r}
+#| echo: false
+par(mar = c(0, 0, 0, 0))
+x <- rnorm(500)
+dx <- density(x, adjust = 2)
+hist(x, freq = FALSE, col = "gray95", xlab = NULL, main = NULL, ylab = NULL); lines(dx, lwd = 2, col = "red3")
+```
+
+## Some Notes on Estimation
+
+$$\hat{Y} = \beta_0 + \beta_1 X1 + \beta_2 X2 + ...\beta_k Xk$$
+
+$$\hat{Y} = \mathbf{XB} $$ 
+
+$\hat{Y}$ = predicted/fitted value  
+$\beta_0$ = model intercept   
+$\beta_1, \beta_2,...$ = model coefficients   
+
+## Some Notes on Estimation {.smaller}
+#### *Maximum likelihood Estimation (MLE)*
+
+- How most frequentist statistical equations are "solved"
+- Iterative approach, find the most probable set of model parameters (coefficients and variance terms) that maximizes a likelihood function
+- If a data set is perfectly balanced, maximum likelihood has the same results as ordinary least squares    
+- REML (restricted maximum likelihood) is a special type of MLE for mixed models
+
+::: {.r-stack background-color="#FDDC5C" logo=false}
+
+# Regression
+:::
+
+## Regression Example
+Simple linear regression: one continuous independent variable
+```{r}
+data(anscombe); head(anscombe, n = 4)
+m1 <- lm(y1 ~ x1, data = anscombe)
+plot(anscombe$x1, anscombe$y1, pch = 21, bg = "dodgerblue4")
+```
+
+## Regression Example
+- `print(m1)` is a pretty printing of some output      
+- `summary(m1)` is a function with pre-selected and formatted output
+
+```{r}
+#| eval: false
+#| echo: true
+print(m1) 
+s1 <- summary(m1)
+```
+
+-------------------------------
+
+```{r}
+#| echo: false
+(s1 <- summary(m1))
+```
+
+## Regression Output
+
+Model coefficients
+```{r}
+s1$coefficients
+```
+
+- Standard error of the estimate
+- P-value is evaluating if the estimate is different from zero
+
+## Regression Output
+
+Other Important output
+```{r}
+s1$sigma # standard deviation of the residuals
+s1$r.squared # model R^2
+s1$adj.r.squared # adjusted model R^2
+```
+
+$ R^2_{Adj} = 1 - \frac {(1-R^2)(1-n)} {m - k - 1}$
+
+## Other Regression Output
+
+```{r}
+#| eval: false
+s1$call # model reminder
+s1$term # function data conditining
+s1$residuals # raw residuals
+s1$df # degrees of freedom
+s1$aliased # check that no variables are linearly dependent
+s1$fstatistic # model F-test
+s1$cov.unscaled
+```
+
+*(I tend not to need these unless doing something very specific)*
+
+## More Regression Output
+*From the model object*
+
+```{r}
+coef(m1)
+residuals(m1)
+```
+
+## Possible Regression Output {.smaller}
+
+```{r}
+methods(class = class(m1))
+```
+
+*These are built-in methods for this class of object, and are dependent on the libraries loaded
+
+## Possible Regression Output {.smaller}
+
+- `confint()` provides confidence interval of parameters
+- `extractAIC()` and `logLik()` return fit statistics
+- `hatvalues()`, `dfbetas()`, `cooks.distance()`, and `influence()` are model diagnostics tools
+- `drop()` and `add1()` drop/add terms sequentially and evaluate model fit statistics (not applicable for simple linear regression)
+- `plot()` provides diagnostic plots (= `plot.lm()`)
+- `simulate()` simulates data under the estimated model parameters
+- `residuals()`, `rstandard()`, `rstudent()` produce raw, Pearson and studentized residuals, respectively
+- `predict()` is for predicting a new data set
+
+## Regression Output
+
+Confidence Intervals
+```{r}
+confint(m1)
+confint(m1, level = 0.90)
+```
+
+```{r}
+#| echo: false
+#| include: false
+s1$sigma
+s1$cov.unscaled
+s1$sigma^2 * s1$cov.unscaled
+vcov(m1)
+```
+
+## Regression Output {.smaller .scrollable}
+Influential data points 
+
+```{r}
+influence(m1)
+```
+
+## $R^2$ versus $r$ {.smaller}
+- $R^2$ coefficient of determination
+
+![](images/SSR_viz.png)
+
+::: {.right-align}
+[Image Source](https://www.sciencedirect.com/science/article/abs/pii/S0001457517303962)
+:::
+
+## $R^2$ versus $r$
+- $R^2$ coefficient of determination
+$$ R^2 = 1 - \frac {SS_{error}}{SS_{regression} + SS_{errror}}$$
+
+$$ 0 \leq R^2 \leq 1$$
+
+- For measuring the strength of a regression 
+
+- $R^2$ exists, $R$ does not
+
+## $R^2$ versus $r$
+- $r$ coefficient of correlation:
+
+$$ r_{xy} = \frac{s_{xy}}{s_x s_y} $$
+
+$$ -1 \leq r \leq 1$$
+
+- For understanding pairwise relationships
+
+- $r^2$ = $R^2$ only in the case of simple linear regression
+
+## Multiple Linear Regression
+Several continous variables effecting differences in a continuous independent variable
+
+```{r}
+data(mtcars)
+m2 <- lm(mpg ~ disp + hp + drat, data = mtcars)
+```
+## Multiple Linear Regression
+
+```{r}
+summary(m2)
+```
+
+## ANOVA
+*<Regression with categorical variables)*
+
+## Mixed Models
+
+```{r}
+library(lme4)
+```
+
+## Repeated Measures
+
+```{r}
+
+```
+
+
+## Final Thoughts {.smaller}
+
+- 
+
+## Additional Resources {.smaller}
+
+- [An R Companion to Applied Regression](https://www.john-fox.ca/Companion/) (2019), $3^{rd}$ Ed., by
+John Fox and Sanford Weisberg. 
+
+- Learn more about [functions for detecting influential data](https://web.mit.edu/~r/current/arch/i386_linux26/lib/R/library/stats/html/influence.measures.html) 
+
+- 
+
+- [Linear Mixed Model Guide](https://idahoagstats.github.io/mixed-models-in-R/): details on implementation of linear mixed models in R
+
+- [*Mixed-Effects Models in S and S-PLUS*](https://link.springer.com/book/10.1007/b98882) *thee book* for **nlme**, by José C. Pinheiro and Douglas M. Bates (2000). We used this book extensively for developing this guide. Sadly, it's out of print. However, there are affordable used copies available; some school libraries also carry this. 
+
+
+
