@@ -241,7 +241,7 @@ These are built-in methods for this class of object, and are dependent on the li
 - `confint()` provides confidence interval of parameters
 - `extractAIC()` and `logLik()` return fit statistics
 - `hatvalues()`, `dfbetas()`, `cooks.distance()`, and `influence()` are model diagnostics tools
-- `drop()` and `add1()` drop/add terms sequentially and evaluate model fit statistics (not applicable for simple linear regression)
+- `drop1()` and `add1()` drop/add terms sequentially and evaluate model fit statistics (not applicable for simple linear regression)
 - `plot()` provides diagnostic plots (= `plot.lm()`)
 - `simulate()` simulates data under the estimated model parameters
 - `residuals()`, `rstandard()`, `rstudent()` produce raw, Pearson and studentized residuals, respectively
@@ -352,7 +352,7 @@ N: 2 levels, 0 and 1
 P: 2 levels, 0 and 1                   
 K: 2 levels, 0 and 1            
 
-$$ Y_{ijk+} = \beta_0 + \beta_1N +\beta_2P + \beta_3K $$
+$$ \hat{Y}_{ijk} = \beta_0 + \beta_1N +\beta_2P + \beta_3K $$
 
 ## ANOVA {.smaller .scrollable}
 *(with block)*
@@ -373,7 +373,7 @@ block 3: 0 and 1
 | D | 0 | 0 | 0 | 0 | 1  | 0 |
 | E | 0 | 0 | 0 | 0 | 0  | 1 |
 
-$$ Y_{npk} = \beta_0 +...+ \beta_4 Bl2 + \beta_5 Bl3 + \beta_6 Bl4 + \beta_7 Bl5 + \beta_8 Bl6$$
+$$ \hat{Y}_{npk} = \beta_0 +...+ \beta_4 Bl2 + \beta_5 Bl3 + \beta_6 Bl4 + \beta_7 Bl5 + \beta_8 Bl6$$
 
 
 
