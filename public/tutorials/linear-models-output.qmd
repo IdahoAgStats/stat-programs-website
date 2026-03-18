@@ -100,7 +100,7 @@ $\beta_1, \beta_2,...$ = model coefficients
 - Iterative approach, find the most probable set of model parameters (coefficients and variance terms) that maximizes a likelihood function
 - If a data set is perfectly balanced, maximum likelihood has the same results as ordinary least squares    
 - REML (restricted maximum likelihood) is a special type of MLE for mixed models.
-
+- ordinary least squares (OLS) is the original method, but it's less flexible than MLE
 
 ::: {.r-stack background-color="#FDDC5C" logo=false}
 
@@ -108,7 +108,7 @@ $\beta_1, \beta_2,...$ = model coefficients
 :::
 
 
------------------------------------------------------
+## P-value
 
 ::: {.custom-blockquote}
 ...a p-value is the probability under a specified statistical model that a statistical summary of the data (e.g., the sample mean difference between two compared groups) would be equal to or more extreme than its observed value.
@@ -120,10 +120,10 @@ $\beta_1, \beta_2,...$ = model coefficients
 -- [American Statistical Association](https://doi.org/10.1080/00031305.2016.1154108)
 :::
 
------------------------------------------------------
+## Confidence Interval
 
 ::: {.custom-blockquote}
- [A confidence interval percentage] is the frequency with which other unobserved intervals will contain the true effect, not how frequently the one interval being presented will contain future estimates...if all the assumptions used to compute the intervals were correct.
+ [A confidence interval percentage] is the frequency with which other unobserved intervals will contain the true effect....if all the assumptions used to compute the intervals were correct.
 :::
 
 <br>
@@ -135,7 +135,7 @@ $\beta_1, \beta_2,...$ = model coefficients
 -----------------------------------------------------
 
 ::: {.custom-blockquote}
-The confidence level instead reflects the long-run reliability of the method used to generate the interval...,.if the same sampling procedure were repeated 100 times from the same population, approximately 95 of the resulting intervals would be expected to contain the true population mean. The frequentist approach sees the true population mean as a fixed unknown constant, while the confidence interval is calculated using data from a random sample.  
+The confidence level instead reflects the long-run reliability of the method used to generate the interval....if the same sampling procedure were repeated 100 times from the same population, approximately 95 of the resulting intervals would be expected to contain the true population mean. The frequentist approach sees the true population mean as a fixed unknown constant, while the confidence interval is calculated using data from a random sample.  
 :::
 
 <br>
@@ -160,10 +160,10 @@ data(anscombe); head(anscombe, n = 4)
 
 ```{r}
 m1 <- lm(y1 ~ x1, data = anscombe)
-plot(anscombe$x1, anscombe$y1, pch = 21, bg = "dodgerblue4")
+plot(anscombe$x1, anscombe$y1, pch = 21, bg = "blue3"); abline(3, 0.5)
 ```
 
-## Regression Example {.scrollable}
+## Regression Example {.smaller .scrollable}
 - `print(m1)` is a pretty printing of some output      
 - `summary(m1)` is a function with pre-selected and formatted output
 
@@ -180,19 +180,30 @@ s1$coefficients
 
 - the "(Intercept)" is $\beta_0$ and "x1" is $\beta_1$ 
 - the Standard error of the estimate is given
-- the t value is from the student's t distribution
+- the t value is from the student's t-distribution
 - P-value is evaluating if the estimate is different from zero
 
 ## Regression Output
 
-Other Important output
+Other valuable output
 ```{r}
 s1$sigma # standard deviation of the residuals
 s1$r.squared # model R^2
 s1$adj.r.squared # adjusted model R^2
 ```
 
-$R^2_{Adj} = 1 - \frac {(1-R^2)(1-n)} {m - k - 1}$
+$R^2_{Adj} = 1 - \frac {(1-R^2)(1-n)} {n - k - 1}$
+
+## Regression Output
+
+Other valuable output: F-statistic      
+- overall indicator of model fit     
+- comparing to a null model: `y ~ 1` (intercept-only model)   
+
+```{r}
+s1$fstatistic
+pf(s1$fstatistic[1], s1$fstatistic[2], s1$fstatistic[3], lower.tail = FALSE)
+```
 
 ## Other Regression Output
 
@@ -220,17 +231,17 @@ residuals(m1)
 
 ```{r}
 class(m1)
-methods(class = class(m1))
+methods(class = "lm")
 ```
 
-*These are built-in methods for this class of object, and are dependent on the libraries loaded
+These are built-in methods for this class of object, and are dependent on the libraries loaded
 
 ## Possible Regression Output {.smaller}
 
 - `confint()` provides confidence interval of parameters
 - `extractAIC()` and `logLik()` return fit statistics
 - `hatvalues()`, `dfbetas()`, `cooks.distance()`, and `influence()` are model diagnostics tools
-- `drop()` and `add1()` drop/add terms sequentially and evaluate model fit statistics (not applicable for simple linear regression)
+- `drop1()` and `add1()` drop/add terms sequentially and evaluate model fit statistics (not applicable for simple linear regression)
 - `plot()` provides diagnostic plots (= `plot.lm()`)
 - `simulate()` simulates data under the estimated model parameters
 - `residuals()`, `rstandard()`, `rstudent()` produce raw, Pearson and studentized residuals, respectively
@@ -341,12 +352,12 @@ N: 2 levels, 0 and 1
 P: 2 levels, 0 and 1                   
 K: 2 levels, 0 and 1            
 
-$$ Y_{ijk+} = \beta_0 + \beta_1N +\beta_2P + \beta_3K $$
+$$ \hat{Y}_{ijk} = \beta_0 + \beta_1N +\beta_2P + \beta_3K $$
 
 ## ANOVA {.smaller .scrollable}
 *(with block)*
 
-**6 levels of block**
+**6 levels of block**      
 block 1: 0 only     
 block 2: 0 and 1       
 block 3: 0 and 1      
@@ -362,7 +373,7 @@ block 3: 0 and 1
 | D | 0 | 0 | 0 | 0 | 1  | 0 |
 | E | 0 | 0 | 0 | 0 | 0  | 1 |
 
-$$ Y_{npk} = \beta_0 +...+ \beta_4 Bl2 + \beta_5 Bl3 + \beta_6 Bl4 + \beta_7 Bl5 + \beta_8 Bl6$$
+$$ \hat{Y}_{npk} = \beta_0 +...+ \beta_4 Bl2 + \beta_5 Bl3 + \beta_6 Bl4 + \beta_7 Bl5 + \beta_8 Bl6$$
 
 
 

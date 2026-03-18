@@ -95,7 +95,7 @@ hist(x, freq = FALSE, col = "gray95", xlab = NULL, main = NULL, ylab = NULL); li
 
 ::: {.r-stack background-color="#FDDC5C" logo=false}
 
-# New Tpic
+# New Topic
 :::
 
 
@@ -103,7 +103,7 @@ hist(x, freq = FALSE, col = "gray95", xlab = NULL, main = NULL, ylab = NULL); li
 
 
 ::: {.custom-blockquote}
-In the "general" linear model days, when a premium was placed on the i.i.d. error paradigm, if we did reject $H_0$, it would set off a minor crisis in the form of a hunt for a variance stabilizing transformation. In contemporary modeling, we simply proceed with inference on estimable functions using the unequal variance model.  
+ [[ some quote]] 
 :::
 
 <br>
