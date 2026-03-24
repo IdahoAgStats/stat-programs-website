@@ -79,8 +79,8 @@ $\epsilon_i$ = model residual, the gap between the predicted value for $Y_i$ and
 
 ## The Expected Value, $E(Y)$ {.smaller}
 
-- "least squares means", "estimated marginal means", "best linear unbiased linear estimates" (BLUEs)    
-- estimating these is often a goal of an experiment and analysis    
+- Synonyms: "least squares means", "estimated marginal means", "best linear unbiased linear estimates" (BLUEs)    
+- Estimating these is often a goal of an experiment and analysis    
 - It is a function of the model parameters      
 
 
@@ -94,10 +94,10 @@ $\mathbf{\Sigma}$ = variance-covariance matrix for fixed effects, $\mathbf{\beta
 
 ## Estimates & Hypothesis Statements {.smaller}
 
-- It helps an analysis to have *specific* hypothesis statements
+- It helps an analysis to have *specific* questions or goals.
 - Examples:
-  - How much does an this cattle feed increase weight gain among calves < 1 year old?
-  - How many nematodes eggs ar produced in each of these genotypes and which ones differ from the control genotypes?
+  - How much does a type of cattle feed increase weight gain among calves < 1 year old?
+  - How many nematodes eggs are produced in each of these crop varieties and which ones differ from the control variety?
   - Does grain yield increase by at least 2 units as a result of 10 years of reduced tillage?
   - How far do I need to sample in a field to achieve spatial independence?
 
@@ -135,7 +135,7 @@ SE = sqrt(diag(X %*% V %*% t(X)))
 
 -----------------------------------------------------
 
-::: {.custom-blockquote}
+::: {.custom-blockquote .smaller}
 The confidence level instead reflects the long-run reliability of the method used to generate the interval....if the same sampling procedure were repeated 100 times from the same population, approximately 95 of the resulting intervals would be expected to contain the true population mean. The frequentist approach sees the true population mean as a fixed unknown constant, while the confidence interval is calculated using data from a random sample.  
 :::
 
@@ -147,7 +147,7 @@ The confidence level instead reflects the long-run reliability of the method use
 
 ## P-value
 
-::: {.custom-blockquote}
+::: {.custom-blockquote .smaller}
 ...a p-value is the probability under a specified statistical model that a statistical summary of the data (e.g., the sample mean difference between two compared groups) would be equal to or more extreme than its observed value.
 :::
 
@@ -163,7 +163,7 @@ The confidence level instead reflects the long-run reliability of the method use
 :::
 
 
-## Estimates Example: Whitepine {.smaller}
+## Estimates Example: White pine {.smaller}
 
 - White pine study (from homoscedasticity lecture), 4 pollen parents crossed with 7 female trees (4 reps), epicotyl length was assessed
 - What pollen and egg parent have the longest epicotyl length? Which parental combination results in the longest epicotyl length? 
@@ -183,18 +183,18 @@ m1 <- lmer(length ~ male*female + (1|rep), data = hanover.whitepine)
 
 
 
-## Estimates Example: Whitepine
+## Estimates Example: white pine
 #### ANOVA
 
 ```{r}
-joint_tests(m1)
+anova(m1)
 ```
-## Estimates Example: Whitepine {.scrollable}
+## Estimates Example: white pine {.scrollable}
 #### Main effects
 
 ```{r}
-(wp_emm1 <- emmeans(m1, ~ male))
-(wp_emm2 <- emmeans(m1, ~ female))
+(wp_emm1 <- emmeans(m1, ~ male)) # print out, same as summary()
+(wp_emm2 <- emmeans(m1, ~ female, level = 0.90)) #90% confidence interval
 ```
 ## Notes
 
@@ -216,34 +216,33 @@ NOTE: Results may be misleading due to involvement in interactions
 
 df1 = data.frame(type = rep(c("No interaction, 1 main effect", "No interaction, 2 main effects", 
                               "Interaction + Main effect", "Interaction"), each = 4),
-                 trt = rep(c("A", "B"), 8),
-                 level = rep(rep(c("low", "high"), each = 2), 4),
+                 Trt = rep(c("B", "A"), 8),
+                 dosage = rep(rep(c("low", "high"), each = 2), 4),
                  value = c(1,2, 1, 2,   1, 2, 1.5, 2.5,    1, 2, 1, 3,   1, 2, 2.5, 1.2))
-df1$level = factor(df1$level, levels = c("low", "high"))
+df1$dosage = factor(df1$dosage, levels = c("low", "high"))
 df1$type = factor(df1$type, levels = c("No interaction, 1 main effect", "No interaction, 2 main effects", 
                               "Interaction + Main effect", "Interaction"))
 
-ggplot(df1, aes(x = level, y = value, color = trt, shape = trt, group = trt)) +
+ggplot(df1, aes(x = dosage, y = value, color = Trt, shape = Trt, group = Trt)) +
   geom_line(color = "gray20") + 
   geom_point(size = 5) +
   facet_wrap(vars(type), ncol = 2, nrow = 2) +
   theme_bw(base_size = 15) +
   scale_color_manual(values = c("violetred", "dodgerblue")) +
-  ylab("some variable") + xlab("treatment level") + 
-  theme(legend.title = element_blank(),
-        panel.grid.minor.y = element_blank(),
+  ylab("some variable") + xlab("dosage") + 
+  theme(panel.grid.minor.y = element_blank(),
         panel.grid.major.x = element_blank())
 ```
 
-## Estimates Example: Whitepine {.scrollable}
+## Estimates Example: white pine {.scrollable}
 #### Interactions
 
 ```{r}
 wp_emm3 <- emmeans(m1, ~female*male) 
-wp_emm3 |> as.data.frame() |> arrange(desc(emmean))
+wp_emm3 |> as.data.frame() |> dplyr::arrange(desc(emmean))
 ```
 
-## Estimates Example: Whitepine 
+## Estimates Example: white pine 
 #### Plotting interactions helps
 
 ```{r}
@@ -256,12 +255,12 @@ emmip(m1, male ~ female)
 
 
 
-## Estimates Example: Whitepine 
+## Estimates Example: white pine 
 #### Contrasts
 
 - Pairwise is possible, but with 28 levels (7 female * 4 male parents) that will be very messy since that means 378 total contrasts. Note that functions for compact letter display, e.g. `multcomp::cld()`, are doing this in order to generate letters. 
 
-- For the whitepine example, there may be no need to conduct hypothesis tests, getting the estimates may be enough for parental selection. 
+- For the white pine example, there may be no need to conduct hypothesis tests, getting the estimates may be enough for parental selection. 
 
 ::: {.r-stack background-color="#FDDC5C" logo=false}
 
@@ -281,8 +280,10 @@ emmip(m1, male ~ female)
 *In most cases, the only way to know if two things are different is to conduct a contrast.* 
 </center>
 
-## Contrasts 
-#### Pairwise contrasts
+## Pairwise Contrasts {.smaller}
+
+- Nitrogen fertility experiment: 9 N levels, 2 zones, 4 reps, completely randomized design
+- Dependent variable: crop yield
 
 ```{r}
 data("bachmaier.nitrogen", package = "agridat")
@@ -291,16 +292,14 @@ m2 <- lm(yield ~ nitro*zone, data = bachmaier.nitrogen)
 (bach_emm1 <- emmeans(m2, ~ zone | nitro, at = list(nitro = c("0", "100", "200"))))
 ```
 
-## Contrasts 
-#### Pairwise contrasts
+## Pairwise contrasts
 
 ```{r}
 class(bach_emm1)
 pairs(bach_emm1)
 ```
 
-## Contrasts {.scrollable}
-#### Pairwise contrasts
+## Pairwise Contrasts {.scrollable}
 
 - The difference between `|` and `*`   
 
@@ -309,8 +308,8 @@ pairs(bach_emm1)
 pairs(emmeans(m2, ~ zone*nitro, at = list(nitro = c("0", "100", "200"))))
 ```
 
-## Contrasts {.scrollable}
-#### Consecutive contrasts
+
+## Consecutive Contrasts {.scrollable}
 
 - We can look at these same estimates in another way
 
@@ -318,8 +317,7 @@ pairs(emmeans(m2, ~ zone*nitro, at = list(nitro = c("0", "100", "200"))))
 (bach_emm2 <- emmeans(m2, ~ nitro | zone , at = list(zone = "low")))
 ```
 
-## Contrasts {.scrollable}
-#### Consecutive contrasts
+## Consecutive Contrasts {.scrollable}
 
 - We can conduct pairwise contrasts of an ordered list
 
@@ -327,9 +325,24 @@ pairs(emmeans(m2, ~ zone*nitro, at = list(nitro = c("0", "100", "200"))))
 contrast(bach_emm2, "consec")
 ```
 
+## Stratification {.smaller}
 
-## Contrasts {.smaller .scrollable}
-#### To a reference level
+- What if there are 3 (or more) factors?
+- Three ways to look at all three at once:
+
+```{r}
+#| eval: false
+#| echo: true
+emmeans(m0, ~ A|B*C)
+emmeans(m0, ~ A*B|C)
+emmeans(m0, ~ A|B|C)
+emmeans(m0, ~ A*B*C)
+```
+
+- There are decisions to make!
+- In all but the last example, the order of the factors matter. 
+
+## Contrast to a Control {.smaller .scrollable}
 
 - Fertilizer study: 7 levels (None, Spring or Fall applied at 300, 600 and 1200 lbs/acre of sulfur), completely randomized design     
 - Dependent variable: percent scab infection on potato skins
@@ -341,22 +354,22 @@ m3 <- lm(inf ~ trt, data = cochran.crd)
 (inf_emm1 <-emmeans(m3, "trt"))
 ```
 
-## Contrasts 
-#### To a reference level
+## Contrast to a Control {.scrollable}
 
 ```{r}
 contrast(inf_emm1, "trt.vs.ctrl", ref = "O")
+contrast(inf_emm1, "trt.vs.ctrl", ref = c("O", "S6")) # for multiple reference levels
 ```
 
-## Contrasts 
-#### To the overall mean
+## Contrast to the Mean
+
+- Useful when there is no natural ordering
 
 ```{r}
 contrast(inf_emm1, "eff")
 ```
 
-## Contrasts {.smaller}
-#### To a constant
+## Contrasts to a Constant {.smaller}
 
 - Example: are the treatments able to keep the infection rate below 10 percent?
 ```{r}
@@ -371,14 +384,14 @@ summary(inf_emm1, null = 10, infer = TRUE, side = "<")
 - Use fractions that sum to |1| to calculate the average differences
 
 ```{r}
-levels(cochran.crd$trt)
+levels(cochran.crd$Trt)
 clist = list("Spring.v.Fall" = c(0, -1/3, -1/3, -1/3, 1/3, 1/3, 1/3),
               "F3.v.S3" = c(0, 1, 0, 0, -1, 0, 0),
              "F12.v.Spr" = c(0, 0, 0, 1, -1/3, -1/3, -1/3))
 contrast(inf_emm1, clist)
 ```
 
-## Back to the Whitepine Epicotyl Study
+## Back to the White Pine Epicotyl Study
 
 - 4x7 design   
 - No natural ordering among the treatments   
@@ -395,13 +408,13 @@ contrast(inf_emm1, clist)
 
 ```{r}
 library(multcomp)
-cld(inf_emm1, alpha = 0.1, Letters = LETTERS)
+cld(bach_emm2, Letters = LETTERS)
 ```
 
 ## Equivalence Testing {.smaller}
 #### Are these the same? 
 
-- A user sets a threshold, a quantativie difference between two treatment levels, that is scientifically not important. This is a value judgement informed by domain knowledge.      
+- A user sets a threshold, a quantitative difference between two treatment levels, where a difference equal to that vaue or less is scientifically not meaninful. This is a value judgement informed by domain knowledge.      
 - A hypothesis test is conducted to evaluate if two things differ by more than the predetermined threshold.      
 - The null hypothesis is that two means are equivalent and the alternative hypothesis is that they are not. 
 - This test provides some answers to the long-desired and frequently unanswered question "are these things the same"?     
@@ -410,23 +423,24 @@ cld(inf_emm1, alpha = 0.1, Letters = LETTERS)
 
 - Pairs example: 
 ```{r}
-test(pairs(wp_emm1), delta = 0.5, side = 2)
+test(pairs(wp_emm1), delta = 0.5, side = 2) 
 ```
+- High p-values favor differences that are greater than 0.5 
 
 ## Equivalence Testing {.smaller .scrollable}
 #### Compare to mean example
 
 - The means are compared to the overall mean and differences less than 0.5 are tested.
-- In this instance, low p-values favor observations that are greater than 0.5 and are not equivalent to the overall mean or within 0.5 units of it. 
+- High p-values favor observations that are not equivalent to the overall mean (within 0.5 units of it). 
 
 ```{r}
-test(contrast(wp_emm3, "eff"), delta = -0.5, side = "<") |> 
-  mutate(pval2 = 1 - p.value) |> dplyr::select(1:3, 7) |> 
-  mutate_if(is.numeric, round, digits = 4) |> arrange(desc(estimate))
+test(contrast(wp_emm3, "eff"), delta = -0.5, side = "<") |> arrange(desc(estimate))
 ```
 
 ## When a Covariate Is Present {.scrollable}
 #### Slopes
+
+- Corn yield study: 10 varieties ("gen"), 5 years, a continuous variable "chu" (corn heat units)
 
 ```{r}
 data(theobald.covariate, package = "agridat")
@@ -437,7 +451,7 @@ summary(l1)
 mean(theobald.covariate$chu)
 ```
 
-## When a Covariate Is Present {.smaller}
+## When a Covariate Is Present {.scrollable}
 #### Main effects
 
 Calculated at average value for the covariate
@@ -485,8 +499,8 @@ ggplot(bach_emm3_df, aes(x = nitro, y = emmean, group = zone, color = zone)) +
 
 - The estimated marginal means are the mathematical products of the coefficients determined during model fitting; they are a summary term for each level of a fixed effect.    
 - Think carefully about contrasts to conduct. What questions do you want answered?
-- Avoid using CLD if you can because it substantial reduces statistical power.
-- Consider other options: compare to a reference, compare to the mean, compare to a value, conduct equivalance tests.
+- Avoid using CLD if you can because it substantially reduces statistical power.
+- Consider other options to CLD: compare to a reference, compare to the mean, compare to a value, conduct equivalence tests.
 - When an interaction is present, explore that first before looking at main effects.
 - Explore 'emmeans' documentation (help files, vignettes) to see the full suite of functionality.
 

@@ -26,7 +26,7 @@ type: book
 
 ## Workshop overview
 
-You’ve taken the stats class, but what do you remember? Can you confidently run an ANOVA and interpret the results, even when things look wonky? Are p-values the only thing you look at? (Your model can tell you so much more!) Experiments require a massive effort to design, set-up and see through to the end. Make that effort worth it with a solid analysis. This is a general topical webinar and does not require knowledge of specific statistical program. Examples will be shown in R, but 
+You’ve taken the stats class, but what do you remember? Can you confidently run an ANOVA and interpret the results, even when things look wonky? Are p-values the only thing you look at? (Your model can tell you so much more!) Experiments require a massive effort to design, set-up and see through to the end. Make that effort worth it with a solid analysis. This is a general topical webinar and does not require knowledge of specific statistical program, although there will be extensive examples in R. 
 
 ## Intended audience and how to prepare
 
@@ -38,7 +38,7 @@ Attendees are not expected to follow along with coding, but all scripts will be 
 
 ## Schedule
 
-| Date  |      Topic   | Links  |
+| Date  |      Topic   | Links       |
 |-----------|-------------|---------------|
 | Feb 24  | Model Assumptions: Normality. *How do we identify this and what do we do when it’s violated? What can we do about outliers? An exploration of this and brief discussion of generalized linear models.* | <a href="../../tutorials/normality.html" target="_blank">slides</a> \| <a href="https://github.com/IdahoAgStats/stat-programs-website/blob/main/static/tutorials/normality.qmd" target="_blank">code</a> | 
 | Mar 3  |  Model Assumptions: Equal Variance. *How do we identify this and what do we do when it’s violated? How to identify and model heteroscedasticity ~~and what to do about it for repeated measures/longitudinal data.~~* | <a href="../../tutorials/homoscedasticity.html" target="_blank">slides</a> \| <a href="https://github.com/IdahoAgStats/stat-programs-website/blob/main/static/tutorials/homoscedasticity.qmd" target="_blank">code</a> |  
