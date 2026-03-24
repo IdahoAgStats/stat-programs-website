@@ -17,8 +17,10 @@ execute:
 ```{r}
 #| include: false
 #| echo: false
-library(lme4); library(nlme); library(infer); library(dplyr); library(ggplot2)
+library(lme4); library(nlme); library(dplyr); library(ggplot2); library(lmerTest)
 library(emmeans)
+
+library(multcomp); library(multcompView)
 
 cex_axis = 1.5
 cex_lab = 1.5
@@ -37,7 +39,7 @@ cex_lab = 1.5
 ::: {.column width="70%"}
 <br>
 
-## Making Sense of Your Estimates?
+## Making Sense of Your Estimates
 
 <br> <br> 
 *Julia Piaskowski*
@@ -55,7 +57,7 @@ cex_lab = 1.5
 ##
  <br> <br>
 
-### "....."
+### "I want to know if these things are different."
 
 :::
 
@@ -75,61 +77,438 @@ $B_1$ = how $Y$ changes with $X$
 $\epsilon_i$ = model residual, the gap between the predicted value for $Y_i$ and its observed value
 
 
-## The Residual Is Important {.smaller}
+## The Expected Value, $E(Y)$ {.smaller}
 
-$$ \epsilon_i \sim N(0, \sigma)$$
+- "least squares means", "estimated marginal means", "best linear unbiased linear estimates" (BLUEs)    
+- estimating these is often a goal of an experiment and analysis    
+- It is a function of the model parameters      
 
-- The residuals are normally distributed with a mean of zero and some standard deviation that we will estimate during the model-fitting process. 
 
-- All model residuals are *independent and identically distributed*, "i.i.d." -- they are uncorrelated with each other and drawn from the same distribution (that has exactly one variance)
+$$\hat{Y_{i}} = \beta_0 + \beta_i X$$
+
+$$SE(Y_i) = \mathbf{X \Sigma X^T}$$
+
+$\mathbf{X}$ = design matrix for X.  
+
+$\mathbf{\Sigma}$ = variance-covariance matrix for fixed effects, $\mathbf{\beta}$
+
+## Estimates & Hypothesis Statements {.smaller}
+
+- It helps an analysis to have *specific* hypothesis statements
+- Examples:
+  - How much does an this cattle feed increase weight gain among calves < 1 year old?
+  - How many nematodes eggs ar produced in each of these genotypes and which ones differ from the control genotypes?
+  - Does grain yield increase by at least 2 units as a result of 10 years of reduced tillage?
+  - How far do I need to sample in a field to achieve spatial independence?
 
 ```{r}
-#| echo: false
-par(mar = c(0, 0, 0, 0))
-x <- rnorm(500)
-dx <- density(x, adjust = 2)
-hist(x, freq = FALSE, col = "gray95", xlab = NULL, main = NULL, ylab = NULL); lines(dx, lwd = 2, col = "red3")
+#| eval: false
+#| include: false
+
+library("lme4")
+library("emmeans")
+
+response <- c(33,85,77,43,93,87,24,81,65,56,74,96,47,57,94)
+ind <- c(1,1,1,2,2,2,3,3,3,4,4,4,5,5,5)
+treatment <- c("A","B","C","A","B","C","A","B","C","A","B","C","A","B","C")
+
+df0 <- data.frame(response, ind, treatment)
+
+mod <- lmer(response ~ treatment + (1 | ind), data = df0)
+
+X = model.matrix(mod)[1:3]
+V = vcov(mod)
+SE = sqrt(diag(X %*% V %*% t(X)))
 ```
 
-
-
-::: {.r-stack background-color="#FDDC5C" logo=false}
-
-# New Topic
-:::
-
-
-----------------------------------------------------------------
-
+## Confidence Interval
 
 ::: {.custom-blockquote}
- [[ some quote]] 
+ [A confidence interval percentage] is the frequency with which other unobserved intervals will contain the true effect....if all the assumptions used to compute the intervals were correct.
 :::
 
 <br>
 
 ::: {.right-align .smaller}
--- Walt Stroup, Marina Ptukhiuna and Julie Garai (2024), *[Generalized Linear Mixed Models](https://www.taylorfrancis.com/books/mono/10.1201/9780429092060/generalized-linear-mixed-models-walter-stroup-marina-ptukhina-julie-garai)*, 2nd Ed, Section 7.2.3.1
+-- Greenland et al, [2016](https://pmc.ncbi.nlm.nih.gov/articles/PMC4877414/)
+:::
+
+-----------------------------------------------------
+
+::: {.custom-blockquote}
+The confidence level instead reflects the long-run reliability of the method used to generate the interval....if the same sampling procedure were repeated 100 times from the same population, approximately 95 of the resulting intervals would be expected to contain the true population mean. The frequentist approach sees the true population mean as a fixed unknown constant, while the confidence interval is calculated using data from a random sample.  
+:::
+
+<br>
+
+::: {.right-align .smaller}
+-- [Wikipedia](https://en.wikipedia.org/wiki/Confidence_interval)
+:::
+
+## P-value
+
+::: {.custom-blockquote}
+...a p-value is the probability under a specified statistical model that a statistical summary of the data (e.g., the sample mean difference between two compared groups) would be equal to or more extreme than its observed value.
+:::
+
+<br>
+
+::: {.right-align .smaller}
+-- [American Statistical Association](https://doi.org/10.1080/00031305.2016.1154108)
+:::
+
+::: {.r-stack background-color="#FDDC5C" logo=false}
+
+# Estimates
 :::
 
 
-## 
+## Estimates Example: Whitepine {.smaller}
 
-## SAS 
+- White pine study (from homoscedasticity lecture), 4 pollen parents crossed with 7 female trees (4 reps), epicotyl length was assessed
+- What pollen and egg parent have the longest epicotyl length? Which parental combination results in the longest epicotyl length? 
 
+```{r}
+library(lme4); library(emmeans); library(lmerTest)
+data("hanover.whitepine", package = "agridat")
+m1 <- lmer(length ~ male*female + (1|rep), data = hanover.whitepine)
+```
+
+<br>
+<br>
+
+::: {.smaller}
+*Note: for this and all other analyses in this presentation, the data and model inspected in previous lectures and found to meet linear model assumptions of normality, homoscedasticity and independence.*
+:::
+
+
+
+## Estimates Example: Whitepine
+#### ANOVA
+
+```{r}
+joint_tests(m1)
+```
+## Estimates Example: Whitepine {.scrollable}
+#### Main effects
+
+```{r}
+(wp_emm1 <- emmeans(m1, ~ male))
+(wp_emm2 <- emmeans(m1, ~ female))
+```
+## Notes
+
+- *If you get the following message, install the 'pbrktest' package:*
+
+```{}
+Cannot use mode = "kenward-roger" because *pbkrtest* package is not installed
+```
+- *This message is automatically printed when main effects are requested from a model with interactions:*
+
+```{}
+NOTE: Results may be misleading due to involvement in interactions
+```
+
+## Interaction types
+
+```{r}
+#| echo: false
+
+df1 = data.frame(type = rep(c("No interaction, 1 main effect", "No interaction, 2 main effects", 
+                              "Interaction + Main effect", "Interaction"), each = 4),
+                 trt = rep(c("A", "B"), 8),
+                 level = rep(rep(c("low", "high"), each = 2), 4),
+                 value = c(1,2, 1, 2,   1, 2, 1.5, 2.5,    1, 2, 1, 3,   1, 2, 2.5, 1.2))
+df1$level = factor(df1$level, levels = c("low", "high"))
+df1$type = factor(df1$type, levels = c("No interaction, 1 main effect", "No interaction, 2 main effects", 
+                              "Interaction + Main effect", "Interaction"))
+
+ggplot(df1, aes(x = level, y = value, color = trt, shape = trt, group = trt)) +
+  geom_line(color = "gray20") + 
+  geom_point(size = 5) +
+  facet_wrap(vars(type), ncol = 2, nrow = 2) +
+  theme_bw(base_size = 15) +
+  scale_color_manual(values = c("violetred", "dodgerblue")) +
+  ylab("some variable") + xlab("treatment level") + 
+  theme(legend.title = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        panel.grid.major.x = element_blank())
+```
+
+## Estimates Example: Whitepine {.scrollable}
+#### Interactions
+
+```{r}
+wp_emm3 <- emmeans(m1, ~female*male) 
+wp_emm3 |> as.data.frame() |> arrange(desc(emmean))
+```
+
+## Estimates Example: Whitepine 
+#### Plotting interactions helps
+
+```{r}
+emmip(m1, male ~ female)
+```
+
+::: {.right-align .smaller}
+`emmip()` [documentation](https://rvlenth.github.io/emmeans/reference/emmip.html)
+:::
+
+
+
+## Estimates Example: Whitepine 
+#### Contrasts
+
+- Pairwise is possible, but with 28 levels (7 female * 4 male parents) that will be very messy since that means 378 total contrasts. Note that functions for compact letter display, e.g. `multcomp::cld()`, are doing this in order to generate letters. 
+
+- For the whitepine example, there may be no need to conduct hypothesis tests, getting the estimates may be enough for parental selection. 
+
+::: {.r-stack background-color="#FDDC5C" logo=false}
+
+# Contrasts 
+:::
+
+
+## Major Contrast Types
+
+- Pairwise
+- Consecutively pairwise between ordered levels
+- To a reference level
+- To a constant
+- Custom
+
+<center>
+*In most cases, the only way to know if two things are different is to conduct a contrast.* 
+</center>
+
+## Contrasts 
+#### Pairwise contrasts
+
+```{r}
+data("bachmaier.nitrogen", package = "agridat")
+bachmaier.nitrogen$nitro <- as.factor(bachmaier.nitrogen$nitro)
+m2 <- lm(yield ~ nitro*zone, data = bachmaier.nitrogen)
+(bach_emm1 <- emmeans(m2, ~ zone | nitro, at = list(nitro = c("0", "100", "200"))))
+```
+
+## Contrasts 
+#### Pairwise contrasts
+
+```{r}
+class(bach_emm1)
+pairs(bach_emm1)
+```
+
+## Contrasts {.scrollable}
+#### Pairwise contrasts
+
+- The difference between `|` and `*`   
+
+```{r}
+# pairs(emmeans(m2, ~ zone | nitro, at = list(nitro = c("0", "100", "200"))))
+pairs(emmeans(m2, ~ zone*nitro, at = list(nitro = c("0", "100", "200"))))
+```
+
+## Contrasts {.scrollable}
+#### Consecutive contrasts
+
+- We can look at these same estimates in another way
+
+```{r}
+(bach_emm2 <- emmeans(m2, ~ nitro | zone , at = list(zone = "low")))
+```
+
+## Contrasts {.scrollable}
+#### Consecutive contrasts
+
+- We can conduct pairwise contrasts of an ordered list
+
+```{r}
+contrast(bach_emm2, "consec")
+```
+
+
+## Contrasts {.smaller .scrollable}
+#### To a reference level
+
+- Fertilizer study: 7 levels (None, Spring or Fall applied at 300, 600 and 1200 lbs/acre of sulfur), completely randomized design     
+- Dependent variable: percent scab infection on potato skins
+
+```{r}
+data(cochran.crd, package= "agridat")
+cochran.crd$trt <- factor(cochran.crd$trt, levels = c("O", "F3", "F6", "F12", "S3", "S6", "S12"))
+m3 <- lm(inf ~ trt, data = cochran.crd)
+(inf_emm1 <-emmeans(m3, "trt"))
+```
+
+## Contrasts 
+#### To a reference level
+
+```{r}
+contrast(inf_emm1, "trt.vs.ctrl", ref = "O")
+```
+
+## Contrasts 
+#### To the overall mean
+
+```{r}
+contrast(inf_emm1, "eff")
+```
+
+## Contrasts {.smaller}
+#### To a constant
+
+- Example: are the treatments able to keep the infection rate below 10 percent?
+```{r}
+summary(inf_emm1, null = 10, infer = TRUE, side = "<")
+#summary(inf_emm1, null = 10, infer = TRUE) # two-sided test (above or below 10)
+```
+
+## Custom Contrasts {.smaller}
+
+- When there are special contrasts to do not captured by standard contrast options
+- Use coefficients for each level of the independent variable, they must sum to zero.
+- Use fractions that sum to |1| to calculate the average differences
+
+```{r}
+levels(cochran.crd$trt)
+clist = list("Spring.v.Fall" = c(0, -1/3, -1/3, -1/3, 1/3, 1/3, 1/3),
+              "F3.v.S3" = c(0, 1, 0, 0, -1, 0, 0),
+             "F12.v.Spr" = c(0, 0, 0, 1, -1/3, -1/3, -1/3))
+contrast(inf_emm1, clist)
+```
+
+## Back to the Whitepine Epicotyl Study
+
+- 4x7 design   
+- No natural ordering among the treatments   
+<br>
+
+<center>
+**What contrasts might be beneficial for this study?**
+</center>
+
+## Compact Letter Display {.smaller}
+
+- Most often, the least powerful way to evaluate treatment difference
+- Very susceptible to misinterpretation
+
+```{r}
+library(multcomp)
+cld(inf_emm1, alpha = 0.1, Letters = LETTERS)
+```
+
+## Equivalence Testing {.smaller}
+#### Are these the same? 
+
+- A user sets a threshold, a quantativie difference between two treatment levels, that is scientifically not important. This is a value judgement informed by domain knowledge.      
+- A hypothesis test is conducted to evaluate if two things differ by more than the predetermined threshold.      
+- The null hypothesis is that two means are equivalent and the alternative hypothesis is that they are not. 
+- This test provides some answers to the long-desired and frequently unanswered question "are these things the same"?     
+
+## Equivalence Testing
+
+- Pairs example: 
+```{r}
+test(pairs(wp_emm1), delta = 0.5, side = 2)
+```
+
+## Equivalence Testing {.smaller .scrollable}
+#### Compare to mean example
+
+- The means are compared to the overall mean and differences less than 0.5 are tested.
+- In this instance, low p-values favor observations that are greater than 0.5 and are not equivalent to the overall mean or within 0.5 units of it. 
+
+```{r}
+test(contrast(wp_emm3, "eff"), delta = -0.5, side = "<") |> 
+  mutate(pval2 = 1 - p.value) |> dplyr::select(1:3, 7) |> 
+  mutate_if(is.numeric, round, digits = 4) |> arrange(desc(estimate))
+```
+
+## When a Covariate Is Present {.scrollable}
+#### Slopes
+
+```{r}
+data(theobald.covariate, package = "agridat")
+m4 <- lmer(yield ~  gen + chu:gen + (1|gen:year), data = theobald.covariate)
+
+l1 <- emtrends(m4, var = "chu")
+summary(l1)
+mean(theobald.covariate$chu)
+```
+
+## When a Covariate Is Present {.smaller}
+#### Main effects
+
+Calculated at average value for the covariate
+```{r}
+emmeans(m4, ~ gen)
+```
+
+## When a Covariate Is Present
+#### Main effects
+
+If desired, set a range of values for estimation: 
+```{r}
+emmeans(m4, ~ gen*chu, 
+        at = list(chu = c(2.3, 2.4, 2.5, 2.6, 2.7, 2.8), gen = "G08"))
+```
+
+## Plotting & Saving to File
+
+- Convert to a data frame or tibble first 
+- Use ggplot or use `emmip()`
+
+```{r}
+bach_emm3_df <- emmeans(m2, ~ nitro*zone) |> as.data.frame() 
+head(bach_emm3_df, n = 4)
+```
+
+```{r}
+#| eval: false
+#| echo: true
+write.csv(bach_emm3_df, "bachmaier_nitrogen_estimates.csv", row.names = FALSE)
+```
+
+## Plotting & Saving to File
+
+```{r}
+ggplot(bach_emm3_df, aes(x = nitro, y = emmean, group = zone, color = zone)) +
+  geom_line(linewidth = 0.7) + 
+  geom_errorbar(aes(ymin = emmean-SE, ymax = emmean+SE), width = 0.15, linewidth = 1) +
+  ylab("yield") + xlab("nitrogen applied") + 
+  scale_color_manual(values = c("brown", "cyan3")) + theme_bw(base_size = 18) 
+```
 
 
 ## Final Thoughts {.smaller}
 
-- 
+- The estimated marginal means are the mathematical products of the coefficients determined during model fitting; they are a summary term for each level of a fixed effect.    
+- Think carefully about contrasts to conduct. What questions do you want answered?
+- Avoid using CLD if you can because it substantial reduces statistical power.
+- Consider other options: compare to a reference, compare to the mean, compare to a value, conduct equivalance tests.
+- When an interaction is present, explore that first before looking at main effects.
+- Explore 'emmeans' documentation (help files, vignettes) to see the full suite of functionality.
 
-## Additional Resources {.smaller}
+## Additional Resources 
 
+- [Emmeans package documentation](https://rvlenth.github.io/emmeans/index.html){.external target="_blank"}: comprehensive guide
 
+- Use `?summary.emmGrid` for extensive information on emmeans objects including p-value adjustments
 
-- [Linear Mixed Model Guide](https://idahoagstats.github.io/mixed-models-in-R/): details on implementation of linear mixed models in R
+- Statistical Programs' [philosophy on analysis](https://idahoagstats.github.io/mixed-models-in-R/chapters/analysis-tips.html){.external target="_blank"}
 
-- [*Mixed-Effects Models in S and S-PLUS*](https://link.springer.com/book/10.1007/b98882) *thee book* for **nlme**, by José C. Pinheiro and Douglas M. Bates (2000). We used this book extensively for developing this guide. Sadly, it's out of print. However, there are affordable used copies available; some school libraries also carry this. 
+- [*Data Analysis Using Regression and Multilevel/Hierarchical Models*](https://sites.stat.columbia.edu/gelman/arm/){.external target="_blank"} (2007) by Andrew Gelman and Jennifer Hill. This is a comprehensive and readabale explanation of linear mixed models (available in the UI library). 
 
+---------------------------------------------------
 
+::: {.custom-blockquote .smaller}
+The scientific method is the most rigorous path to knowledge, but it’s also messy and tough. ~~Science~~ [Statistics] deserves respect exactly because it is difficult — not because it gets everything correct on the first try. The uncertainty inherent in science doesn’t mean that we can’t use it to make important policies or decisions. It just means that we should remain cautious and adopt a mindset that’s open to changing course if new data arises. We should make the best decisions we can with the current evidence and take care not to lose sight of its strength and degree of certainty. It’s no accident that every good paper includes the phrase “more study is needed” — there is always more to learn.
+:::
+
+<br>
+
+::: {.right-align .smaller}
+-- Christie Aschwanden/538, [Science Isn't Broken](https://fivethirtyeight.com/features/science-isnt-broken/#part1)
+:::
 

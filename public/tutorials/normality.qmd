@@ -127,7 +127,7 @@ $$ \epsilon_i \sim N(0, \sigma)$$
 Technically in a linear model, $\bar{y_{i.}}$, the mean value for a population, follows a normal distribution for a set of known parameters:
 
 
-$$ \bar{y_{i.}} \sim 𝑁(x_i \beta,  \sigma^2/r_i) $$
+$$ \bar{Y_{i.}} \sim 𝑁(x_i \beta,  \sigma^2/r_i) $$
 
 We often cannot observe this distribution well with our limited number of reps. But we if repeated a study an infinite number of times, a normal distribution for $\bar{y_{i.}}$ would likely be observed. 
 
