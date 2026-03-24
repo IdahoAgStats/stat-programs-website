@@ -75,8 +75,6 @@ $B_1$ = how $Y$ changes with $X$
 $\epsilon_i$ = model residual, the gap between the predicted value for $Y_i$ and its observed value
 
 
-
-
 ## The Expected Value, $E(Y)$
 
 - "least squares means", "estimated marginal means", "best linear unbiased linear estimates" (BLUEs)    
@@ -136,8 +134,25 @@ The confidence level instead reflects the long-run reliability of the method use
 -- [Wikipedia](https://en.wikipedia.org/wiki/Confidence_interval)
 :::
 
+## P-value
 
-## Estimates Example: Whitepine
+::: {.custom-blockquote}
+...a p-value is the probability under a specified statistical model that a statistical summary of the data (e.g., the sample mean difference between two compared groups) would be equal to or more extreme than its observed value.
+:::
+
+<br>
+
+::: {.right-align .smaller}
+-- [American Statistical Association](https://doi.org/10.1080/00031305.2016.1154108)
+:::
+
+::: {.r-stack background-color="#FDDC5C" logo=false}
+
+# Estimates
+:::
+
+
+## Estimates Example: Whitepine {.smaller}
 
 - White pine study (from homoscedasticity lecture), 4 pollen parents crossed with 7 female trees (4 reps), epicotyl length was assessed
 - What pollen and egg parent have the longest epicotyl length? Which parental combination results in the longest epicotyl length? 
@@ -148,13 +163,13 @@ data("hanover.whitepine", package = "agridat")
 m1 <- lmer(length ~ male*female + (1|rep), data = hanover.whitepine)
 ```
 
-*Note: data and model inspected in previous lectures and found to meet linear model assumptions of normality, homoscedasticity and independence. 
+*Note: for this and all other analyses in this presentation, the data and model inspected in previous lectures and found to meet linear model assumptions of normality, homoscedasticity and independence. 
 
 ## Estimates Example: Whitepine
 #### ANOVA
 
 ```{r}
-anova(m1, type = "marginal")
+joint_tests(m1)
 ```
 ## Estimates Example: Whitepine {.scrollable}
 #### Main effects
@@ -237,34 +252,175 @@ emmip(m1, male ~ female)
 - Pairwise
 - Consecutively pairwise between ordered levels
 - To a reference level
-- To multiple reference levels
 - To a constant
 - Custom
+
+*In most cases, the only way to know if two things are different is to conduct a contrast.* 
 
 ## Contrasts 
 #### Pairwise contrasts
 
+```{r}
+data("bachmaier.nitrogen", package = "agridat")
+bachmaier.nitrogen$nitro <- as.factor(bachmaier.nitrogen$nitro)
+m2 <- lm(yield ~ nitro*zone, data = bachmaier.nitrogen)
+(bach_emm1 <- emmeans(m2, ~ zone | nitro, at = list(nitro = c("0", "100", "200"))))
+```
 
 ## Contrasts 
+#### Pairwise contrasts
+
+```{r}
+pairs(bach_emm1)
+```
+
+## Contrasts {.scrollable}
+#### Pairwise contrasts
+
+- The difference between `|` and `*`   
+
+```{r}
+pairs(emmeans(m2, ~ zone*nitro, at = list(nitro = c("0", "100", "200"))))
+```
+
+## Contrasts {.scrollable}
 #### Consecutive contrasts
+
+- We can look at these same estimates in another way
+
+```{r}
+(bach_emm2 <- emmeans(m2, ~ nitro | zone , at = list(zone = "low")))
+```
+
+## Contrasts {.scrollable}
+#### Consecutive contrasts
+
+- And we can conduct pairwise contrasts of an ordered list
+
+```{r}
+contrast(bach_emm2, "consec")
+```
+
 
 ## Contrasts 
 #### To a reference level
 
-## Contrasts 
-#### To multipel reference levels
+- Fertilizer study: 7 levels (None, Spring or Fall applied at 300, 600 and 1200 lbs/acre of sulfur), completely randomized design     
+- Dependent variable: percent scab infection on potato skins
+
+```{r}
+data(cochran.crd, package= "agridat")
+cochran.crd$trt <- factor(cochran.crd$trt, levels = c("O", "F3", "F6", "F12", "S3", "S6", "S12"))
+m7 <- lm(inf ~ trt, data = cochran.crd)
+(inf_emm1 <-emmeans(m7, "trt"))
+```
 
 ## Contrasts 
-#### To a constant value
+#### To a reference level
+
+```{r}
+contrast(inf_emm1, "trt.vs.ctrl", ref = "O")
+```
+
+## Contrasts 
+#### To the overall mean
+
+```{r}
+contrast(inf_emm1, "eff")
+```
+
+## Contrasts 
+#### To a constant
+
+- Example: are the treatments able to keep the infection rate below 10 percent?
+```{r}
+summary(inf_emm1, null = 10, infer = TRUE, side = "<")
+# two-sided test (above or below 10)
+#summary(inf_emm1, null = 10, infer = TRUE) 
+```
 
 ## Custom Contrasts 
 
+- When there are special contrasts to do not captured by standard contrast options
+- Use coefficients for each level of the independent variable, they must sum to zero.
+- Use fractions that sum to |1| to calculate the average differences
+
+```{r}
+levels(cochran.crd$trt)
+clist = list("Spring.v.Fall" = c(0, -1/3, -1/3, -1/3, 1/3, 1/3, 1/3),
+              "F3.v.S3" = c(0, 1, 0, 0, -1, 0, 0))
+contrast(inf_emm1, clist)
+```
+
+## Back to the Whitepine Epicotyl Study
+
+- 4x7 design   
+- No natural ordering among the treatments   
+- What contrasts might be beneficial for this study?
+
+## Compact Letter Display
+
+- Most often, the least powerful way to evaluate treatment difference
+- Very susceptible to misinterpretation
+
+```{r}
+cld(inf_emm1, alpha = 0.1, Letters = LETTERS)
+```
+
+## Equivalence Testing
+#### Are these the same? 
+
+- A user sets a threshold, a quantativie difference between two treatment levels, that is scientifically not important. This is a value judgement informed by domain knowledge.      
+- A hypothesis test is conducted to evaluate if two things differ by more than the predetermined threshold.      
+- The null hypothesis is that two means are equivalent and the alternative hypothesis is that they are not. 
+- This test provides some answers to the long-desired and frequently unanswered question "are these things the same"?     
+
 ## Equivalence Testing
 
-## Effect Sizes
+- Pairs example: 
+```{r}
+test(pairs(wp_emm1), delta = 0.5, side = 2)
+```
+
+## Equivalence Testing {.smaller .scrollable}
+#### Compare to mean example
+
+- The means are compared to the overall mean and differences less than 0.5 are tested.
+- In this instance, low p-values favor observations that are greater than 0.5 and are not equivalent to the overall mean or within 0.5 units of it. 
+
+```{r}
+test(contrast(wp_emm3, "eff"), delta = -0.5, side = "<") |> 
+  mutate(pval2 = 1 - p.value) |> dplyr::select(1:3, 7) |> 
+  mutate_if(is.numeric, round, digits = 4) |> arrange(desc(estimate))
+```
+
+## When a Covariate Is Present {.scrollable}
+#### Slopes
+
+```{r}
+data(theobald.covariate, package = "agridat")
+m10 <- lmer(yield ~  gen + chu:gen + (1|gen:year), data = theobald.covariate)
+
+l1 <- emtrends(m10, var = "chu")
+summary(l1)
+mean(theobald.covariate$chu)
+```
 
 ## When a Covariate Is Present
+#### Main effects
 
+Calculated at average value for the covariate
+```{r}
+emmeans(m10, ~ gen)
+```
+
+## When a Covariate Is Present
+#### Main effects
+
+If desired, set a range of values for estimation: 
+```{r}
+emmeans(m10, ~ gen*chu, at = list(chu = c(2.3, 2.4, 2.5, 2.6, 2.7, 2.8), gen = "G08"))
+```
 
 
 ::: {.r-stack background-color="#FDDC5C" logo=false}
@@ -272,26 +428,21 @@ emmip(m1, male ~ female)
 # New Topic
 :::
 
-
-
-
-
 ----------------------------------------------------------------
-
-
-
 
 
 
 ## Final Thoughts {.smaller}
 
-- 
+- Think carefully about contrasts to conduct 
+- Avoid using CLD if you can
+- Consider other options: compare to a reference, compare to the mean, compare to a value, conduct equivalance tests
 
 ## Additional Resources {.smaller}
 
-- [Ememans package documentation](https://rvlenth.github.io/emmeans/index.html): comprehensive guide
+- [Emmeans package documentation](https://rvlenth.github.io/emmeans/index.html): comprehensive guide
 
-
+- Use `?summary.emmGrid` for extensive information on emmeans objects including p-value adjustments
 
 
 
