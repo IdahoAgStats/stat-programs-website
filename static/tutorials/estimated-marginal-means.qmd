@@ -498,6 +498,8 @@ ggplot(bach_emm3_df, aes(x = nitro, y = emmean, group = zone, color = zone)) +
 
 - Statistical Programs' [philosophy on analysis](https://idahoagstats.github.io/mixed-models-in-R/chapters/analysis-tips.html){.external target="_blank"}
 
+- [*Data Analysis Using Regression and Multilevel/Hierarchical Models*](https://sites.stat.columbia.edu/gelman/arm/){.external target="_blank"} (2007) by Andrew Gelman and Jennifer Hill. This is a comprehensive and readabale explanation of linear mixed models (available in the UI library). 
+
 ---------------------------------------------------
 
 ::: {.custom-blockquote .smaller}
