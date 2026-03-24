@@ -17,7 +17,7 @@ execute:
 ```{r}
 #| include: false
 #| echo: false
-library(lme4); library(nlme); library(infer); library(dplyr); library(ggplot2)
+library(lme4); library(nlme); library(dplyr); library(ggplot2); #library(lmerTest)
 library(emmeans)
 
 cex_axis = 1.5
@@ -37,7 +37,7 @@ cex_lab = 1.5
 ::: {.column width="70%"}
 <br>
 
-## Making Sense of Your Estimates?
+## Making Sense of Your Estimates
 
 <br> <br> 
 *Julia Piaskowski*
@@ -75,21 +75,195 @@ $B_1$ = how $Y$ changes with $X$
 $\epsilon_i$ = model residual, the gap between the predicted value for $Y_i$ and its observed value
 
 
-## The Residual Is Important {.smaller}
 
-$$ \epsilon_i \sim N(0, \sigma)$$
 
-- The residuals are normally distributed with a mean of zero and some standard deviation that we will estimate during the model-fitting process. 
+## The Expected Value, $E(Y)$
 
-- All model residuals are *independent and identically distributed*, "i.i.d." -- they are uncorrelated with each other and drawn from the same distribution (that has exactly one variance)
+- "least squares means", "estimated marginal means", "best linear unbiased linear estimates" (BLUEs)    
+- estimating these is often a goal of an experiment and analysis    
+- It is a function of the model parameters      
+
+
+$$\hat{Y_{i}} = \beta_0 + \beta_i X$$
+
+$$SE(Y_i) = \mathbf{X \Sigma X^T}$$
+$ \mathbf{X}$ = design matrix for X
+$ \mathbf{\Sigma}$ = variance-covariance matrix for fixed effects, $\mathbf{\beta}$
+
+
+
+```{r}
+#| eval: false
+#| include: false
+
+library("lme4")
+library("emmeans")
+
+response <- c(33,85,77,43,93,87,24,81,65,56,74,96,47,57,94)
+ind <- c(1,1,1,2,2,2,3,3,3,4,4,4,5,5,5)
+treatment <- c("A","B","C","A","B","C","A","B","C","A","B","C","A","B","C")
+
+df0 <- data.frame(response, ind, treatment)
+
+mod <- lmer(response ~ treatment + (1 | ind), data = df0)
+
+X = model.matrix(mod)[1:3]
+V = vcov(mod)
+SE = sqrt(diag(X %*% V %*% t(X)))
+```
+
+## Confidence Interval
+
+::: {.custom-blockquote}
+ [A confidence interval percentage] is the frequency with which other unobserved intervals will contain the true effect....if all the assumptions used to compute the intervals were correct.
+:::
+
+<br>
+
+::: {.right-align .smaller}
+-- Greenland et al, [2016](https://pmc.ncbi.nlm.nih.gov/articles/PMC4877414/)
+:::
+
+-----------------------------------------------------
+
+::: {.custom-blockquote}
+The confidence level instead reflects the long-run reliability of the method used to generate the interval....if the same sampling procedure were repeated 100 times from the same population, approximately 95 of the resulting intervals would be expected to contain the true population mean. The frequentist approach sees the true population mean as a fixed unknown constant, while the confidence interval is calculated using data from a random sample.  
+:::
+
+<br>
+
+::: {.right-align .smaller}
+-- [Wikipedia](https://en.wikipedia.org/wiki/Confidence_interval)
+:::
+
+
+## Estimates Example: Whitepine
+
+- White pine study (from homoscedasticity lecture), 4 pollen parents crossed with 7 female trees (4 reps), epicotyl length was assessed
+- What pollen and egg parent have the longest epicotyl length? Which parental combination results in the longest epicotyl length? 
+
+```{r}
+library(lme4); library(emmeans)
+data("hanover.whitepine", package = "agridat")
+m1 <- lmer(length ~ male*female + (1|rep), data = hanover.whitepine)
+```
+
+*Note: data and model inspected in previous lectures and found to meet linear model assumptions of normality, homoscedasticity and independence. 
+
+## Estimates Example: Whitepine
+#### ANOVA
+
+```{r}
+anova(m1, type = "marginal")
+```
+## Estimates Example: Whitepine {.scrollable}
+#### Main effects
+
+```{r}
+(wp_emm1 <- emmeans(m1, ~ male))
+(wp_emm2 <- emmeans(m1, ~ female))
+```
+## Estimates Example
+#### Notes
+
+- *If you get the following message, install the 'pbrktest' package:*
+```
+Cannot use mode = "kenward-roger" because *pbkrtest* package is not installed
+```
+- *This message is automatically printed when main effects are requested from a model with interactions:*
+```
+NOTE: Results may be misleading due to involvement in interactions
+```
+
+## Interaction types
 
 ```{r}
 #| echo: false
-par(mar = c(0, 0, 0, 0))
-x <- rnorm(500)
-dx <- density(x, adjust = 2)
-hist(x, freq = FALSE, col = "gray95", xlab = NULL, main = NULL, ylab = NULL); lines(dx, lwd = 2, col = "red3")
+
+df1 = data.frame(type = rep(c("No interaction, 1 main effect", "No interaction, 2 main effects", 
+                              "Interaction + Main effect", "Interaction"), each = 4),
+                 trt = rep(c("A", "B"), 8),
+                 level = rep(rep(c("low", "high"), each = 2), 4),
+                 value = c(1,2, 1, 2,   1, 2, 1.5, 2.5,    1, 2, 1, 3,   1, 2, 2.5, 1.2))
+df1$level = factor(df1$level, levels = c("low", "high"))
+df1$type = factor(df1$type, levels = c("No interaction, 1 main effect", "No interaction, 2 main effects", 
+                              "Interaction + Main effect", "Interaction"))
+
+ggplot(df1, aes(x = level, y = value, color = trt, shape = trt, group = trt)) +
+  geom_line(color = "gray20") + 
+  geom_point(size = 5) +
+  facet_wrap(vars(type), ncol = 2, nrow = 2) +
+  theme_bw(base_size = 15) +
+  scale_color_manual(values = c("violetred", "dodgerblue")) +
+  ylab("some variable") + xlab("treatment level") + 
+  theme(legend.title = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        panel.grid.major.x = element_blank())
 ```
+
+## Estimates Example: Whitepine {.scrollable}
+#### Interactions
+
+```{r}
+wp_emm3 <- emmeans(m1, ~female*male) 
+wp_emm3 |> as.data.frame() |> arrange(desc(emmean))
+```
+
+## Estimates Example: Whitepine 
+#### Interactions
+
+Plotting helps. 
+```{r}
+emmip(m1, male ~ female)
+```
+
+[`emmip()` documentation](https://rvlenth.github.io/emmeans/reference/emmip.html)
+
+## Estimates Example: Whitepine 
+#### Contrasts
+
+- Pairwise is possible, but with 28 levels (7 female * 4 male parents) that will be very messy since that means 378 total contrasts. Note that functions for compact letter display, e.g. `multcomp::cld()`, are doing this in order to generate letters. 
+
+- For plant breeding, there may be no need to conduct hypothesis tests, getting the estimates may be enough for parental selection. 
+
+::: {.r-stack background-color="#FDDC5C" logo=false}
+
+# Contrasts 
+:::
+
+
+## Major Contrast Types
+
+- Pairwise
+- Consecutively pairwise between ordered levels
+- To a reference level
+- To multiple reference levels
+- To a constant
+- Custom
+
+## Contrasts 
+#### Pairwise contrasts
+
+
+## Contrasts 
+#### Consecutive contrasts
+
+## Contrasts 
+#### To a reference level
+
+## Contrasts 
+#### To multipel reference levels
+
+## Contrasts 
+#### To a constant value
+
+## Custom Contrasts 
+
+## Equivalence Testing
+
+## Effect Sizes
+
+## When a Covariate Is Present
 
 
 
@@ -99,23 +273,13 @@ hist(x, freq = FALSE, col = "gray95", xlab = NULL, main = NULL, ylab = NULL); li
 :::
 
 
+
+
+
 ----------------------------------------------------------------
 
 
-::: {.custom-blockquote}
- [[ some quote]] 
-:::
 
-<br>
-
-::: {.right-align .smaller}
--- Walt Stroup, Marina Ptukhiuna and Julie Garai (2024), *[Generalized Linear Mixed Models](https://www.taylorfrancis.com/books/mono/10.1201/9780429092060/generalized-linear-mixed-models-walter-stroup-marina-ptukhina-julie-garai)*, 2nd Ed, Section 7.2.3.1
-:::
-
-
-## 
-
-## SAS 
 
 
 
@@ -125,11 +289,9 @@ hist(x, freq = FALSE, col = "gray95", xlab = NULL, main = NULL, ylab = NULL); li
 
 ## Additional Resources {.smaller}
 
+- [Ememans package documentation](https://rvlenth.github.io/emmeans/index.html): comprehensive guide
 
 
-- [Linear Mixed Model Guide](https://idahoagstats.github.io/mixed-models-in-R/): details on implementation of linear mixed models in R
-
-- [*Mixed-Effects Models in S and S-PLUS*](https://link.springer.com/book/10.1007/b98882) *thee book* for **nlme**, by José C. Pinheiro and Douglas M. Bates (2000). We used this book extensively for developing this guide. Sadly, it's out of print. However, there are affordable used copies available; some school libraries also carry this. 
 
 
 
