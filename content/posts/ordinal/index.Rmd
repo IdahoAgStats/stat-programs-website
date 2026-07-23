@@ -1,0 +1,267 @@
+---
+title: "Stop Averaging Your Rating Scales"
+authors:
+  - anoman
+categories:
+  - R
+  - statistics
+  - categorical analysis
+draft: true
+date: "2026-07-23"
+image:
+  caption: ""
+  focal_point: ""
+lastMod: "2026-07-23"
+subtitle: []
+summary: "A practical guide on why ordinal data deserves better than a mean and a t-test, featuring an introduction to cumulative link models using the ordinal package in R."
+tags: []
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+![](Ordinal-Data.jpg)
+
+Here's something I did for years without thinking twice. I'd go into a
+field, look at plants, and write down a number from 1 to 5 for how sick
+they looked. Then I’d go back to my office, add up all those numbers,
+find the average, and say one type of plant was better than another just
+because its average was lower.
+
+But the problem is those 1 to 5 numbers were just names I gave to “a
+little sick,” “very sick,” and stuff in between. They’re not real
+measurements like weight or length. So saying a plant is “2.7 sick”
+makes no sense, because no plant can actually be 2.7 sick. That means
+averaging them and doing fancy math on them only made it look scientific
+when it wasn’t really proving anything.
+
+This guide shows how to:
+
+- Recognize the statistical pitfalls of treating rating scales as
+  continuous data
+- Understand the mathematical limitations of calculating a mean on
+  ordinal categories
+- Fit a proportional odds model using the
+  [**ordinal**](https://CRAN.R-project.org/package=ordinal) package in R
+- Extract and interpret predicted probabilities for each rating category
+- Generate summary visualizations that map the true distribution of your
+  data
+
+### Required Packages
+
+We’ll need the following R packages installed and loaded:
+
+```{r setup, message=FALSE, echo=TRUE}
+#| warning: false
+library(ordinal)
+library(ggplot2)
+```
+
+## The problem? Plant scores are "Ordinal Data"
+
+What is ordinal data, really? It's just categories with an order to
+them, but no guarantee that the steps between them are equal. Disease
+severity 1 to 5, "strongly disagree" to "strongly agree," lodging
+scores, a taste panel rating from "hate it" to "love it", all ordinal.
+You know 4 is worse than 3, but you have no idea whether the jump from 3
+to 4 is the same size as the jump from 1 to 2. It probably isn't.
+
+That's the whole problem with averaging. A mean quietly assumes every
+step is worth exactly the same amount, and that the numbers are real
+quantities you can add up. Neither is true. The categories only tell you
+the order. Anything beyond that is us pretending.
+
+## The fix is easier than you think
+
+Instead of averaging, we fit a model that treats the categories as
+categories but still respects their order. The classic one is the
+**proportional odds model** (also called a cumulative link model). In R,
+it lives in the `ordinal` package, and the function is `clm()`.
+
+The one rule to remember: your response has to be an ordered factor, not
+a plain number. That's how you tell R "these have an order, but don't
+you dare add them up."
+
+```{r}
+#| warning: false
+
+# Fake data to show how it works
+plots <- data.frame(
+  treatment = rep(c("A", "B"), each = 10),
+  severity = c(1,2,2,1,3,2,1,2,3,2,  3,4,3,5,3,4,2,3,4,3) # 1-5 scores
+)
+
+# CRITICAL: make severity an ordered factor
+plots$severity <- factor(plots$severity, ordered = TRUE)
+
+# Fit the model
+model <- clm(severity ~ treatment, data = plots)
+summary(model)
+```
+
+Here's the part I like. The single treatmentB coefficient of 3.83 is
+positive and significant, which just means treatment B pushes plots
+toward *higher* severity categories. And those threshold rows (1\|2, 2\|3, ...) are the model
+admitting something a mean never could: the cutpoints between categories
+aren't evenly spaced. Look at the jumps, the gap from the 2\|3 line to
+the 3\|4 line is a bit bigger than from 1\|2 to 2\|3. The model measured
+the uneven spacing instead of pretending it away.
+
+## What you get that a mean can't give you
+
+Here's the real payoff. Because the model thinks in categories, you can
+ask it for the probability of landing in each severity class — not one
+blurry average, but the whole distribution.
+
+```{r}
+# Predicted probability of each severity category, per treatment
+newdata <- data.frame(treatment = c("A", "B"))
+probs <- predict(model, newdata = newdata, type = "prob")$fit
+rownames(probs) <- c("A", "B")
+round(probs, 3)
+```
+
+Read that across. Treatment A spends most of its time in categories 1
+and 2 and almost never hits a 5. Treatment B has drained out of the low
+end and piled up in 3 and 4. That is so much richer than a single average like "2.7 versus 3.4."
+A mean would have quietly hidden the fact that A basically never produces a severe plot at all.
+
+And it plots straight out of the same numbers:
+
+```{r}
+plot_df <- data.frame(
+  treatment = rep(rownames(probs), times = ncol(probs)),
+  severity  = rep(1:5, each = nrow(probs)),
+  prob      = as.vector(probs)
+)
+
+ggplot(plot_df, aes(x = severity, y = prob, colour = treatment, fill = treatment)) +
+  geom_area(alpha = 0.25, position = "identity", linewidth = 0) +
+  geom_line(linewidth = 1.4) +
+  geom_point(size = 3.6, stroke = 1.4, shape = 21, fill = "white") +
+  scale_colour_manual(values = c(A = "#4C9F70", B = "#C1524B"), name = "Treatment") +
+  scale_fill_manual(values = c(A = "#4C9F70", B = "#C1524B"), guide = "none") +
+  scale_x_continuous(breaks = 1:5,
+                     labels = c("1\nhealthy", "2", "3", "4", "5\nsevere")) +
+  scale_y_continuous(labels = function(x) paste0(x * 100, "%"),
+                     expand = expansion(mult = c(0, .08))) +
+  labs(title = "Two treatments, two very different stories",
+       subtitle = "Predicted probability of landing in each severity category",
+       x = NULL, y = NULL) +
+  theme_minimal(base_size = 13) +
+  theme(panel.grid.minor = element_blank(),
+        panel.grid.major.x = element_blank(),
+        plot.title = element_text(face = "bold", size = 15),
+        plot.subtitle = element_text(colour = "grey35"),
+        legend.position = "top", legend.justification = "left")
+```
+
+## The one catch you should know about
+
+I'm not going to pretend this model is free. It makes one big
+assumption, and it's worth a paragraph: the proportional odds
+assumption. In plain terms, it assumes a treatment shoves every category
+boundary in the same direction by the same amount. It can't decide to
+bump you from mild to moderate but not from moderate to severe — it
+moves the whole scale together.
+
+Sometimes that's not realistic, so it's worth a quick check. Fair warning
+though, this test needs more data than our toy example has. With 20 plots
+spread across 5 categories it just returns blanks. So let's borrow the
+`wine` dataset that ships with the package:
+
+```{r}
+data(wine)   # comes with the package
+
+model_wine <- clm(rating ~ temp + contact, data = wine)
+
+# Does the proportional odds assumption hold?
+nominal_test(model_wine)
+```
+
+The p-values for `temp` and `contact` are what you care about here. Both
+are comfortably above 0.05, which means there's no evidence the assumption
+is broken, so you're fine. If one of them came back small (say under 0.05), that variable is
+misbehaving, and you'd let it off the leash with a *partial*
+proportional odds model (the `nominal =` argument in `clm()`). But
+honestly? Nine times out of ten in field data, the basic model is
+plenty. Don't let the assumption scare you off — just check it, note it,
+and move on.
+
+## But my t-test gave me a p-value too
+
+Fair. Let's actually run the wrong way and the right way side by side on
+the same data and see what happens.
+
+```{r}
+data(wine)
+
+# THE WRONG WAY: pretend the rating is a number, run a t-test
+wine$rating_num <- as.numeric(as.character(wine$rating))
+t.test(rating_num ~ temp, data = wine)
+
+# THE RIGHT WAY: ordinal model
+model_temp <- clm(rating ~ temp, data = wine)
+summary(model_temp)
+```
+
+The t-test tells you cold wine averaged 2.33 and warm averaged 3.50, p =
+0.0000007. The ordinal model also says warm wine rates significantly
+higher (p \< 0.0001). So did the t-test "work"?
+
+Sort of. And this is the honest part I want to leave you with: the mean
+isn't evil. When the effect is big and the categories are roughly evenly
+spaced, a t-test will often point the same direction. It's not that
+you'll always get the wrong answer — it's that you get a thinner one.
+"2.33 versus 3.50" quietly invents a precision the data never had, and
+it can't tell you that warm wine almost never gets a bottom rating while
+cold wine almost never gets a top one. Same data, but the ordinal model
+actually respects what the numbers are.
+
+## The takeaway
+
+Here's the reframe I wish someone had handed me years ago: your rating
+scale was never a ruler. Those 1 to 5 disease scores, the "disagree to
+agree" survey columns, the lodging ratings — they're ranks in a costume,
+ordered labels doing their best impression of real numbers. A mean takes
+that costume at face value. An ordinal model doesn't.
+
+The nice surprise is that respecting your data doesn't cost you
+anything. It's one package, one `factor(..., ordered = TRUE)`, and one
+function. In exchange you stop reporting averages nobody can picture,
+and you start reporting something a person can actually see: how likely
+each treatment is to land in each category.
+
+So next time you're about to take the mean of a rating scale — don't.
+Fit the model that knows those numbers are only pretending. Your data
+will thank you, and so will whoever reviews your paper.
+
+## Want to go deeper?
+
+If any of this made you want to actually learn the machinery rather than
+just copy my code, here's where I'd send you, roughly in order of how
+gently they ease you in:
+
+- [**Cumulative Link Models for Ordinal Regression with the R Package
+  ordinal**](https://cran.r-project.org/web/packages/ordinal/vignettes/clm_article.pdf)
+  — Rune Christensen wrote the package, and this is his own walkthrough
+  of it. It uses that same wine bitterness dataset from Randall (1989) —
+  a factorial experiment where nine judges rated wine from four
+  treatment conditions, 72 observations in all. Start here.
+
+- [**Summary and Analysis of Extension Program Evaluation in R
+  (Mangiafico)**](https://rcompanion.org/handbook/G_01.html) — the
+  friendliest intro I know, and it's aimed squarely at ag and extension
+  folks. It also covers the proportional odds assumption and the
+  `nominal_test` and `scale_test` functions we used above.
+
+- [**McCullagh (1980), *Regression Models for Ordinal
+  Data***](https://www.jstor.org/stable/2984952) — the original paper.
+  Dense, but it's where the proportional odds model comes from, and it's
+  worth knowing the source.
+
+- [**The `ordinal` package
+  itself**](https://CRAN.R-project.org/package=ordinal) — the reference
+  manual, plus the mixed-model side of things if your ratings are nested
+  (multiple judges, repeated plots, split-plot designs). That's
+  `clmm()`, and it's the natural next step once you outgrow `clm()`.
