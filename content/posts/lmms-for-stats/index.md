@@ -55,7 +55,7 @@ Providing instructions to a chatbot can greatly quality of results. Jarad Neimi 
 
 ##### 3. Know what you want and ask for it
 
-That is, if you ask for something, do not leave ambiguity in your prompt for the chatbot to interpret. For example, the prompt "are there any outliers in my data set?" implies a known definition of an outlier. If you did not define what is meant by "outlier", the chatbot may pick one type of outlier or it may try multiple options. These choices may or may not be aligned with your study goals. It is better when you the researcher makes analytical choices rather than a chatbot. 
+That is, if you ask for something, do not leave ambiguity in your prompt for the chatbot to interpret. For example, the prompt "are there any outliers in my data set?" implies a known definition of an outlier. If you did not define what is meant by "outlier", the chatbot may pick one type of outlier or it may try multiple options. These choices may or may not be aligned with your study goals. It is better when you the researcher makes analytical choices rather than a chatbot. Using a set of pre-loaded instructions may help alleviate these issues.  
 
 ##### 4. Verify what the generative AI tools suggest with reliable outside sources
 
