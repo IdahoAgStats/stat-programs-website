@@ -37,6 +37,7 @@ When you do not know the statistical model appropriate for your data, spend time
 
 Be specific in prompts. The more specific your prompts, the better fitting results you get. Much has been written on this topic already ([example 1](https://claude.com/blog/best-practices-for-prompt-engineering)), but the vaguer the prompt, the less relevant the output. "Analyze this data set" may be among the least useful prompts, while "give me a generalized linear mixed model for count data with possible zero inflation" is much more likely to provide helpful information. Of course, the trick is knowing what to ask, and hence why it is important to understand the statistical model you want to run. 
 
+
 **Some examples of specific prompts:**
 
 - “provide R code to run an ordinal mixed model where the proportional odds assumption is met”    
@@ -47,6 +48,10 @@ Be specific in prompts. The more specific your prompts, the better fitting resul
 
 - [upload data] “please analyze this”       
 - “I need R code to analyse y as a function of x and z”.
+
+
+Providing instructions to a chatbot can greatly quality of results. Jarad Neimi of Iowa State University has written some [excellent instructions](https://github.com/jarad/DS3030/blob/main/tutor/DS3030-tutor.md) to feed into a chatbot prior to asking for help.   
+
 
 ##### 3. Know what you want and ask for it
 
