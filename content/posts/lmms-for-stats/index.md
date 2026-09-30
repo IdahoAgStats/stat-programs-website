@@ -50,9 +50,9 @@ Be specific in prompts. The more specific your prompts, the better fitting resul
 - [upload data] “please analyze this”       
 - “I need R code to analyse y as a function of x and z”.
 
+Note that there are some task specific tools of great utility out there. One generating some interest among the statistical community is [Rtutor.ai](https://rtutor.ai/) for its utility matched with its alignment with teaching and learning goals. 
 
 Providing instructions to a chatbot can greatly quality of results. These instructions can be loaded from a file or written on fly. They provide guidelines to a chatbot in an attempt to elicit specific answers or behavior. "[Caveman](https://github.com/JuliusBrussee/caveman" is one such example; it is s set of instructions intended for a broad set of circumstances to reduce token usage (important if are operating under a token cap). Jarad Neimi of Iowa State University has written some [excellent instructions](https://github.com/jarad/DS3030/blob/main/tutor/DS3030-tutor.md) to feed into a chatbot prior to asking for statistical assistance help. These instruct a chatbot on how to serve as a statistical tutor. 
-
 
 #### 3. Know what you want and ask for it
 
@@ -92,4 +92,5 @@ Overall, be cautious asking AI for things a calculator can do. Some chatbots are
 These steps probably all sound very time consuming! they can be; this is the cost of using stochastic tools like large language models. As stochastic tools, their answers are drawn from a probability distribution, for better or for worse. They may give us reliable results, but they give us unreliable results randomly as part of their core process (these are text prediction engines, after all). 
 
 Chatbots can lull us into a false [sense of trust](https://pmc.ncbi.nlm.nih.gov/articles/PMC12838375/) by communicating with us as if they are another human trying to connect with us. And even as we try to check their work, it is easy to fall into [confirmation fatigue](https://changkun.de/blog/ideas/human-in-the-loop-agents/), much like how we fail to read pop-up boxes and click “accept” to simply make them go away. After seeing dozens of these per day, who isn’t tired of dealing with these repetitive nuisances? Using generative AI tools as scientists requires a rigorous level of caution and vigilance that should not be ignored or underestimated. Nevertheless, given its demonstrated advantages for some tasks, I do think we can learn to use chatbots without compromising our research integrity. 
+
 
