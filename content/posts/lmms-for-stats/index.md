@@ -1,5 +1,5 @@
 ---
-title: "Using Generative AI for Statistical Analysis"
+title: "Using Generative AI Chatbots for Statistical Analysis"
 authors:
 - jpiaskowski
 categories:
@@ -18,13 +18,17 @@ summary: []
 
 Learning and using statistics are hard, requiring years of training and many hours of coursework and private study to master. Additionally, by the time a researcher finally gets to perform statistical analysis after the long process of experimental set-up and data collection, there is often an expectation that the work is more-or-less "done", and this final step of data analysis should be finished quickly. At this stage, any and all shortcuts to a finished product may be sought out, as we have limited hours in the day and many demands on our time. 
 
-Chatbots derived from large language models (e.g. Claude, Gemini, ChatGPT), a subset of generative AI tools, is one such shortcut. These chatbots can be incredibly useful solving issues rapidly, and they can be unreliable, serving us out-of-date, imagined, and/or flat-out incorrect information. I have seen generative AI chatbots recommend statistical models while making incorrect assumptions about the model itself, misunderstand the nature of the input data, or fail to properly check that the data conform to model expectations. I’ve seen chatbots run unsuitable models on data sets whose outputs don’t match what the user requested, or change model default arguments unwisely and without justification, use the wrong diagnostic checks, or more often, skip diagnostic checks altogether. And of course, I’ve seen many hallucinations: functions that don’t exist, arguments not available within a function, and non-existent programming libraries. I have also used chatbots to resolve many coding issues: LaTeX symbols I cannot recall, manipulating text with regular expressions (this seems to be special skill of chatbots), and coding in html, css, javascript, languages I barely know. I've seen it accurately pull weather data from an online source and produce a custom plot using python's 'matplotlib' library. Chatbots have helped me track down references to arcane topics and have summarized long videos I do have time or interest to watch in full. [Chatbots can be useful tools](https://arxiv.org/html/2502.08114v1) for reducing cognitive load and enhancing analytical capabilities. 
+Chatbots derived from large language models (e.g. Claude, Gemini, ChatGPT), a subset of generative AI tools, is one such shortcut. These chatbots can be incredibly useful solving issues rapidly, and they can be unreliable, serving us out-of-date, imagined, and/or flat-out incorrect information. I have seen generative AI chatbots recommend statistical models while making incorrect assumptions about the model itself, misunderstand the nature of the input data, or fail to properly check that the data conform to model expectations. I’ve seen chatbots run unsuitable models on data sets whose outputs don’t match what the user requested, or change model default arguments unwisely and without justification, use the wrong diagnostic checks, or more often, skip diagnostic checks altogether. And of course, I’ve seen many hallucinations: functions that don’t exist, arguments not available within a function, and non-existent programming libraries. 
+
+I have also used chatbots to resolve many coding issues: LaTeX symbols I cannot recall, manipulating text with regular expressions (this seems to be special skill of chatbots), and coding in html, css, javascript, languages I barely know. I've seen it accurately pull weather data from an online source and produce a custom plot using python's 'matplotlib' library. Chatbots have helped me track down references to arcane topics and have summarized long videos I do have time or interest to watch in full. [Chatbots can be useful tools](https://arxiv.org/html/2502.08114v1) for reducing cognitive load and enhancing analytical capabilities. 
+
+There is an incredible number of chatbots available for usage and different versions of them. These differ in capabilities and reliability and they tend to largely improve with updated versions. This article makes no attempt to parse out the differences and advantages between them, but it is helpful to keep in mind that this is a rapidly shifting landscape. 
 
 This dichotomy between useful and erroneous makes chatbots challenging tools to use properly. How do we know when we can trust them? As scientists, how do we use them responsibly in our work? Below are some tips I find helpful when using generative AI for data preparation, exploration, and analysis. 
 
 ### How to use AI for statistical analysis:
 
-*This guide is aimed towards researchers in higher education, where we are expected to provide highly accurate information.*
+*This guide is aimed towards researchers in higher education, where we are expected to provide highly accurate information. It is also focused on chatbots and not other tools like agents.*
 
 
 #### 1. Decouple model selection from coding
@@ -33,9 +37,10 @@ You have to start by understanding the statistical model you want to run prior t
 
 When you do not know the statistical model appropriate for your data, spend time investigating that before jumping into the implementation of a model. Chatbots can be a useful entry point for that. They can suggest options that you can learn more about with books, Wikipedia (often quite accurate for stats) or other reliable sources. Prior to using a statistical model, you should understand the basics of what the model does, what circumstances it is best suited for, what sort of data it expects, what assumptions accompany the model, and how to interpret the output it provides. You do not need to understand the math behind it or be able to calculate it by hand, but you have to defend its usage in your research. This is the minimum expectation of scientists for statistical models we use in our work. 
 
-The development of generative AI tools to help you explore a topic may be rather helpful for this step. Both Google Gemini and OpenAI's ChatGPT offer a "deep research" option for comprehensively exploring a new topic. University of Idaho's Mindrouter has an [excellent guide](https://mindrouter.uidaho.edu/blog/introducing-vandalchat-deep-research) on how to use these tools; While it focuses on a specific service available only to University of Idaho affiliates, it also includes details on how to responsibly navigate information from this type of generative AI resources.  
+The development of generative AI tools to help you explore a topic may be rather helpful for this step. Both Google Gemini and OpenAI's ChatGPT offer a "deep research" option for comprehensively exploring a new topic. University of Idaho's Mindrouter has an [excellent guide](https://mindrouter.uidaho.edu/blog/introducing-vandalchat-deep-research) on how to use these tools; While it focuses on a specific service available only to University of Idaho affiliates, it also includes details on how to responsibly navigate information from this type of generative AI resource.  
 
-#### 2. Get specific with your coding prompts
+#### 2. Know what you want and ask for it.
+*Get specific with your coding prompts*
 
 Be specific in prompts. The more specific your prompts, the better fitting results you get. Much has been written on this topic already ([example 1](https://claude.com/blog/best-practices-for-prompt-engineering)), but the vaguer the prompt, the less relevant the output. "Analyze this data set" may be among the least useful prompts, while "give me a generalized linear mixed model for count data with possible zero inflation" is much more likely to provide helpful information. Of course, the trick is knowing what to ask, and hence why it is important to understand the statistical model you want to run. Sometimes, it can be helpful to ask the chatbot what information it needs to answer your query.
 
@@ -50,13 +55,17 @@ Be specific in prompts. The more specific your prompts, the better fitting resul
 - [upload data] “please analyze this”       
 - “I need R code to analyse y as a function of x and z”.
 
+Do not leave ambiguity in your prompt for the chatbot to interpret. For example, the prompt "are there any outliers in my data set?" implies a known definition of an outlier. If you did not define what is meant by "outlier", the chatbot may pick one [type of outlier](https://en.wikipedia.org/wiki/Outlier) or it may try multiple options. These choices may or may not be aligned with your study goals. It is better when you the researcher makes analytical choices rather than a chatbot. Using a set of pre-loaded instructions may help alleviate these issues (discussed in item #4).  
+
+
 Note that there are some task specific tools of great utility out there. One generating some interest among the statistical community is [Rtutor.ai](https://rtutor.ai/) for its utility matched with its alignment with teaching and learning goals. 
+
+#### 3. Use instructions to train a chatbot.  
 
 Providing instructions to a chatbot can greatly quality of results. These instructions can be loaded from a file or written on fly. They provide guidelines to a chatbot in an attempt to elicit specific answers or behavior. "[Caveman](https://github.com/JuliusBrussee/caveman" is one such example; it is s set of instructions intended for a broad set of circumstances to reduce token usage (important if are operating under a token cap). Jarad Neimi of Iowa State University has written some [excellent instructions](https://github.com/jarad/DS3030/blob/main/tutor/DS3030-tutor.md) to feed into a chatbot prior to asking for statistical assistance help. These instruct a chatbot on how to serve as a statistical tutor. 
 
-#### 3. Know what you want and ask for it
 
-That is, if you ask for something, do not leave ambiguity in your prompt for the chatbot to interpret. For example, the prompt "are there any outliers in my data set?" implies a known definition of an outlier. If you did not define what is meant by "outlier", the chatbot may pick one [type of outlier](https://en.wikipedia.org/wiki/Outlier) or it may try multiple options. These choices may or may not be aligned with your study goals. It is better when you the researcher makes analytical choices rather than a chatbot. Using a set of pre-loaded instructions may help alleviate these issues (discussed in item #4).  
+
 
 #### 4. Verify what the generative AI tools suggest with reliable outside sources
 
@@ -75,17 +84,17 @@ Identifying when accuracy matters is a context-dependent value judgement a user 
 
 #### 5. Take the time to understand your code.
 
-Read the code and make sure you understand what each line of code is doing. You don’t have to be able to explain it deeply, but a general understanding helps so you can adjust the code to fit your circumstances. Chatbots are also great at explaining code! Ask your LLM to explain what is going on if any particular line of code, any command, or any function argument is unclear to you. 
+Read the code and make sure you understand what each line of code is doing. You don’t have to be able to explain it deeply, but a general understanding helps so you can adjust the code to fit your circumstances. Chatbots are also great at explaining code! Ask your LLM to explain what is going on if any particular line of code, any command, or any function argument is unclear to you. Often, they do this already, perhaps even excessively.^[I have definitely thought "just give me the answer and not all this mumbo jumbo" after receiving a huge cascade of output in response to what feel like a narrow query.] We can always ask the chatbot to be more succinct. This is also a moment to weigh the importance of understanding your LMM-generated code. Is it for a plot that can be quickly verified or is for underlying analysis that we have to intellectually defend. 
 
-Unfortunately, generate AI does produce statistical coding slop, that is, excessively long and over-complicated code created with minimal human oversight. This may be hundreds of lines of code, much of it implementing inefficient solutions (hello, regex!) or setting arcane little-used options (e.g. setting the font family for a plot). While some of this is the direct response to a prompt, some of it is extra "help" added unprompted and unnoticed by the user. For example, a chatbot may add some extra code to “fix” other micro-issues, such as missing data. This may not always be beneficial, as it may mask other issues with your data that should not be ignored. 
+Unfortunately, generate AI does produce statistical coding slop, that is, excessively long and over-complicated code created with minimal human oversight. This may be hundreds of lines of code, much of it implementing inefficient solutions (hello, regex!) or setting arcane little-used options (e.g. setting the font family for a plot). While some of this is the direct response to a prompt, some of it is extra "help" added unprompted and unnoticed by the user. For example, a chatbot may add some extra code to “fix” other micro-issues, such as missing data. This may not always be beneficial, as it may mask other issues with your data that should not be ignored.
 
-This can be difficult and time consuming to review, so most folks do not do this and hence do not understand their code well. As result, the code is challenging if not impossible to troubleshoot, quite brittle and sensitive to any changes in the data and hence not reusable, and sometimes implementing unwise choices such as dropping observations with missing data. This is why it is important to read your code before plowing ahead. Generative AI chatbots have enabled us to run code blindly without understanding it. It has long been an unwise choice to use a statistical model or any code you do not understand; generative AI has not changed this essential truth.You can also ask a generative AI chatbot to explain code, as they are quite good at this. 
+This can be difficult and time consuming to review, so most folks do not do this and hence do not understand their code well. As result, the code is challenging if not impossible to troubleshoot, quite brittle and sensitive to any changes in the data and hence not reusable, and sometimes implementing unwise choices such as dropping observations with missing data. This is why it is important to read your code before plowing ahead. Generative AI chatbots have enabled us to run code blindly without understanding it. It has long been an unwise choice to use a statistical model or any code you do not understand; generative AI has not changed this essential truth. You can also ask a generative AI chatbot to explain code, as they are often quite good at this. 
 
 #### 6. Do not use a chatbot for statistical analysis itself
 
 Generative AI can provide decent solutions for analytical choices and code, but their ability to run the code itself is less proven. Some chatbots can run python code (since python is part of the modern web), but the python ecosystem for statistical inference and mixed models in particular are limited. Additionally, it can be very easy to fall for confirmation bias when a chatbot gives us an answer generally aligned with our goals or wishes. Good analysis means understanding the analytical approach, ensuring it aligns with study goals, correct implementation and checking that model assumptions are met. Its quite tempting to bypass these processes when asking a chatbot to conduct an end-to-end analysis. 
  
-Overall, be cautious asking AI for things a calculator can do. Some chatbots are now directly linked to a calculator, but not always. That can be difficult to check and potentially time wasting. Calculators are very good at the narrow set of tasks they were built for, so take advantage of that. 
+Overall, be cautious asking AI for things a calculator can do. Some chatbots are now directly linked to a calculator, but not always. That can be difficult to check and potentially time wasting. Calculators are very good at the narrow set of tasks they were built for, so it makes sense to take advantage of that. 
 
 ###  Final thoughts: be vigilant
 
