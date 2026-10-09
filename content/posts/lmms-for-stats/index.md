@@ -28,12 +28,12 @@ This dichotomy between useful and erroneous makes chatbots challenging tools to 
 
 ### How to use AI for statistical analysis:
 
-*This guide is aimed towards researchers in higher education, where we are expected to provide highly accurate information. It is also focused on chatbots and not other tools like agents.*
+*This guide is aimed towards researchers in higher education, where we are expected to provide highly accurate information. It is also focused on chatbots and not other generativ AI tools such as agents.*
 
 
 #### 1. Decouple model selection from coding
 
-You have to start by understanding the statistical model you want to run prior to generating any code for analysis. How do you find out the most suitable statistical approach? The usual processes: take a class, read books, read journal articles. Use blog posts, Wikipedia articles to help introduce a topic that is new to you. AI chatbots can help you find methodologies you were otherwise unaware of - it’s quite good at that! However, AI is error prone, lacking in nuance and we are never quite sure what information it is using. It is a starting point, but you should never rely solely on AI for your understanding of a statistical process or model. Learn the basic of how a method works: what it is intended to do, the circumstances it is best suited for, the input data is expects, and how to evaluate model quality. 
+You have to start by understanding the statistical model you want to run prior to generating any code for analysis. How do you find out the most suitable statistical approach? The usual processes: take a class, read books, read journal articles. Use blog posts, Wikipedia articles to help introduce a topic that is new to you. AI chatbots can help you find methodologies you were otherwise unaware of. However, AI is error prone, lacking in nuance and we are never quite sure what information it is using. It is a starting point, but you should never rely solely on AI for your understanding of a statistical process or model. Learn the basic of how a method works: what it is intended to do, the circumstances it is best suited for, the input data is expects, and how to evaluate model quality. 
 
 When you do not know the statistical model appropriate for your data, spend time investigating that before jumping into the implementation of a model. Chatbots can be a useful entry point for that. They can suggest options that you can learn more about with books, Wikipedia (often quite accurate for stats) or other reliable sources. Prior to using a statistical model, you should understand the basics of what the model does, what circumstances it is best suited for, what sort of data it expects, what assumptions accompany the model, and how to interpret the output it provides. You do not need to understand the math behind it or be able to calculate it by hand, but you have to defend its usage in your research. This is the minimum expectation of scientists for statistical models we use in our work. 
 
@@ -102,4 +102,36 @@ These steps probably all sound very time consuming! they can be; this is the cos
 
 Chatbots can lull us into a false [sense of trust](https://pmc.ncbi.nlm.nih.gov/articles/PMC12838375/) by communicating with us as if they are another human trying to connect with us. And even as we try to check their work, it is easy to fall into [confirmation fatigue](https://changkun.de/blog/ideas/human-in-the-loop-agents/), much like how we fail to read pop-up boxes and click “accept” to simply make them go away. After seeing dozens of these per day, who isn’t tired of dealing with these repetitive nuisances? Using generative AI tools as scientists requires a rigorous level of caution and vigilance that should not be ignored or underestimated. Nevertheless, given its demonstrated advantages for some tasks, I do think we can learn to use chatbots without compromising our research integrity. 
 
+### EXTRA TO INCORPORATE
+
+[source](https://jtvanleuven.github.io/Git-R-and-Unix-for-Reproducible-Scientific-Analysis/)
+
+
+How It Works
+
+Each day page contains green AI Prompt boxes with pre-written prompts you can copy and paste into Claude.ai, ChatGPT, or Gemini. The AI writes the code — your job is to read it, run it, and iterate when things break.
+
+    Read what the AI produced before running it
+    Run the code and check the output
+    Iterate — paste error messages back and ask for a fix
+    Understand — ask the AI to explain anything you don't follow
+
+Prompt Writing Best Practices
+
+The quality of what the AI gives you depends almost entirely on how well you describe what you want.
+1 · Give context
+
+Tell the AI what language or tool you're using and what your goal is. "I'm using bash on macOS and I want to…" is much better than just "write me a script."
+2 · Be specific
+
+Vague questions get vague answers. Describe exactly what you have and what you want the output to look like. Name your files, variables, and expected results.
+3 · Paste error messages verbatim
+
+When something breaks, copy the exact error message — don't paraphrase it. The specific wording is often the key to diagnosing the problem.
+4 · Ask for explanations, not just code
+
+Follow up with "Explain what this script does line by line" or "Why does this step need to happen before the next one?" Understanding is the goal, not just having code that runs.
+5 · Iterate in the same conversation
+
+Keep the conversation going rather than starting over. "That worked — now modify it to also save a log file" builds on context the AI already has.
 
