@@ -17,10 +17,12 @@ execute:
 ```{r}
 #| include: false
 #| echo: false
+#| 
 library(lme4); library(nlme); library(dplyr); library(ggplot2); library(lmerTest)
 library(emmeans)
 
-library(multcomp); library(multcompView)
+library(multcomp)
+library(multcompView)
 
 cex_axis = 1.5
 cex_lab = 1.5
@@ -408,6 +410,7 @@ contrast(inf_emm1, clist)
 
 ```{r}
 library(multcomp)
+
 cld(bach_emm2, Letters = LETTERS)
 ```
 
