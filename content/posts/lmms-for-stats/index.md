@@ -6,14 +6,14 @@ categories:
 - large language models
 - statistical analysis
 - generative AI
-date: "2026-09-21T00:00:00Z"
-draft: true
+date: "2026-10-21T00:00:00Z"
+draft: false
 image:
   focal_point: ""
   caption: "Image from Stanford [XCS221 Course](https://online.stanford.edu/courses/xcs221-artificial-intelligence-principles-and-techniques)"
   placement: 1
 subtitle: "How to be the 'human in the loop' with large language model output"
-summary: []
+summary: "Usage of generative AI is becoming more common in statistical analysis, so let’s make sure it helps us and doesn’t lead us to incorrect methodologies or solutions."
 ---
 
 Learning and using statistics is hard, requiring years of training and many hours of coursework and study to master. Additionally, by the time a researcher finally arrives at the statistical analysis stage after the long process of experiment set-up and data collection, there is often an expectation that the work is more-or-less "done." Hence, this final step of data analysis should be finished quickly so the outputs can be published. That is to say, there are strong demotivators to spending time learning how to implement unfamiliar statistical approaches. At this stage, any and all shortcuts to a finished product may be sought out, as we have limited hours in the day and many demands on our time. 
