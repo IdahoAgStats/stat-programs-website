@@ -20,7 +20,7 @@ editor_options:
     wrap: 72
 ---
 
-![](Ordinal-Data.jpg)
+![](featured.jpg)
 
 Here's something I did for years without thinking twice. I'd go into a
 field, look at plants, and write down a number from 1 to 5 for how sick
