@@ -3,8 +3,17 @@
 <article class="article">
 
   {{ partial "page_header" . }}
+  
+
 
   <div class="article-container">
+    
+      {{ if .TableOfContents }}
+       <h4>Table of Contents</h4>
+  <div class="table-of-contents">
+    {{ .TableOfContents }}
+  </div>
+{{ end }}
 
     <div class="article-style">
       {{ .Content }}

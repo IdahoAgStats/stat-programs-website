@@ -9,5 +9,11 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_cache$", "\\.knit\\.md$", "\\.utf8\
   [markup.goldmark]
     [markup.goldmark.renderer]
       unsafe = true
+    [markup.goldmark.extensions]
+      definitionList = true
+      footnote = true
+      highlight = true
+      strikethrough = true
+      table = true
       toc = true
 
