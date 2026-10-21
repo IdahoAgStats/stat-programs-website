@@ -1,11 +1,11 @@
 ---
 title: "So, you think you have big data"
 authors:
-- jpiaskowski
+  - jpiaskowski
 categories:
-- big data
-- R
-- parallel computing
+  - big data
+  - R
+  - parallel computing
 date: "2025-01-10T00:00:00Z"
 draft: false
 image:

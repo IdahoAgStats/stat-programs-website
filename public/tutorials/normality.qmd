@@ -1,0 +1,485 @@
+---
+format: 
+  revealjs:
+    theme: [default]
+    aspectratio: 16x9
+    slide-number: true
+    css: custom.css
+    embed-resources: true
+    logo: images/UI_Main_horizontal_4c.png
+editor: source
+execute:
+  echo: false
+  message: false
+  warning: false
+---
+
+```{r}
+#| include: false
+library(lme4); library(nlme); library(infer); library(dplyr); library(ggplot2)
+
+cex_axis = 1.5
+cex_lab = 1.5
+
+```
+
+::: {.r-stack background-color="#FDDC5C" logo=false}
+
+
+:::: {.columns}
+
+::: {.column width="30%"}
+<br> <br> <br>
+![](images/UI_Main_stacked_4c.png)
+:::
+
+::: {.column width="70%"}
+<br>
+
+## Assessing the Linear Modelling Assumption of Normality
+
+<br> <br> 
+*Julia Piaskowski*
+
+*February 24, 2026* 
+<br> <br> 
+
+:::
+
+::::
+:::
+
+
+
+
+::: {.r-stack background-color="#FDDC5C" logo=false}
+##
+ <br> <br>
+**"My data is not normal. I did a Shapiro-Wilk test on the data and it failed that test. What transformation should I use?"**
+
+:::
+
+----------------------------------------------------------------
+
+![](images/normal_dist.jpg){width=100%}
+
+::: {.smaller}
+[Image source](https://www.freecodecamp.org/news/normal-distribution-explained/)
+:::
+
+
+----------------------------------------------------------------
+
+```{r echo=FALSE}
+data(rothamsted.oats, package = "agridat")
+hist(rothamsted.oats$grain, main = "Oats study, n = 96", xlab = "(( Shapiro-wilk p-value = 0.000082 ))", col = "gold", cex.lab = cex_lab, cex.axis = cex_axis, cex.main = cex_lab)
+mtext("grain yield", side = 3)
+```
+
+----------------------------------------------------------------
+
+```{r echo=FALSE}
+data("Penicillin", package = "lme4")
+hist(Penicillin$diameter, main = "Penicillin study, n = 144", xlab = "(( Shapiro-wilk p-value = 0.00086 ))", col = "gold", cex.lab = cex_lab, cex.axis = cex_axis, cex.main = cex_lab)
+mtext("bacterial grown (diameter, mm)", side = 3)
+```
+
+----------------------------------------------------------------
+
+```{r echo=FALSE}
+data(Pastes, package = "lme4")
+hist(Pastes$strength, main = "Pastes study, n = 60", xlab = "(( Shapiro-wilk p-value = 0.029 ))", col = "gold", cex.lab = cex_lab, cex.axis = cex_axis, cex.main = cex_lab)
+mtext("paste strength", side = 3, )
+```
+
+
+## Linear Model Review
+
+$$Y_i = \beta_0 + \beta_1 X_i + \epsilon_i$$
+
+$Y_i$ = dependent variable (there is only 1)
+
+$X_i$ = independent variable(s) (there may be many)
+
+$B_0$ = model intercept, the overall mean of $Y$
+
+$B_1$ = how $Y$ changes with $X$ 
+
+$\epsilon_i$ = model residual, the gap between the predicted value for $Y_i$ and its observed value
+
+
+## The Residual Is Important {.smaller}
+
+$$ \epsilon_i \sim N(0, \sigma)$$
+
+- The residuals are normally distributed with a mean of zero and some standard deviation that we will estimate during the model-fitting process. 
+
+- All model residuals share this same distribution and distributional properties! That is, they are identically distributed. 
+
+- The residuals are independent of each other (i.e. they are uncorrelated with each other)
+
+- The residuals should have no correlation with other model parameters (e.g. treatment effects)
+
+
+
+## The Distribution of $Y$
+
+Technically in a linear model, $\bar{y_{i.}}$, the mean value for a population, follows a normal distribution for a set of known parameters:
+
+
+$$ \bar{Y_{i.}} \sim 𝑁(x_i \beta,  \sigma^2/r_i) $$
+
+We often cannot observe this distribution well with our limited number of reps. But we if repeated a study an infinite number of times, a normal distribution for $\bar{y_{i.}}$ would likely be observed. 
+
+
+## Example Analyses 1
+
+```{r}
+library(lme4)
+par(mfrow = c(1,2))
+m1 <- lmer(grain ~ trt + (1|block), data = rothamsted.oats)
+qqnorm(rstudent(m1), main = "qq-plot of Oats Fertilizer study", cex.lab = cex_lab, cex.axis = cex_axis); qqline(rstudent(m1))
+hist(rstudent(m1), main = "studentized residuals", col = "#20b2aa", xlab = "(( Shapiro-wilk p-value = 0.28 ))", cex.lab = cex_lab, cex.axis = cex_axis)
+```
+
+
+## Example Analyses 2
+
+```{r}
+par(mfrow = c(1,2))
+m2 <- lmer(diameter ~ (1|plate) + (1|sample), data = Penicillin)
+qqnorm(rstudent(m2), main = "qq-plot of Penicillin study", cex.lab = cex_lab, cex.axis = cex_axis); qqline(rstudent(m2))
+hist(rstudent(m2), main = "studentized residuals", col = "#20b2aa", xlab = "(( Shapiro-wilk p-value = 0.30 ))", cex.lab = cex_lab, cex.axis = cex_axis)
+```
+
+
+## Example Analyses 3
+
+```{r}
+par(mfrow = c(1,2))
+m3 <- lmer(strength ~ (1|batch) + (1|cask), data = Pastes)
+qqnorm(rstudent(m3), main = "qq-plot of Pastes study", cex.lab = cex_lab, cex.axis = cex_axis); qqline(rstudent(m3))
+hist(rstudent(m3), main = "studentized residuals", col = "#20b2aa", xlab = "((Shapiro-wilk = 0.02 ))", cex.lab = cex_lab, cex.axis = cex_axis)
+```
+
+
+## Early Lessons
+
+- Often, the residuals are normally distributed, and hence model expectations are met!
+
+- Linear models are considered robust to modest departures from normality; that is, the estimates will be fine and the results from ANOVA will be correct.
+
+- The Shapiro-Wilk test is not great for asessing normality; it's very sensitive to the size of the data set; large data sets may fail just based on sampling variation, small data sets pass because there are too few observations to adequately test.
+
+
+
+## Sampling Variation & Normality
+
+The function `rnorm()` can be used to generate random values that follow a normal distribution, that we can test for normality using `shapiro.test()`.
+
+```{r}
+# generating 60 random values from the normal distribution (mean = 0, sd = 1) 
+shapiro.test(rnorm(60))
+```
+
+
+## Sampling Variation & Normality
+
+```{r echo=FALSE}
+stest <- replicate(200, shapiro.test(rnorm(60))$p.value)
+hist(stest, main = "P-values from Shapiro-Wilk Test of Gaussian Data", 
+     xlab = "from 200 simulations (n = 60 each)",col = "#b2ec5d", cex.lab = cex_lab, cex.axis = cex_axis)
+```
+
+
+## The Central Limit Theorum
+
+<br>
+
+> In probability theory, the central limit theorem states that, under appropriate conditions, the distribution of a normalized version of the sample mean converges to a standard normal distribution.  
+> [--Wikipedia](https://en.wikipedia.org/wiki/Central_limit_theorem)
+
+
+
+## What Data Are Truly Not Normal?
+
+- Count data (unless the values are very high, e.g. hundreds)   
+- Data that lack variability; most data points are a single value (emergence and crop stand data) 
+- Binomial data (yes/no)
+- Data with categorical outcomes (rating scales)
+- Data that have many zeros
+- Extremely skewed data
+
+
+## Count data
+
+
+- Things you count: insects, calves born, trips to the grocery store (requires a generalized linear model)
+
+
+```{r echo=FALSE}
+par(mfrow = c(1,2))
+data(grouseticks); hist(grouseticks$TICKS, xlab = "grousetick counts", main = "Poisson variable", 
+                        col = "violetred", cex.lab = cex_lab, cex.axis = cex_axis)
+full_mod1  <- lmer(TICKS~YEAR+HEIGHT+(1|BROOD)+(1|LOCATION),data=grouseticks)
+
+qqnorm(rstudent(full_mod1), main = "Normality not met", cex.lab = cex_lab, cex.axis = cex_axis); qqline(rstudent(full_mod1))
+```
+
+
+## No Data Variability
+
+```{r}
+#| echo: false
+x = c(rep(100, 95), 95, 99, 90, 90, 75)
+hist(x, xlim = c(0, 100), main = "(e.g. stand percentage)", xlab = NULL, col = "violetred", 
+     cex.lab = cex_lab, cex.axis = cex_axis, cex.main = cex_lab)
+```
+
+
+## Binomial data {.smaller}
+
+- These are a set number of evaluations where only two possible outcomes are possible for each
+- The results might be expressed this as proportion that one outcome resulted: number of plants that survived after a cold shock, number of insects that choose a volatile compound. 
+- Requires a generalized linear model (logistic regression)
+
+## Binomial data 
+```{r echo=FALSE}
+par(mfrow = c(1,2))
+binom = data.frame(y = c(rbinom(20, 20, p = 0.5), rbinom(20, 20, p = 0.77)),
+                   xvar = rep(c("A", "B"), each = 20))
+hist(binom$y, main = "Binomial trait",xlab = "p1 = 0.50, p2 = 0.77", col = "violetred", sub = "20 trials each", cex.lab = cex_lab, cex.axis = cex_axis)
+bin_mod <- gls(y ~ xvar, data = binom)
+qqnorm(resid(bin_mod), main = "Normality not met", cex.lab = cex_lab, cex.axis = cex_axis); qqline(resid(bin_mod))
+```
+
+## Alternatives for Non-normal data
+
+#### Categorical
+
+- Likert scales (strong disagree to agree)
+- disease rating (very resistant to very tolerant)
+- special models: multinomial, ordinal (very complicated)
+
+#### Many zero's
+
+- common in count data 
+- common in relative abundance data from metagenomics
+- zero-inflated models (complicated)
+
+
+## Skewed Distributions 
+
+
+- extreme tails on the left or more commonly, the right side of histograms
+- no single solution, many other distributions that support skewed distributions: beta (for percentage), lognormal, exponential, tweedie,... (complicated)
+
+## Skewed Distributions 
+
+```{r echo=FALSE}
+par(mfrow = c(1,2))
+set.seed(208)
+gamm_dat <- rgamma(500, shape = 2)
+hist(gamm_dat, main = "Gamma-distributed trait",col = "violetred", xlab = "n = 500, shape = 2", cex.lab = cex_lab, cex.axis = cex_axis)
+ln_dat <- rlnorm(500, meanlog = 5, sdlog = 1)
+hist(ln_dat, main = "Lognormal-distributed trait",col = "violetred", xlab = "n = 500, mean = 5, sd = 1", breaks = 20, cex.lab = cex_lab, cex.axis = cex_axis)
+```
+
+]
+
+## Alternatives for Non-normal Data
+
+**Non-parametric hypothesis tests** *(No distributional assumptions)*
+
+- Mann-Whitney $U$ test/Wilcoxon rank-sum test for 2 samples: `wilcox.test()`
+- Kruskall-Wallis for 3+ samples: `kruskal.test()`
+- Wilcoxon signed-rank test for paired samples: `wilcox.test(..., paired = TRUE)`
+
+#### Drawbacks
+
+- only conducting a hypothesis test, no estimation
+
+
+## Alternatives for Non-normal Data
+
+#### Permutations
+
+1. Calculate the test statistic from your data (e.g. difference in treatment means).
+
+2. Simulate data in which the test statistic is null (e.g. the difference in treatment means is zero).
+
+3. Find out how often your test statistic occurs in the simulated data; the probability of this occurring is your p-value.
+
+
+## Permutations
+```{r echo=FALSE}
+set.seed(100)
+sim_dat <- rnorm(500, mean = 10)
+sim_stat <- sum(sim_dat>=12.25)/length(sim_dat)
+hist(sim_dat, breaks = 10, col = "#ffb347", xlab = "test statistics", main = "Distribution in the null world", 
+     sub = "d = 12.25, p(d >= 12.25) = 0.016"); abline(v = 12.25, col = "#009150", lwd = 6, cex.lab = cex_lab, cex.axis = cex_axis)
+```
+
+<br>
+[Andrew Heiss' Null Worlds](https://nullworlds.andrewheiss.com/)
+
+## Permutation Example
+
+#### Alfalfa data set
+
+- split plot: main plot is date of harvest (4 levels), split plot is variety (3 levels)
+```{r}
+#| echo: true
+data("Alfalfa", package = "nlme")
+
+alf_mod <- lme(Yield ~ Variety + Date,
+               random = ~1|Block/Date,
+               data = Alfalfa)
+```
+
+## Alfalfa Permuatation Example
+```{r}
+#| echo: false
+par(mfrow = c(1,2))
+hist(Alfalfa$Yield, col = "#ffb347", main = "Alfalfa yield", xlab = NULL, cex.lab = cex_lab, cex.axis = cex_axis)
+qqnorm(resid(alf_mod)); qqline(resid(alf_mod))
+```
+
+
+## Permutations
+
+```
+sim_func <- function(){
+  N = nrow(Alfalfa)
+  Alfalfa$yield2 <- sample(Alfalfa$Yield, size = N, replace = FALSE)
+  try(perm_mod <- lme(yield2 ~ Variety + Date,
+               random = ~1|Block/Date,
+               data = Alfalfa))
+  if(exists("perm_mod")) return(perm_mod)
+}
+
+perms <- replicate(500, sim_func(), simplify = FALSE)
+```
+
+```{r}
+#| include: false
+set.seed(208) 
+
+sim_func <- function(){
+  N = nrow(Alfalfa)
+  Alfalfa$yield2 <- sample(Alfalfa$Yield, size = N, replace = FALSE)
+  try(perm_mod <- lme(yield2 ~ Variety + Date,
+               random = ~1|Block/Date,
+               data = Alfalfa))
+  if(exists("perm_mod")) return(perm_mod)
+}
+
+perms <- replicate(500, sim_func(), simplify = FALSE)
+```
+
+
+## Permutated ANOVA
+
+```{r}
+#| echo: true
+perm_anova <- lapply(perms, anova, type = "marginal") |>  # Conduct anova
+  dplyr::bind_rows() |> # some data formatting
+  tibble::rownames_to_column(var = "variable") |> 
+  mutate(variable = stringr::str_extract(variable, "[A-Za-z]+")) |> 
+  dplyr::filter(variable != "Intercept") # remove the intercept (optional step)
+```
+
+```{r}
+head(as.data.frame(perm_anova), n = 4L)
+```
+
+
+```{r}
+#| echo: true
+(alf_aov <- anova(alf_mod, type = "marginal"))
+```
+
+
+## Permutated ANOVA
+
+```{r include=FALSE}
+raw_f <- alf_aov$`F-value`[-1]
+pval1 = perm_anova |> filter(variable == "Date") |> select(`F-value`) |> 
+  summarise(sum(`F-value` > raw_f[1])/n()) |> pull()
+pval2 = perm_anova |> filter(variable == "Variety") |> select(`F-value`) |> 
+  summarise(sum(`F-value` > raw_f[2])/n()) |> pull()
+
+fvals <- data.frame(variable = c("Variety", "Date"),
+                    Fvalue = raw_f,
+                    pvals = as.character(c(pval1, pval2)))
+```
+
+```{r}
+ggplot(data = perm_anova, aes(x = `F-value`)) +
+  geom_histogram(color = "white", fill = "#bfc1c2", bins = 25) +
+  facet_grid(. ~ variable, scales = "free") +
+  geom_vline(data = fvals, mapping = aes(xintercept = Fvalue), col = "red2", linewidth = 1) + 
+  theme_classic(base_size = 18)
+```
+
+
+## The R package 'infer' {.smaller}
+
+
+- Provides functions for permutation, automatic calculation of target statistics and visualization
+- Very limited in functionality: can only calculate ANOVA statistics for one independent variable at a time
+- Can only compare means when there are exactly two levels
+- This package works fine for one-way ANOVA, simple linear regression and multiple linear regression. 
+- It is ill-suited for multiple-way factorial studies 
+
+[![](images/infer.png){width=40%}](https://infer.tidymodels.org/index.html)
+
+## Outliers {.smaller}
+
+- Do you know what led to the outlying data point? (Did you drop a sample bag? Did ducks eat your plot? Did your boss insist on something ill advised?). Decide if this is variation that reflects your target inferential conditions or not. 
+- If you do not know what caused an extreme value, run an analysis (e.g. a linear model) and look at the absolute value of the residuals. Create a decision criteria for data removal. 
+- Data removal is a tricky process that may introduce bias or accusation of bias. In general, be very judicious when excluding outlying data points from an analysis. 
+- If a single extreme data point is driving an analytical conclusion, it is definitely worth conducting a sensitivity analysis to see what happens when the extreme data point is excluded. 
+
+
+## Outliers {.smaller}
+
+```{r}
+#| echo: true
+Alfalfa$alf_res <- residuals(alf_mod, type = "normalized")
+```
+
+```{r}
+#| eval: false
+#| include: false
+hist(Alfalfa$alf_res, main = NULL, xlab = "Studenized residuals", cex.axis = cex_axis, cex.lab = cex_lab,
+     xlim = c(-4.5, 4.5)); abline(v = -4, col = "red2"); abline(v = 4, col = "red2")
+```
+
+```{r}
+#| echo: false
+plot(Alfalfa$alf_res, main = NULL, ylab = "Studenized residuals", cex.axis = cex_axis, cex.lab = cex_lab,
+     ylim = c(-4.5, 4.5)); abline(h = -4, col = "red2"); abline(h = 4, col = "red2"); abline(h = 0)
+```
+
+
+My cut-off is usually an absolute values of 4 for studentized residuals (99.99% of data falls with 4 units of the mean). This removes very large values and usually, not too many. Only very large data sets need a larger cut-off.
+
+## Final Thoughts {.smaller}
+
+- The assumption of normality is largely for the model residuals.
+- It's good to check the distribution of the dependent variable, but don't expect normality at that stage.
+- Most of the time, data are normal enough.
+- Modest departures from normality can be ignored, anova and estimates are robust to this.
+- Non-parametric tests are an option, but they are overall a low-information solution.
+- Manual permutattions. are an (cumbersome) option.
+- The best choice is always to find the correct distribution for your data.
+- The optimal approach is to use science not statistics to justify data removal. 
+
+## Additional Resources
+
+- [Zero Inflated Models and Generalized Linear Mixed Models with R](https://www.highstat.com/index.php/books2?view=article&id=19&catid=18) (2012) by Alain Zuur, Anatoly Saveliev, and Elena Ieno
+
+- [GLMM FAQs](https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html) by Ben Bolker ([more resources](https://bbolker.github.io/mixedmodels-misc/) on mixed models from Dr. Bolker)
+
+

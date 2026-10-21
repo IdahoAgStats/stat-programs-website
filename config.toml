@@ -1,6 +1,12 @@
 theme = "starter-academic"
-baseURL = "/"
+baseURL = "agstats.io"
 #http://example.org/"
 languageCode = "en-us"
 title = "University of Idaho Agricultural Statistics"
 ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_cache$", "\\.knit\\.md$", "\\.utf8\\.md$"]
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
