@@ -696,8 +696,32 @@
 </div>
 
 
+  
+
 
   <div class="article-container">
+    
+      
+       <h4>Table of Contents</h4>
+  <div class="table-of-contents">
+    <nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#1-decouple-model-selection-from-coding">1. Decouple model selection from coding</a></li>
+        <li><a href="#2-know-what-you-want-and-ask-for-it">2. Know what you want and ask for it.</a></li>
+        <li><a href="#3-take-the-time-to-understand-your-code">3. Take the time to understand your code.</a></li>
+        <li><a href="#4-verify-what-the-generative-ai-tools-suggest-with-reliable-outside-sources">4. Verify what the generative AI tools suggest with reliable outside sources</a></li>
+        <li><a href="#5-start-small-and-gradually-add-complexity">5. Start small and gradually add complexity</a></li>
+        <li><a href="#6-use-instructions-to-train-a-chatbot">6. Use instructions to train a chatbot.</a></li>
+        <li><a href="#final-thoughts-be-vigilant">Final thoughts: be vigilant</a></li>
+        <li><a href="#extra-prompt-writing-best-practices">Extra: Prompt Writing Best Practices</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+
 
     <div class="article-style">
       <p><em>This guide is aimed towards researchers in higher education, where we are expected to provide highly accurate information. It is also focused on Chatbots derived from large language models (e.g., Claude, Gemini, ChatGPT), and not other generative AI tools such as agents.</em></p>
@@ -725,7 +749,7 @@
 <p>At the bottom of this article are tips on prompting.</p>
 <p>Note that there are some task-specific tools of great utility out there. One generating some interest among the statistical community is <a href="https://rtutor.ai/" target="_blank" rel="noopener">Rtutor.ai</a> for its utility matched with its alignment with teaching and learning goals.</p>
 <h3 id="3-take-the-time-to-understand-your-code">3. Take the time to understand your code.</h3>
-<p>Read the code and make sure you understand what each line of code is doing. You don’t have to be able to explain it deeply, but a general understanding helps so you can adjust the code to fit your circumstances. Chatbots are also great at explaining code! Ask your LLM to explain what is going on if any particular line of code, any command, or any function argument is unclear to you. Often, they do this already, perhaps even excessively.^[I have definitely thought &ldquo;just give me the answer and not all this mumbo jumbo&rdquo; after receiving a huge cascade of output in response to what feels like a narrow query.] We can always ask the chatbot to be more succinct. This is also a moment to weigh the importance of understanding your LLM-generated code. Is it for a plot that can be quickly verified or is it for underlying analysis that we have to intellectually defend.</p>
+<p>Read the code and make sure you understand what each line of code is doing. You don’t have to be able to explain it deeply, but a general understanding helps so you can adjust the code to fit your circumstances. Chatbots are also great at explaining code! Ask your LLM to explain what is going on if any particular line of code, any command, or any function argument is unclear to you. Often, they do this already, perhaps even excessively. (I have definitely thought &ldquo;just give me the answer and not all this mumbo jumbo&rdquo; after receiving a huge cascade of output in response to what feels like a narrow query.) We can always ask the chatbot to be more succinct. This is also a moment to weigh the importance of understanding your LLM-generated code. Is it for a plot that can be quickly verified or is it for underlying analysis that we have to intellectually defend.</p>
 <p>Unfortunately, generative AI does produce statistical coding slop, that is, excessively long and over-complicated code created with minimal human oversight. This may be hundreds of lines of code, much of it implementing inefficient solutions (hello, regex!) or setting arcane little-used options (e.g., setting the font family for a plot). While some of this is the direct response to a prompt, some of it is extra &ldquo;help&rdquo; added unprompted and unnoticed by the user. For example, a chatbot may add some extra code to “fix” a micro-issues, such as missing data. This may not always be beneficial, as it may mask other issues with your data that should be investigated or addressed.</p>
 <p>This can be difficult and time-consuming to review, so most users do not do this and hence do not understand their code well. As a result, the code is challenging if not impossible to troubleshoot, quite brittle and sensitive to any changes in the data and hence not reusable, and sometimes implementing unwise choices such as dropping observations with missing data. This is why it is important to read your code before plowing ahead. Generative AI chatbots have enabled us to run code blindly without understanding it. It has long been an unwise choice to use a statistical model or any code you do not understand; generative AI has not changed this essential truth. You can also ask a generative AI chatbot to explain code, as I have observed they can can often provide correct and helpful explanations of code.</p>
 <h3 id="4-verify-what-the-generative-ai-tools-suggest-with-reliable-outside-sources">4. Verify what the generative AI tools suggest with reliable outside sources</h3>
