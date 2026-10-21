@@ -17,9 +17,9 @@ cta:
   label: '**Newsletter Sign-up**'
   url: https://buttondown.email/Uidaho-stat-programs 
   
-cta_note:
-  label: Newsletter Archive  
-  url: https://buttondown.com/Uidaho-stat-programs/archive/
+# cta_note:
+#   label: Newsletter Archive  
+#   url: https://buttondown.com/Uidaho-stat-programs/archive/
 
 cta_alt:
   label: Browse Our Tutorials   
