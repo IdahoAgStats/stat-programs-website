@@ -71,8 +71,8 @@ This looks different for every circumstance. Some examples:
 
 - For any coding exercise where accuracy matters, request the code from the chatbot and manually check it yourself. That is, if you receive Python code, run that code in a Python session and verify the output. While this takes time, it takes considerably less time than writing the code manually and may prevent future embarrassment if it turns out the chatbot got something wrong. By "accuracy matters," I mean when there is a substantial cost to being wrong. This cost is very high for a peer-reviewed publication, where the consequences of incorrect (and uncorrected) answers can be quite serious and detrimental. However, there are also many low-stakes scenarios where the cost of incorrect advice is low, and it is easy to ascertain output quality:
 
-- Historic weather data for a specific location.    
-- Plotting functions. Even when chatbots get this wrong, you will know immediately and can ask for improved code.     
+  - Historic weather data for a specific location.    
+  - Plotting functions. Even when chatbots get this wrong, you will know immediately and can ask for improved code.     
 
 Identifying when accuracy matters is a context-dependent value judgment a user must make. 
 
