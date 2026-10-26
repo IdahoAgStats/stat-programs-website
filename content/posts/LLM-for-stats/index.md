@@ -34,7 +34,7 @@ The development of generative AI tools to help you explore a topic may be rather
 ### 2. Know what you want and ask for it.
 *Get specific with your coding prompts*
 
-Be specific in prompts. The more specific your prompts, the better fitting results you get. Much has been written on this topic already ([example 1](https://claude.com/blog/best-practices-for-prompt-engineering)), but the vaguer the prompt, the less relevant the output. "Analyze this data set" may be among the least useful prompts, while "give me a generalized linear mixed model for count data with possible zero inflation" is much more likely to provide helpful information. Of course, the trick is knowing what to ask, and hence why it is important to understand the statistical model you want to run. 
+Be specific in prompts. The more specific your prompts, the better fitting results you get. Much has been written on this topic already ([example](https://claude.com/blog/best-practices-for-prompt-engineering)), but the vaguer the prompt, the less relevant the output. "Analyze this data set" may be among the least useful prompts, while "give me a generalized linear mixed model for count data with possible zero inflation" is much more likely to provide helpful information. Of course, the trick is knowing what to ask, and hence why it is important to understand the statistical model you want to run. 
 
 **Some examples of specific prompts:**
 
@@ -47,7 +47,7 @@ Be specific in prompts. The more specific your prompts, the better fitting resul
 - [Upload data] “Please analyze this”  
 - “I need R code to analyze y as a function of x and z”.
 
-Do not leave ambiguity in your prompt for the chatbot to interpret. For example, the prompt "Are there any outliers in my data set?" implies a known definition of an outlier. If you did not define what is meant by "outlier," the chatbot may pick one [type of outlier](https://en.wikipedia.org/wiki/Outlier) or it may try multiple options. These choices may or may not be aligned with your study goals. It is better when you, the researcher, make analytical choices rather than a chatbot. Using a set of pre-loaded instructions may help alleviate these issues (discussed in item #4).  
+Do not leave ambiguity in your prompt for the chatbot to interpret. For example, the prompt "Are there any outliers in my data set?" implies a known definition of an outlier. If you did not define what is meant by "outlier," the chatbot may pick one [type of outlier](https://en.wikipedia.org/wiki/Outlier) or it may try multiple options. These choices may or may not be aligned with your study goals. It is better when you, the researcher, make analytical choices rather than a chatbot. Using a set of pre-loaded instructions may help alleviate these issues (discussed in [item #6](#instructions)).  
 
 At the bottom of this article are tips on prompting. 
 
@@ -69,10 +69,7 @@ This looks different for every circumstance. Some examples:
 
 - If a generative tool suggests a particular coding solution for a statistical analysis, make sure that solution is actually doing what you want it to do. If a chatbot says “use this {R library/function} for a mixed model,” make sure the function or package is doing that; reading the package documentation (e.g., the help files) is usually sufficient for evaluating this. 
 
-- For any coding exercise where accuracy matters, request the code from the chatbot and manually check it yourself. That is, if you receive Python code, run that code in a Python session and verify the output. While this takes time, it takes considerably less time than writing the code manually and may prevent future embarrassment if it turns out the chatbot got something wrong. By "accuracy matters," I mean when there is a substantial cost to being wrong. This cost is very high for a peer-reviewed publication, where the consequences of incorrect (and uncorrected) answers can be quite serious and detrimental. However, there are also many low-stakes scenarios where the cost of incorrect advice is low, and it is easy to ascertain output quality:
-
-  - Historic weather data for a specific location.    
-  - Plotting functions. Even when chatbots get this wrong, you will know immediately and can ask for improved code.     
+- For any coding exercise where accuracy matters, request the code from the chatbot and manually check it yourself. That is, if you receive Python code, run that code in a Python session and verify the output. While this takes time, it takes considerably less time than writing the code manually and may prevent future embarrassment if it turns out the chatbot got something wrong. By "accuracy matters," I mean when there is a substantial cost to being wrong. This cost is very high for a peer-reviewed publication, where the consequences of incorrect (and uncorrected) answers can be quite serious and detrimental. However, there are also many low-stakes scenarios where the cost of incorrect advice is low, and it is easy to ascertain output quality. One example is plotting functions. Even when chatbots get this wrong, you will know immediately and can ask for improved code.     
 
 Identifying when accuracy matters is a context-dependent value judgment a user must make. 
 
@@ -80,11 +77,11 @@ Identifying when accuracy matters is a context-dependent value judgment a user m
 
 When doing something that is complex, break the task down into simpler tasks and tackle them one at a time. There is a tendency for the chatbots themselves to add complexity under the intent of helping; they may add some error catching to your code, or code that filters out missing data. This is not bad per se, but it may result in unintended consequences, perhaps even errors in analysis. Asking the chatbot to simplify the code to only what you are asking for will avoid these issues. 
 
-### 6. Use instructions to train a chatbot.  
+### 6. Use instructions to train a chatbot.  {#instructions}
 
 Providing instructions to a chatbot can greatly improve the quality of results. These instructions can be loaded from a file or written on the fly. They provide guidelines to a chatbot in an attempt to elicit specific answers or behavior. "[Caveman](https://github.com/JuliusBrussee/caveman)" is one such example; it is a set of instructions intended for a broad set of circumstances to reduce token usage (important if you are operating under a token cap). Jarad Neimi of Iowa State University has written some [excellent instructions](https://github.com/jarad/DS3030/blob/main/tutor/DS3030-tutor.md) to feed into a chatbot prior to asking for statistical assistance help. These instruct a chatbot on how to serve as a statistical tutor. 
 
-#### 7. Do not use a chatbot for statistical analysis itself
+### 7. Do not use a chatbot for statistical analysis itself
 
 Generative AI can provide decent solutions for analytical choices and code, but their ability to run the code itself is less proven. Some chatbots can run Python code (since Python is part of the modern web), but the Python ecosystem for statistical inference and mixed models in particular are limited. Additionally, it can be very easy to fall for confirmation bias when a chatbot gives us an answer generally aligned with our goals or wishes. Scientifically defensible analysis means understanding the analytical approach, ensuring it aligns with study goals, correctly implementing a statistical model (including assumption checking), and correctly interpreting model outputs. It is quite tempting to bypass these procedures when asking a chatbot to conduct an end-to-end analysis. 
 
