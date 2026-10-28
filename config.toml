@@ -17,3 +17,6 @@ ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_cache$", "\\.knit\\.md$", "\\.utf8\
       table = true
       toc = true
 
+[services]
+  [services.googleAnalytics]
+    id = 'G-ZZST40VXE1'
